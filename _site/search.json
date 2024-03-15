@@ -1,5 +1,12 @@
 [
   {
+    "objectID": "Blog.html",
+    "href": "Blog.html",
+    "title": "Benjamin (songhao)Ma's Website",
+    "section": "",
+    "text": "title: \"My Projects\"\nlisting\n  contents:blog\n  Type:grid\n  Sort:date desc\"\n  categories:flase"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Benjamin Ma",
@@ -7,11 +14,25 @@
     "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "resume/Untitled.html",
+    "href": "resume/Untitled.html",
+    "title": "Untitled",
     "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
+    "text": "This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.\nWhen you click the Knit button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:\n\nsummary(cars)\n\n     speed           dist       \n Min.   : 4.0   Min.   :  2.00  \n 1st Qu.:12.0   1st Qu.: 26.00  \n Median :15.0   Median : 36.00  \n Mean   :15.4   Mean   : 42.98  \n 3rd Qu.:19.0   3rd Qu.: 56.00  \n Max.   :25.0   Max.   :120.00"
+  },
+  {
+    "objectID": "resume/Untitled.html#r-markdown",
+    "href": "resume/Untitled.html#r-markdown",
+    "title": "Untitled",
+    "section": "",
+    "text": "This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.\nWhen you click the Knit button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:\n\nsummary(cars)\n\n     speed           dist       \n Min.   : 4.0   Min.   :  2.00  \n 1st Qu.:12.0   1st Qu.: 26.00  \n Median :15.0   Median : 36.00  \n Mean   :15.4   Mean   : 42.98  \n 3rd Qu.:19.0   3rd Qu.: 56.00  \n Max.   :25.0   Max.   :120.00"
+  },
+  {
+    "objectID": "resume/Untitled.html#including-plots",
+    "href": "resume/Untitled.html#including-plots",
+    "title": "Untitled",
+    "section": "Including Plots",
+    "text": "Including Plots\nYou can also embed plots, for example:\n\n\n\n\n\nNote that the echo = FALSE parameter was added to the code chunk to prevent printing of the R code that generated the plot."
   },
   {
     "objectID": "resume.html",
@@ -25,7 +46,7 @@
     "href": "resume/resume .html",
     "title": "Benjamin Ma’s resume",
     "section": "",
-    "text": "Lijia Yu\n\n\n\n\n\n Ben26msh@gmail.com\n github.com/yulijia\n +1 000-000-0000\nFor more information, please contact me via email.\n\n\n\n\n\nExperienced in statistical analysis, statistical learning models, and optimization methods.\nFull experience with next generation sequencing data analysis.\nHighly skilled in R, Bash, Perl, Python, LaTeX\n\n\n\n\nThis resume was made with the R package pagedown.\nLast updated on 2024-03-13."
+    "text": "Lijia Yu\n\n\n\n\n\n Ben26msh@gmail.com\n github.com/yulijia\n +1 000-000-0000\nFor more information, please contact me via email.\n\n\n\n\n\nExperienced in statistical analysis, statistical learning models, and optimization methods.\nFull experience with next generation sequencing data analysis.\nHighly skilled in R, Bash, Perl, Python, LaTeX\n\n\n\n\nThis resume was made with the R package pagedown.\nLast updated on 2024-03-15."
   },
   {
     "objectID": "resume/resume .html#contact",
@@ -46,7 +67,7 @@
     "href": "resume/resume .html#disclaimer",
     "title": "Benjamin Ma’s resume",
     "section": "",
-    "text": "This resume was made with the R package pagedown.\nLast updated on 2024-03-13."
+    "text": "This resume was made with the R package pagedown.\nLast updated on 2024-03-15."
   },
   {
     "objectID": "resume/resume .html#title",
@@ -89,34 +110,6 @@
     "title": "Benjamin Ma’s resume",
     "section": "Selected Publications and Posters",
     "text": "Selected Publications and Posters\n\nGenetic and epigenetic signals are found predictive to the distribution of intra-individual divergence of alternative splicing.\nPoster for 2013 International Conference of Genomics\nQingdao, China\n2014\nYu L, Chen B, Zhang Z.\n\n\nESCRT-0 complex modulates Rbf mutant cell survival by regulating Rhomboid endosomal trafficking and EGFR signaling.\nJ Cell Sci. 2016 May 15;129(10):2075-84.\nN/A\n2016\nSheng Z, Yu L, Zhang T, Pei X, Li X, Zhang Z and Du W."
-  },
-  {
-    "objectID": "resume/Untitled.html",
-    "href": "resume/Untitled.html",
-    "title": "Untitled",
-    "section": "",
-    "text": "This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.\nWhen you click the Knit button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:\n\nsummary(cars)\n\n     speed           dist       \n Min.   : 4.0   Min.   :  2.00  \n 1st Qu.:12.0   1st Qu.: 26.00  \n Median :15.0   Median : 36.00  \n Mean   :15.4   Mean   : 42.98  \n 3rd Qu.:19.0   3rd Qu.: 56.00  \n Max.   :25.0   Max.   :120.00"
-  },
-  {
-    "objectID": "resume/Untitled.html#r-markdown",
-    "href": "resume/Untitled.html#r-markdown",
-    "title": "Untitled",
-    "section": "",
-    "text": "This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.\nWhen you click the Knit button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:\n\nsummary(cars)\n\n     speed           dist       \n Min.   : 4.0   Min.   :  2.00  \n 1st Qu.:12.0   1st Qu.: 26.00  \n Median :15.0   Median : 36.00  \n Mean   :15.4   Mean   : 42.98  \n 3rd Qu.:19.0   3rd Qu.: 56.00  \n Max.   :25.0   Max.   :120.00"
-  },
-  {
-    "objectID": "resume/Untitled.html#including-plots",
-    "href": "resume/Untitled.html#including-plots",
-    "title": "Untitled",
-    "section": "Including Plots",
-    "text": "Including Plots\nYou can also embed plots, for example:\n\n\n\n\n\nNote that the echo = FALSE parameter was added to the code chunk to prevent printing of the R code that generated the plot."
-  },
-  {
-    "objectID": "Blog.html",
-    "href": "Blog.html",
-    "title": "Benjamin (songhao)Ma's Website",
-    "section": "",
-    "text": "title: \"My Projects\"\nlisting\n  contents:blog\n  Type:grid\n  Sort:date desc\"\n  categories:flase"
   },
   {
     "objectID": "blog/project1/index.html",
