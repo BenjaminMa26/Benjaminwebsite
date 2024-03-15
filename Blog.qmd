@@ -1,10 +1,10 @@
 ---
 title: "My Projects"
-listing
-  contents:blog
-  Type:grid
-  Sort:date desc"
-  categories:flase
+listing:
+  contents: blog
+  type: grid
+  sort: date desc"
+  categories: false
 ---
 
 
