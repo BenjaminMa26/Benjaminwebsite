@@ -1,0 +1,24 @@
+project:
+  type: website
+output-dir: docs
+
+website:
+  title: "Benjamin (songhao)Ma's Website"
+  navbar:
+    left:
+      - href: index.qmd
+        text: About
+      - href: resume.qmd
+        text: resume
+      - href: blog.qmd
+        text: Projects
+      
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+
+

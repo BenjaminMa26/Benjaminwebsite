@@ -1,0 +1,14 @@
+{
+  "hash": "a6eaca08192f00ecc5e4fe64fc0657e2",
+  "result": {
+    "markdown": "---\ntitle: \"Benjamin Ma\"\nimage: \"images/profile_pic.jpg\"\nabout: \n  template: jolla \n  links: \n  - icon: envelope\n    href: ben26msh@gmail.com\n  - icon: linkedin\n    href: https://www.linkedin.com/in/songhaoma/\n---\n\n\nThis is a Quarto website.\n\nTo learn more about Quarto websites visit <https://quarto.org/docs/websites>.\n\n\n::: {.cell}\n\n```{.r .cell-code}\n1 + 1\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[1] 2\n```\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
