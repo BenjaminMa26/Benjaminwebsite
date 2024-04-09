@@ -1,5 +1,5 @@
 {
-  "hash": "1bea1abf729ac8a672d1235e9507dd8a",
+  "hash": "75ac2026926b1a4834c1d392301700fb",
   "result": {
     "markdown": "# This is Project 1\n\n## Section 1: Data\n\nI Clean some data\n\n## Section 2: Analysis\n\nI analyzed the data\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\nmtcars |> \n    ggplot(aes(x = wt, y= mpg)) + geom_point()\n```\n\n::: {.cell-output-display}\n![](index_files/figure-html/unnamed-chunk-1-1.png){width=672}\n:::\n:::\n",
     "supporting": [

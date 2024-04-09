@@ -1,0 +1,7 @@
+# This is Project 2
+
+I use Kmean algorithm in this project to analyse market segmentation problems.
+
+## Section 1: Data
+smartphone_customer_data
+## Section 2: Analysis
