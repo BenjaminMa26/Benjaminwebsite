@@ -28,64 +28,64 @@
     "text": "I analyzed the data\n\nlibrary(tidyverse)\nmtcars |&gt; \n    ggplot(aes(x = wt, y= mpg)) + geom_point()"
   },
   {
-    "objectID": "resume/resume .html",
-    "href": "resume/resume .html",
+    "objectID": "resume/resume.html",
+    "href": "resume/resume.html",
     "title": "Benjamin Ma’s resume",
     "section": "",
     "text": "Benjamin Ma\n\n\n\n\n\n Ben26msh@gmail.com\n github.com/BenjaminMa\n +1 2069307372\nFor more information, please contact me via email.\n\n\n\n\n\nExperienced in statistical analysis, business mapping methods.\nExperience with business analysis and market (inbound, outbound) research with CRM and Salesforce.\nSkilled in leadership\nSkilled in R, Stata, Excel, and SQL\n\n\n\n\nThis resume was made with the R package pagedown.\nLast updated on 2024-04-29."
   },
   {
-    "objectID": "resume/resume .html#contact",
-    "href": "resume/resume .html#contact",
+    "objectID": "resume/resume.html#contact",
+    "href": "resume/resume.html#contact",
     "title": "Benjamin Ma’s resume",
     "section": "",
     "text": "Ben26msh@gmail.com\n github.com/BenjaminMa\n +1 2069307372\nFor more information, please contact me via email."
   },
   {
-    "objectID": "resume/resume .html#skills",
-    "href": "resume/resume .html#skills",
+    "objectID": "resume/resume.html#skills",
+    "href": "resume/resume.html#skills",
     "title": "Benjamin Ma’s resume",
     "section": "",
     "text": "Experienced in statistical analysis, business mapping methods.\nExperience with business analysis and market (inbound, outbound) research with CRM and Salesforce.\nSkilled in leadership\nSkilled in R, Stata, Excel, and SQL"
   },
   {
-    "objectID": "resume/resume .html#disclaimer",
-    "href": "resume/resume .html#disclaimer",
+    "objectID": "resume/resume.html#disclaimer",
+    "href": "resume/resume.html#disclaimer",
     "title": "Benjamin Ma’s resume",
     "section": "",
     "text": "This resume was made with the R package pagedown.\nLast updated on 2024-04-29."
   },
   {
-    "objectID": "resume/resume .html#title",
-    "href": "resume/resume .html#title",
+    "objectID": "resume/resume.html#title",
+    "href": "resume/resume.html#title",
     "title": "Benjamin Ma’s resume",
     "section": "Benjamin Ma",
     "text": "Benjamin Ma\n\nSenior year UC SanDiego Student\nlooking for a skill related job (Business Analyst or marketing related)."
   },
   {
-    "objectID": "resume/resume .html#education",
-    "href": "resume/resume .html#education",
+    "objectID": "resume/resume.html#education",
+    "href": "resume/resume.html#education",
     "title": "Benjamin Ma’s resume",
     "section": "Education",
     "text": "Education\n\nUniversity of California, San Diego\nB.S. Business Economics\nSan Diego, USA\n2022-2024\n\n\n\nUniversity of Edinburgh\nStudy Abroad\nEdinburgh, UK\n2023"
   },
   {
-    "objectID": "resume/resume .html#professional-experience",
-    "href": "resume/resume .html#professional-experience",
+    "objectID": "resume/resume.html#professional-experience",
+    "href": "resume/resume.html#professional-experience",
     "title": "Benjamin Ma’s resume",
     "section": "Professional Experience",
     "text": "Professional Experience\n\nBusiness Analyst, intern\nCamal Group.\nSan Diego, USA\n2023\n\n\nSourcing, cleaning, and visualizing trade data from prospect.\nGenerating weekly summary report to assist make sale strategy decisions.\nOverfulfil the KPI and achieved multiple sales for company.\nReceived return offer from company."
   },
   {
-    "objectID": "resume/resume .html#volunteer-experience",
-    "href": "resume/resume .html#volunteer-experience",
+    "objectID": "resume/resume.html#volunteer-experience",
+    "href": "resume/resume.html#volunteer-experience",
     "title": "Benjamin Ma’s resume",
     "section": "Volunteer Experience",
     "text": "Volunteer Experience\n\nUnited Nations Volunteer Program (Goodness and Mercy Missions)\nParticipated in non-profit organization Developed marketing strategies with team. Negotiated fundrasing with government agencies and global institutions. Awarded with a certification\nNew York, USA\n11/01/2020-08/01/2021\n\n\nUnited Nations Volunteer Program (Cameroon Association of Active Youths)\n-Assisted facilitating donations from institutions -Led a safety equipment’s advisory group. -Cleaning donation data -Using data visualization tools for weekly project evaluation. -Received a certification and letter of appreciation.\nNew York, USA\n11/25/2020-03/25/2021"
   },
   {
-    "objectID": "resume/resume .html#skills-1",
-    "href": "resume/resume .html#skills-1",
+    "objectID": "resume/resume.html#skills-1",
+    "href": "resume/resume.html#skills-1",
     "title": "Benjamin Ma’s resume",
     "section": "Skills",
     "text": "Skills\nCRM, Salesforce, Microsoft-office (Excel, Word, PowerPoint), SQL, STATA, R/Rstudio."
@@ -96,27 +96,6 @@
     "title": "Benjamin’s Resume",
     "section": "",
     "text": "Download PDF file."
-  },
-  {
-    "objectID": "resume/Untitled.html",
-    "href": "resume/Untitled.html",
-    "title": "Untitled",
-    "section": "",
-    "text": "This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.\nWhen you click the Knit button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:\n\nsummary(cars)\n\n     speed           dist       \n Min.   : 4.0   Min.   :  2.00  \n 1st Qu.:12.0   1st Qu.: 26.00  \n Median :15.0   Median : 36.00  \n Mean   :15.4   Mean   : 42.98  \n 3rd Qu.:19.0   3rd Qu.: 56.00  \n Max.   :25.0   Max.   :120.00"
-  },
-  {
-    "objectID": "resume/Untitled.html#r-markdown",
-    "href": "resume/Untitled.html#r-markdown",
-    "title": "Untitled",
-    "section": "",
-    "text": "This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.\nWhen you click the Knit button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:\n\nsummary(cars)\n\n     speed           dist       \n Min.   : 4.0   Min.   :  2.00  \n 1st Qu.:12.0   1st Qu.: 26.00  \n Median :15.0   Median : 36.00  \n Mean   :15.4   Mean   : 42.98  \n 3rd Qu.:19.0   3rd Qu.: 56.00  \n Max.   :25.0   Max.   :120.00"
-  },
-  {
-    "objectID": "resume/Untitled.html#including-plots",
-    "href": "resume/Untitled.html#including-plots",
-    "title": "Untitled",
-    "section": "Including Plots",
-    "text": "Including Plots\nYou can also embed plots, for example:\n\n\n\n\n\nNote that the echo = FALSE parameter was added to the code chunk to prevent printing of the R code that generated the plot."
   },
   {
     "objectID": "index.html",
