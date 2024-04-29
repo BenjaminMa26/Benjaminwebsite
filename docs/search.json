@@ -7,39 +7,25 @@
     "text": "This is Project 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 2\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Benjamin Ma",
+    "objectID": "blog/project1/index.html",
+    "href": "blog/project1/index.html",
+    "title": "This is Project 1",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+    "text": "I Clean some data\n\n\n\nI analyzed the data\n\nlibrary(tidyverse)\nmtcars |&gt; \n    ggplot(aes(x = wt, y= mpg)) + geom_point()"
   },
   {
-    "objectID": "resume/Untitled.html",
-    "href": "resume/Untitled.html",
-    "title": "Untitled",
+    "objectID": "blog/project1/index.html#section-1-data",
+    "href": "blog/project1/index.html#section-1-data",
+    "title": "This is Project 1",
     "section": "",
-    "text": "This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.\nWhen you click the Knit button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:\n\nsummary(cars)\n\n     speed           dist       \n Min.   : 4.0   Min.   :  2.00  \n 1st Qu.:12.0   1st Qu.: 26.00  \n Median :15.0   Median : 36.00  \n Mean   :15.4   Mean   : 42.98  \n 3rd Qu.:19.0   3rd Qu.: 56.00  \n Max.   :25.0   Max.   :120.00"
+    "text": "I Clean some data"
   },
   {
-    "objectID": "resume/Untitled.html#r-markdown",
-    "href": "resume/Untitled.html#r-markdown",
-    "title": "Untitled",
+    "objectID": "blog/project1/index.html#section-2-analysis",
+    "href": "blog/project1/index.html#section-2-analysis",
+    "title": "This is Project 1",
     "section": "",
-    "text": "This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.\nWhen you click the Knit button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:\n\nsummary(cars)\n\n     speed           dist       \n Min.   : 4.0   Min.   :  2.00  \n 1st Qu.:12.0   1st Qu.: 26.00  \n Median :15.0   Median : 36.00  \n Mean   :15.4   Mean   : 42.98  \n 3rd Qu.:19.0   3rd Qu.: 56.00  \n Max.   :25.0   Max.   :120.00"
-  },
-  {
-    "objectID": "resume/Untitled.html#including-plots",
-    "href": "resume/Untitled.html#including-plots",
-    "title": "Untitled",
-    "section": "Including Plots",
-    "text": "Including Plots\nYou can also embed plots, for example:\n\n\n\n\n\nNote that the echo = FALSE parameter was added to the code chunk to prevent printing of the R code that generated the plot."
-  },
-  {
-    "objectID": "resume.html",
-    "href": "resume.html",
-    "title": "Benjamin’s Resume",
-    "section": "",
-    "text": "Download PDF file."
+    "text": "I analyzed the data\n\nlibrary(tidyverse)\nmtcars |&gt; \n    ggplot(aes(x = wt, y= mpg)) + geom_point()"
   },
   {
     "objectID": "resume/resume .html",
@@ -84,81 +70,11 @@
     "text": "Education\n\nUniversity of California, San Diego\nB.S. Business Economics\nSan Diego, USA\n2022-2024\n\n\n\nUniversity of Edinburgh\nStudy Abroad\nEdinburgh, UK\n2023"
   },
   {
-    "objectID": "resume/resume .html#research-experience",
-    "href": "resume/resume .html#research-experience",
-    "title": "Benjamin Ma’s resume",
-    "section": "Research Experience",
-    "text": "Research Experience\n\nGraduate Research Assistant\nBeijing Institute of Genomics, Chinese Academy of Sciences\nBeijing, China\n2011 - 2014\n\nPerformed computational biology research towards understanding regulation of alternative splicing in human and mouse transcriptome.\nFound EGFR pathway related mutations, aimed to understand the impacts of cancer mutations on EGFR signaling pathway.\n\n\n\nBioinformatican\nMy Health Gene Technology Co., Ltd.\nBeijing, China\n2015 - 2016\n\nInvestigated how cancer cells spread to other parts of the body at the single cell level.\n\n\n\nVisiting Scientist\nUniversity of Alabama at Birmingham\nAL, USA\n2016 - 2018\n\nInvestigated the role of mitochondria in development of cancer.\nInvestigated the evolution of genome architecture and its role in important evolutionary events.\nDetected thrombotic thrombocytopenic purpura related mutations in mutiple patients’ blood genome."
-  },
-  {
     "objectID": "resume/resume .html#professional-experience",
     "href": "resume/resume .html#professional-experience",
     "title": "Benjamin Ma’s resume",
     "section": "Professional Experience",
     "text": "Professional Experience\n\nBusiness Analyst, intern\nCamal Group.\nSan Diego, USA\n2023\n\n\nSourcing, cleaning, and visualizing trade data from prospect.\nGenerating weekly summary report to assist make sale strategy decisions.\nOverfulfil the KPI and achieved multiple sales for company.\nReceived return offer from company."
-  },
-  {
-    "objectID": "resume/resume .html#teaching-experience",
-    "href": "resume/resume .html#teaching-experience",
-    "title": "Benjamin Ma’s resume",
-    "section": "Teaching Experience",
-    "text": "Teaching Experience\n\nIntroduction to R Language for Beginners.\nInstructor of R and Data Mining Training Courses at SupStat Inc.\nBeijing, China\n2014\n\n\nComputational Biology and Bioinformatics.\nTeaching assistant of GBS CB2-201 courses at UAB\nAL, USA\n2016 - 2017"
-  },
-  {
-    "objectID": "resume/resume .html#selected-publications-and-posters",
-    "href": "resume/resume .html#selected-publications-and-posters",
-    "title": "Benjamin Ma’s resume",
-    "section": "Selected Publications and Posters",
-    "text": "Selected Publications and Posters\n\nGenetic and epigenetic signals are found predictive to the distribution of intra-individual divergence of alternative splicing.\nPoster for 2013 International Conference of Genomics\nQingdao, China\n2014\nYu L, Chen B, Zhang Z.\n\n\nESCRT-0 complex modulates Rbf mutant cell survival by regulating Rhomboid endosomal trafficking and EGFR signaling.\nJ Cell Sci. 2016 May 15;129(10):2075-84.\nN/A\n2016\nSheng Z, Yu L, Zhang T, Pei X, Li X, Zhang Z and Du W."
-  },
-  {
-    "objectID": "blog/project1/index.html",
-    "href": "blog/project1/index.html",
-    "title": "This is Project 1",
-    "section": "",
-    "text": "I Clean some data\n\n\n\nI analyzed the data\n\nlibrary(tidyverse)\nmtcars |&gt; \n    ggplot(aes(x = wt, y= mpg)) + geom_point()"
-  },
-  {
-    "objectID": "blog/project1/index.html#section-1-data",
-    "href": "blog/project1/index.html#section-1-data",
-    "title": "This is Project 1",
-    "section": "",
-    "text": "I Clean some data"
-  },
-  {
-    "objectID": "blog/project1/index.html#section-2-analysis",
-    "href": "blog/project1/index.html#section-2-analysis",
-    "title": "This is Project 1",
-    "section": "",
-    "text": "I analyzed the data\n\nlibrary(tidyverse)\nmtcars |&gt; \n    ggplot(aes(x = wt, y= mpg)) + geom_point()"
-  },
-  {
-    "objectID": "blog/project2/Market segmentaiton research.html",
-    "href": "blog/project2/Market segmentaiton research.html",
-    "title": "This is Project 2",
-    "section": "",
-    "text": "This project is using analyse customer segmentation by using Kmeans algorithm. In this project the data I use is from mtcars.csv\n\n\nlibrary(tidyverse) library(readr) mtcars &lt;- read_csv(“~/Desktop/mtcars.csv”) View(mtcars) sub &lt;- mtcars |&gt; select(mpg, hp) sub # and plot them ggplot(sub) + geom_point(aes(mpg, hp)) + theme_minimal()"
-  },
-  {
-    "objectID": "blog/project2/Market segmentaiton research.html#section-1-data",
-    "href": "blog/project2/Market segmentaiton research.html#section-1-data",
-    "title": "This is Project 2",
-    "section": "",
-    "text": "library(tidyverse) library(readr) mtcars &lt;- read_csv(“~/Desktop/mtcars.csv”) View(mtcars) sub &lt;- mtcars |&gt; select(mpg, hp) sub # and plot them ggplot(sub) + geom_point(aes(mpg, hp)) + theme_minimal()"
-  },
-  {
-    "objectID": "blog/project2/index.html",
-    "href": "blog/project2/index.html",
-    "title": "This is Project 2",
-    "section": "",
-    "text": "I use Kmean algorithm in this project to analyse market segmentation problems.\n\n\nsmartphone_customer_data ## Section 2: Analysis"
-  },
-  {
-    "objectID": "blog/project2/index.html#section-1-data",
-    "href": "blog/project2/index.html#section-1-data",
-    "title": "This is Project 2",
-    "section": "",
-    "text": "smartphone_customer_data ## Section 2: Analysis"
   },
   {
     "objectID": "resume/resume .html#volunteer-experience",
@@ -175,10 +91,52 @@
     "text": "Skills\nCRM, Salesforce, Microsoft-office (Excel, Word, PowerPoint), SQL, STATA, R/Rstudio."
   },
   {
-    "objectID": "resume/resume.html",
-    "href": "resume/resume.html",
+    "objectID": "resume.html",
+    "href": "resume.html",
     "title": "Benjamin’s Resume",
     "section": "",
     "text": "Download PDF file."
+  },
+  {
+    "objectID": "resume/Untitled.html",
+    "href": "resume/Untitled.html",
+    "title": "Untitled",
+    "section": "",
+    "text": "This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.\nWhen you click the Knit button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:\n\nsummary(cars)\n\n     speed           dist       \n Min.   : 4.0   Min.   :  2.00  \n 1st Qu.:12.0   1st Qu.: 26.00  \n Median :15.0   Median : 36.00  \n Mean   :15.4   Mean   : 42.98  \n 3rd Qu.:19.0   3rd Qu.: 56.00  \n Max.   :25.0   Max.   :120.00"
+  },
+  {
+    "objectID": "resume/Untitled.html#r-markdown",
+    "href": "resume/Untitled.html#r-markdown",
+    "title": "Untitled",
+    "section": "",
+    "text": "This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.\nWhen you click the Knit button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:\n\nsummary(cars)\n\n     speed           dist       \n Min.   : 4.0   Min.   :  2.00  \n 1st Qu.:12.0   1st Qu.: 26.00  \n Median :15.0   Median : 36.00  \n Mean   :15.4   Mean   : 42.98  \n 3rd Qu.:19.0   3rd Qu.: 56.00  \n Max.   :25.0   Max.   :120.00"
+  },
+  {
+    "objectID": "resume/Untitled.html#including-plots",
+    "href": "resume/Untitled.html#including-plots",
+    "title": "Untitled",
+    "section": "Including Plots",
+    "text": "Including Plots\nYou can also embed plots, for example:\n\n\n\n\n\nNote that the echo = FALSE parameter was added to the code chunk to prevent printing of the R code that generated the plot."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Benjamin Ma",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+  },
+  {
+    "objectID": "blog/project2/index.html",
+    "href": "blog/project2/index.html",
+    "title": "This is Project 2",
+    "section": "",
+    "text": "I use Kmean algorithm in this project to analyse market segmentation problems.\n\n\nsmartphone_customer_data ## Section 2: Analysis"
+  },
+  {
+    "objectID": "blog/project2/index.html#section-1-data",
+    "href": "blog/project2/index.html#section-1-data",
+    "title": "This is Project 2",
+    "section": "",
+    "text": "smartphone_customer_data ## Section 2: Analysis"
   }
 ]
