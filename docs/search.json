@@ -4,35 +4,42 @@
     "href": "Blog.html",
     "title": "My Projects",
     "section": "",
-    "text": "This is Project 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 2\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "This is Project 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 2\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "blog/project1/index.html",
-    "href": "blog/project1/index.html",
-    "title": "This is Project 1",
+    "objectID": "blog/project3/index.html",
+    "href": "blog/project3/index.html",
+    "title": "This is Project 3",
     "section": "",
-    "text": "I Clean some data\n\n\n\nI analyzed the data\n\nlibrary(tidyverse)\nmtcars |&gt; \n    ggplot(aes(x = wt, y= mpg)) + geom_point()"
+    "text": "library(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.4.4     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nairquality|&gt;\n  ggplot(aes(x =Ozone, y= Solar.R)) + geom_point()\n\nWarning: Removed 42 rows containing missing values (`geom_point()`)."
   },
   {
-    "objectID": "blog/project1/index.html#section-1-data",
-    "href": "blog/project1/index.html#section-1-data",
-    "title": "This is Project 1",
+    "objectID": "blog/project3/index.html#section-2-analysis",
+    "href": "blog/project3/index.html#section-2-analysis",
+    "title": "This is Project 3",
     "section": "",
-    "text": "I Clean some data"
+    "text": "library(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.4.4     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nairquality|&gt;\n  ggplot(aes(x =Ozone, y= Solar.R)) + geom_point()\n\nWarning: Removed 42 rows containing missing values (`geom_point()`)."
   },
   {
-    "objectID": "blog/project1/index.html#section-2-analysis",
-    "href": "blog/project1/index.html#section-2-analysis",
-    "title": "This is Project 1",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Benjamin Ma",
     "section": "",
-    "text": "I analyzed the data\n\nlibrary(tidyverse)\nmtcars |&gt; \n    ggplot(aes(x = wt, y= mpg)) + geom_point()"
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+  },
+  {
+    "objectID": "resume.html",
+    "href": "resume.html",
+    "title": "Benjamin’s Resume",
+    "section": "",
+    "text": "Download PDF file."
   },
   {
     "objectID": "resume/resume.html",
     "href": "resume/resume.html",
     "title": "Benjamin Ma’s resume",
     "section": "",
-    "text": "Benjamin Ma\n\n\n\n\n\n Ben26msh@gmail.com\n github.com/BenjaminMa\n +1 2069307372\nFor more information, please contact me via email.\n\n\n\n\n\nExperienced in statistical analysis, business mapping methods.\nExperience with business analysis and market (inbound, outbound) research with CRM and Salesforce.\nSkilled in leadership\nSkilled in R, Stata, Excel, and SQL\n\n\n\n\nThis resume was made with the R package pagedown.\nLast updated on 2024-05-02."
+    "text": "Benjamin Ma\n\n\n\n\n\n Ben26msh@gmail.com\n github.com/BenjaminMa\n +1 2069307372\nFor more information, please contact me via email.\n\n\n\n\n\nExperienced in statistical analysis, business mapping methods.\nExperience with business analysis and market (inbound, outbound) research with CRM and Salesforce.\nSkilled in leadership\nSkilled in R, Stata, Excel, and SQL\n\n\n\n\nThis resume was made with the R package pagedown.\nLast updated on 2024-05-03."
   },
   {
     "objectID": "resume/resume.html#contact",
@@ -53,7 +60,7 @@
     "href": "resume/resume.html#disclaimer",
     "title": "Benjamin Ma’s resume",
     "section": "",
-    "text": "This resume was made with the R package pagedown.\nLast updated on 2024-05-02."
+    "text": "This resume was made with the R package pagedown.\nLast updated on 2024-05-03."
   },
   {
     "objectID": "resume/resume.html#title",
@@ -91,18 +98,25 @@
     "text": "Skills\nCRM, Salesforce, Microsoft-office (Excel, Word, PowerPoint), SQL, STATA, R/Rstudio."
   },
   {
-    "objectID": "resume.html",
-    "href": "resume.html",
-    "title": "Benjamin’s Resume",
+    "objectID": "blog/project1/index.html",
+    "href": "blog/project1/index.html",
+    "title": "This is Project 1",
     "section": "",
-    "text": "Download PDF file."
+    "text": "I Clean some data\n\n\n\nI analyzed the data\n\nlibrary(tidyverse)\nmtcars |&gt; \n    ggplot(aes(x = wt, y= mpg)) + geom_point()"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Benjamin Ma",
+    "objectID": "blog/project1/index.html#section-1-data",
+    "href": "blog/project1/index.html#section-1-data",
+    "title": "This is Project 1",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+    "text": "I Clean some data"
+  },
+  {
+    "objectID": "blog/project1/index.html#section-2-analysis",
+    "href": "blog/project1/index.html#section-2-analysis",
+    "title": "This is Project 1",
+    "section": "",
+    "text": "I analyzed the data\n\nlibrary(tidyverse)\nmtcars |&gt; \n    ggplot(aes(x = wt, y= mpg)) + geom_point()"
   },
   {
     "objectID": "blog/project2/index.html",

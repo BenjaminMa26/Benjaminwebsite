@@ -1,0 +1,14 @@
+# This is Project 3
+
+## Section 1: Data
+
+
+
+## Section 2: Analysis
+
+```{r}
+ library(tidyverse)
+airquality|>
+  ggplot(aes(x =Ozone, y= Solar.R)) + geom_point()
+    
+```
