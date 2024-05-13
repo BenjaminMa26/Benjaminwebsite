@@ -1,5 +1,5 @@
 # This is Project 3
-
+blog/project3/smartphone_customer_data.csv
 ## Section 1: Objective
 This project leverages real-world data from T-Mobile to perform an advanced customer segmentation analysis using the K-means clustering algorithm. The focus is to understand the relationship between customers' hand sizes and their gaming durations on mobile devices, and how these insights can inform product customization for gamers.
 
@@ -15,6 +15,7 @@ Further analysis included unscaling the cluster centers to interpret them in the
 ## section 4: Analysis
 ```{r}
 library(tidyverse)
+blog/project3/smartphone_customer_data.csv
 cust_dat <- read_csv("~/Desktop/MGT100 folder/smartphone_customer_data.csv")
 sub <- cust_dat %>% select(gaming, handsize)
 head(sub)   
