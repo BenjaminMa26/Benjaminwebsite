@@ -15,7 +15,7 @@ Further analysis included unscaling the cluster centers to interpret them in the
 ## section 4: Analysis
 ```{r}
 library(tidyverse)
-cust_da|
+cust_dat <- read_csv("~/Desktop/MGT100 folder/smartphone_customer_data.csv")
 sub <- cust_dat %>% select(gaming, handsize)
 head(sub)   
 
