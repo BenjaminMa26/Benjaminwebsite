@@ -1,0 +1,18 @@
+# This is Project 4
+
+## Section 1: Objective
+
+This project is doing market mapping via dimension reduction with principal components analysis (PCA).
+
+
+## Section 2: Analysis
+
+
+
+```{r}
+library(tidyverse)
+library(ggrepel)
+cust_dat <- read_csv("./smartphone_customer_data.csv")
+
+
+```
