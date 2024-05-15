@@ -1,5 +1,6 @@
 # This is Project 3
-blog/project3/smartphone_customer_data.csv
+K-mean clustering algoritm practical using on customer segmentation in marketing research
+
 ## Section 1: Objective
 This project leverages real-world data from T-Mobile to perform an advanced customer segmentation analysis using the K-means clustering algorithm. The focus is to understand the relationship between customers' hand sizes and their gaming durations on mobile devices, and how these insights can inform product customization for gamers.
 
