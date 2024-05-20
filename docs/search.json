@@ -4,7 +4,7 @@
     "href": "Blog.html",
     "title": "My Projects",
     "section": "",
-    "text": "Project 4: Market Mapping through PCA\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nProject 5: Data Wranging for Customers Demand Estimation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 2\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Project 4: Market Mapping through PCA\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nProject 5: Data Wranging for Customers Demand Estimation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 2\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 6\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "blog/project5/index.html",
@@ -105,11 +105,25 @@
     "text": "This Customer Segmentation Analysis project utilizes the K-means clustering algorithm to segment customers based on their gaming habits and hand size, drawing from a dataset that includes various customer attributes. Initially, the dataset is imported and displayed for preliminary inspection. The analysis proceeds by subsetting data relevant to gaming time and hand size, followed by visualization through a scatter plot to understand the distribution before clustering. The data is then standardized to neutralize scale discrepancies, ensuring that clustering reflects genuine patterns rather than differences in measurement units. K-means clustering is applied to this standardized data to determine distinct customer groups, with iterative adjustments of cluster centroids to optimize within-cluster homogeneity. This segmentation allows for targeted product development and marketing strategies, particularly for designing smartphones that cater to the ergonomic and usage preferences of gamers. The success of this approach in identifying meaningful customer segments demonstrates the versatility of K-means clustering, suggesting its applicability across different industries to meet varied market and industrial needs."
   },
   {
-    "objectID": "resume.html",
-    "href": "resume.html",
-    "title": "Benjamin’s Resume",
+    "objectID": "blog/project1/index.html",
+    "href": "blog/project1/index.html",
+    "title": "This is Project 1",
     "section": "",
-    "text": "Download PDF file."
+    "text": "I Clean some data\n\n\n\nI analyzed the data\n\nlibrary(tidyverse)\nmtcars |&gt; \n    ggplot(aes(x = wt, y= mpg)) + geom_point()"
+  },
+  {
+    "objectID": "blog/project1/index.html#section-1-data",
+    "href": "blog/project1/index.html#section-1-data",
+    "title": "This is Project 1",
+    "section": "",
+    "text": "I Clean some data"
+  },
+  {
+    "objectID": "blog/project1/index.html#section-2-analysis",
+    "href": "blog/project1/index.html#section-2-analysis",
+    "title": "This is Project 1",
+    "section": "",
+    "text": "I analyzed the data\n\nlibrary(tidyverse)\nmtcars |&gt; \n    ggplot(aes(x = wt, y= mpg)) + geom_point()"
   },
   {
     "objectID": "resume/resume.html",
@@ -175,25 +189,11 @@
     "text": "Skills\nCRM, Salesforce, Microsoft-office (Excel, Word, PowerPoint), SQL, STATA, R/Rstudio."
   },
   {
-    "objectID": "blog/project1/index.html",
-    "href": "blog/project1/index.html",
-    "title": "This is Project 1",
+    "objectID": "resume.html",
+    "href": "resume.html",
+    "title": "Benjamin’s Resume",
     "section": "",
-    "text": "I Clean some data\n\n\n\nI analyzed the data\n\nlibrary(tidyverse)\nmtcars |&gt; \n    ggplot(aes(x = wt, y= mpg)) + geom_point()"
-  },
-  {
-    "objectID": "blog/project1/index.html#section-1-data",
-    "href": "blog/project1/index.html#section-1-data",
-    "title": "This is Project 1",
-    "section": "",
-    "text": "I Clean some data"
-  },
-  {
-    "objectID": "blog/project1/index.html#section-2-analysis",
-    "href": "blog/project1/index.html#section-2-analysis",
-    "title": "This is Project 1",
-    "section": "",
-    "text": "I analyzed the data\n\nlibrary(tidyverse)\nmtcars |&gt; \n    ggplot(aes(x = wt, y= mpg)) + geom_point()"
+    "text": "Download PDF file."
   },
   {
     "objectID": "blog/project4/index.html",
