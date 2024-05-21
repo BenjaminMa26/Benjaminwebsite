@@ -390,6 +390,6 @@ Concerns about overfitting are paramount, as they could diminish our model’s p
 
 ## Summary 7
 
-This model, referred to as “out9,” has demonstrated the most robust performance based on our criteria, which include the hit rate and the log-likelihood ratio index. Furthermore, it effectively incorporates segment-level heterogeneity, enriching its analytical depth. I will utilize this specific model configuration for the subsequent two weeks of the course, allowing us to further explore its capabilities and refine our understanding of its predictive power within various consumer segments.
+This model, referred to as “out9,” has demonstrated the most robust performance based on our criteria, which include the hit rate and the log-likelihood ratio index. Furthermore, it effectively incorporates segment-level heterogeneity, enriching its analytical depth. I will utilize this specific model configuration for the subsequent two projects, and further exploring its capabilities and shows more variety predictive power within various consumer segments.
 
 
