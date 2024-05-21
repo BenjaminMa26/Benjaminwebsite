@@ -21,12 +21,11 @@ I use Kmean algorithm in this project to analyse market segmentation problems.
 
 library(tidyverse)
 mtcars
-mtcars |> 
-  ggplot(aes(x = wt, y= mpg)) + geom_point()
+
 
 sub <- mtcars %>% select(wt, mpg)
 sub
-ggplot(sub) +geom_point(aes(wt, mpg)) + theme_minimal()
+
 scl <- sub %>% scale() %>% as_tibble()
 scl
 scl %>% summarize_all(mean) %>% round(3) 
