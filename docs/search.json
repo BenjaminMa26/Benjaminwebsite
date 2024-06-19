@@ -4,7 +4,7 @@
     "href": "Blog.html",
     "title": "My Projects",
     "section": "",
-    "text": "Project 4: Market Mapping through PCA\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nProject 5: Data Wranging for Customers Demand Estimation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 2\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 6\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Project 4: Market Mapping through PCA\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nProject 5: Data Wranging for Customers Demand Estimation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nProject 7: Price Optimization Using Demand Models\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 2\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 6\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "blog/project5/index.html",
@@ -126,11 +126,18 @@
     "text": "I analyzed the data\n\nlibrary(tidyverse)\nmtcars |&gt; \n    ggplot(aes(x = wt, y= mpg)) + geom_point()"
   },
   {
+    "objectID": "resume.html",
+    "href": "resume.html",
+    "title": "Benjamin’s Resume",
+    "section": "",
+    "text": "Download PDF file."
+  },
+  {
     "objectID": "resume/resume.html",
     "href": "resume/resume.html",
     "title": "Benjamin Ma’s resume",
     "section": "",
-    "text": "Benjamin Ma\n\n\n\n\n\n Ben26msh@gmail.com\n github.com/BenjaminMa\n +1 2069307372\nFor more information, please contact me via email.\n\n\n\n\n\nExperienced in statistical analysis, business mapping methods.\nExperience with business analysis and market (inbound, outbound) research with CRM and Salesforce.\nSkilled in leadership\nSkilled in R, Stata, Excel, and SQL\n\n\n\n\nThis resume was made with the R package pagedown.\nLast updated on 2024-05-31."
+    "text": "Benjamin Ma\n\n\n\n\n\n Ben26msh@gmail.com\n github.com/BenjaminMa\n +1 2069307372\nFor more information, please contact me via email.\n\n\n\n\n\nExperienced in statistical analysis, business mapping methods.\nExperience with business analysis and market (inbound, outbound) research with CRM and Salesforce.\nSkilled in leadership\nSkilled in R, Stata, Excel, and SQL\n\n\n\n\nThis resume was made with the R package pagedown.\nLast updated on 2024-06-18."
   },
   {
     "objectID": "resume/resume.html#contact",
@@ -151,7 +158,7 @@
     "href": "resume/resume.html#disclaimer",
     "title": "Benjamin Ma’s resume",
     "section": "",
-    "text": "This resume was made with the R package pagedown.\nLast updated on 2024-05-31."
+    "text": "This resume was made with the R package pagedown.\nLast updated on 2024-06-18."
   },
   {
     "objectID": "resume/resume.html#title",
@@ -189,11 +196,74 @@
     "text": "Skills\nCRM, Salesforce, Microsoft-office (Excel, Word, PowerPoint), SQL, STATA, R/Rstudio."
   },
   {
-    "objectID": "resume.html",
-    "href": "resume.html",
-    "title": "Benjamin’s Resume",
+    "objectID": "blog/project7/index.html",
+    "href": "blog/project7/index.html",
+    "title": "Project 7: Price Optimization Using Demand Models",
     "section": "",
-    "text": "Download PDF file."
+    "text": "use the heterogeneous MNL from project 6 to optimize prices.\n\n\nThis script aims to optimize the pricing strategy for Samsung’s smartphone models using a heterogeneous Multinomial Logit (MNL) model. The analysis focuses on understanding consumer choice behavior in response to price variations and seeks to maximize the overall profitability of Samsung’s smartphone product line."
+  },
+  {
+    "objectID": "blog/project7/index.html#objective",
+    "href": "blog/project7/index.html#objective",
+    "title": "Project 7: Price Optimization Using Demand Models",
+    "section": "",
+    "text": "This script aims to optimize the pricing strategy for Samsung’s smartphone models using a heterogeneous Multinomial Logit (MNL) model. The analysis focuses on understanding consumer choice behavior in response to price variations and seeks to maximize the overall profitability of Samsung’s smartphone product line."
+  },
+  {
+    "objectID": "blog/project7/index.html#how-do-you-learn-wtp",
+    "href": "blog/project7/index.html#how-do-you-learn-wtp",
+    "title": "Project 7: Price Optimization Using Demand Models",
+    "section": "How do you learn WTP?",
+    "text": "How do you learn WTP?\nThe EVC method for product x:\n\nSelect a best, available alternative (y) and find it’s price.\nDetermine the incremental economic value of your product (x) over y [may involve the difference in non-price costs between x and y]\nSplit the benefit (not necessarily 50/50) with the customer"
+  },
+  {
+    "objectID": "blog/project7/index.html#economic-value-to-the-customer-evc",
+    "href": "blog/project7/index.html#economic-value-to-the-customer-evc",
+    "title": "Project 7: Price Optimization Using Demand Models",
+    "section": "Economic Value to The Customer (EVC)",
+    "text": "Economic Value to The Customer (EVC)\nBest Available Alternative (y) Might not be a commercial product. Choose y based on customer interviews. if wrong y, EVC estimate will be too high.\nIncremental Economic Value of X Consider benefits and non-price costs. Price of x doesn’t enter the calculation\nSplit the benefit Contrib margin (profit) VS con. surplus (growth) Fairness, pperceived vs actual benefit, etc\nCan do this by segment y and EVC can vary across customer segments. If EVC&lt;0, reconsider your product or target customer.\nsummary: The Economic Value to the Customer (EVC) method is a pricing strategy that determines the maximum price a customer is willing to pay based on the total value they derive from the product. The cost is the expense incurred to produce the product, while the price is set above the cost to ensure profitability. The perceived value is the customer’s assessment of the product’s worth, often higher than the price, providing the inducement to buy, which is the extra value perceived by the customer. The contribution margin is the profit margin between the cost and the price. The best available alternative (best avail. alt y) represents the value of the closest competing product. The area of negotiation is the range between the cost and the EVC, where the final price can be adjusted based on market dynamics and customer willingness to pay."
+  },
+  {
+    "objectID": "blog/project7/index.html#price-optimization-under-ced-and-mnl",
+    "href": "blog/project7/index.html#price-optimization-under-ced-and-mnl",
+    "title": "Project 7: Price Optimization Using Demand Models",
+    "section": "Price Optimization Under CED and MNL",
+    "text": "Price Optimization Under CED and MNL\n\nConstant Elasticity of Demand (CED) Model\n\nAssume a convenient functional form: \\(Q = e^{\\alpha} \\times P^{\\beta}\\)\nThis implies: \\(\\ln(Q) = \\alpha + \\beta \\times \\ln(P)\\)\nSlope coefficient is elasticity: \\(\\beta = \\frac{d(\\ln Q)}{d(\\ln P)} = \\frac{P}{Q} \\frac{dQ}{dP} = \\varepsilon\\)\nOptimal price is: \\(P^{*} = \\frac{c}{1 + \\frac{1}{\\varepsilon}}\\)\n\n\n\nHeterogeneous Multinomial Logit (MNL) Demand Model\n\nGet estimated sales from market share predictions for a given price: \\(q_{j}(p_{j}) = M \\times \\hat{s}_{j}(p_{j})\\)\nCalculate profit at that price: \\(\\pi(p_{j}) = q_{j}(p_{j}) \\times \\left[ p_{j} - c_{j}(q_{j}(p_{j})) \\right]\\)\nTry a bunch of candidate prices, and pick the one that maximizes profit: \\(p^{*} = \\underset{p_{m}}{\\arg\\max} \\ \\pi(p_{m})\\)"
+  },
+  {
+    "objectID": "blog/project7/index.html#library-imports-and-data-preparation",
+    "href": "blog/project7/index.html#library-imports-and-data-preparation",
+    "title": "Project 7: Price Optimization Using Demand Models",
+    "section": "Library Imports and Data Preparation",
+    "text": "Library Imports and Data Preparation\n\n# Data Importing \nsuppressPackageStartupMessages(library(tidyverse))\nsuppressPackageStartupMessages(library(mlogit))\nsuppressPackageStartupMessages(library(gridExtra))\n\n# load data, get segments, fit mnl model\n    # load main dataset\ncust_dat &lt;- read_csv(\"~//Desktop/MGT100 folder/smartphone_customer_data.csv\", show_col_types = FALSE)\n# load \"enhanced\" dataset for fitting mnl model\n    load(\"~/Desktop/MGT100 folder/mnl_datasets.RData\")\n     # fit mnl data\n    out &lt;- mlogit(choice ~ apple:segment + \n                           samsung:segment + \n                           price:segment +\n                           screen_size:segment + \n                           price:total_minutes:segment | 0, data=mdat1)"
+  },
+  {
+    "objectID": "blog/project7/index.html#demand-curve-for-a-phone",
+    "href": "blog/project7/index.html#demand-curve-for-a-phone",
+    "title": "Project 7: Price Optimization Using Demand Models",
+    "section": "Demand Curve for A Phone",
+    "text": "Demand Curve for A Phone\nConstruct the estimated demand curve for the small Samsung phone (S1). That means we will vary the price of S1 while holding everything else constant, and track how its market share changes as we change its price.\nRecall that last year S1 had a price of $799 and a market share of 25.3%.\n\n# Get a vector of price changes to use\npvec &lt;- seq(from = -200, to = 200, by = 10)\n\n# Construct an empty matrix to store shares at each price\nsmat &lt;- matrix(NA, nrow = length(pvec), ncol = 6)\ncolnames(smat) &lt;- c(\"A1\", \"A2\", \"S1\", \"S2\", \"H1\", \"H2\")\n\n# Suppress output using invisible and capture.output\ninvisible(capture.output({\n  # Loop over the price change values\n  for (i in 1:length(pvec)) {\n    # Print progress (this will be suppressed)\n    cat(\"Working on\", i, \"of\", length(pvec), \"\\n\")\n    \n    # Get the price change amount\n    p &lt;- pvec[i]\n    \n    # Change prices for S1 phones\n    tempdat &lt;- as_tibble(mdat1) |&gt; mutate(price = ifelse(phone_id == \"S1\", price + p, price))\n    \n    # Make market share predictions with the temporarily-changed S1 prices\n    preds &lt;- predict(out, newdata = tempdat)\n    \n    # Calculate and store market shares\n    smat[i, ] &lt;- colMeans(preds)\n  }\n}, file = NULL))\n\n    \n    # gather our prices and estimated shares into a dataframe\n    relcol &lt;- which(colnames(smat) == \"S1\")\n    s1dat &lt;- tibble(scenario=1:length(pvec), price=pvec+799, share=smat[,relcol])\n    \n    # plot S1's inverse demand curve\n    ggplot(s1dat, aes(x=share, y=price)) +\n        geom_point() + \n        geom_line() + \n        labs(x=\"Share\", y=\"Price\") +\n        theme_bw()\n\n\n\n\nThe term “residual demand” is used when the demand is specific to a product and assumes that other factors remain constant. This approach acknowledges that changes in external factors, such as the prices of competing products like A1 or H1, will also affect the residual demand curve for S1.\nIt is important to observe that the model-predicted market share may not perfectly align with the observed market share. This discrepancy arises because the model includes brand-specific coefficients rather than product-specific coefficients. This difference is not a flaw in the model but rather an aspect to be cognizant of during analysis."
+  },
+  {
+    "objectID": "blog/project7/index.html#model-fitting",
+    "href": "blog/project7/index.html#model-fitting",
+    "title": "Project 7: Price Optimization Using Demand Models",
+    "section": "Model Fitting",
+    "text": "Model Fitting\n\n# actual market shares\n       invisible({ cust_dat |&gt; filter(years_ago == 1) |&gt; count(phone_id) |&gt; mutate(shr = n / sum(n))})\n        \n        # predicted market shares at 0 price change\n        smat[21,] |&gt; round(3)\n\n   A1    A2    S1    S2    H1    H2 \n0.249 0.107 0.232 0.119 0.172 0.120 \n\n        # Convert shares to number of phones\n    \n    # Suppose the market size is such that 150 million smartphones are sold in the US each year\n    # and further suppose that the college-age demographic that we've measured with our\n    # dataset comprises 1 out of every 15 smartphone sales, or 10 million phones.\n    \n    M &lt;- 10\n\n    # Let's scale our demand curve to be in the price-quantity space instead of the price-share space\n    \n    s1dat &lt;- s1dat |&gt; mutate(quantity = share*M)\n\n    ggplot(s1dat, aes(x=quantity, y=price)) + \n        geom_point() + \n        geom_line() + \n        labs(x=\"Quantity\", y=\"Price\") +\n        theme_bw()\n\n\n\n# Calculate S1 price to maximize S1 profits based on own-price elasticity\n     # Marginal cost\n    \n        # We need to know our marginal cost function. Suppose that a manager \n        # at Samsung informs us that it costs $470 to manufacture, transport, \n        # and advertise one S1 phone, regardless of how many S1 phones are produced. \n    \n        mc1 &lt;- 470\n        \n    # Calculate own-price elasticity at +/- $10 from actual price of $799\n    \n        p1 &lt;- s1dat |&gt; filter(price==799-10) |&gt; pull(price)\n        q1 &lt;- s1dat |&gt; slice(20) |&gt; pull(quantity)\n        \n        p2 &lt;- s1dat |&gt; slice(22) |&gt; pull(price)\n        q2 &lt;- s1dat |&gt; slice(22) |&gt; pull(quantity)\n        \n        elasticity &lt;- ((q2-q1)/q1) / ((p2-p1)/p1)\n        elasticity\n\n[1] -3.62357\n\n    # Approximate optimal price using the elasticity rule\n    \n        mc1 * 1 / (1 - 1/abs(elasticity))\n\n[1] 649.1452\n\n        # this approach suggests that S1 price should be set much lower ($649) than its \n        # current value ($799). However, it is based on an assumption of constant demand elasticity,\n        # whereas our estimated demand model does not restrict price elasticity to be constant\n    \n    # As an aside: check elasticity over full range of prices considered\n        \n        # total calc\n        p1 &lt;- s1dat |&gt; slice(1) |&gt; pull(price)\n        q1 &lt;- s1dat |&gt; slice(1) |&gt; pull(quantity)\n        \n        p2 &lt;- s1dat |&gt; slice(41) |&gt; pull(price)\n        q2 &lt;- s1dat |&gt; slice(41) |&gt; pull(quantity)\n        \n        elasticity &lt;- ((q2-q1)/q1) / ((p2-p1)/p1)\n        elasticity\n\n[1] -1.234135\n\n        # one-window at a time calc\n        res_e &lt;- vector(length=39)\n        for(i in 2:40) {\n            p1 &lt;- s1dat |&gt; slice(i-1) |&gt; pull(price)\n            q1 &lt;- s1dat |&gt; slice(i-1) |&gt; pull(quantity)\n            \n            p2 &lt;- s1dat |&gt; slice(i+1) |&gt; pull(price)\n            q2 &lt;- s1dat |&gt; slice(i+1) |&gt; pull(quantity)\n            \n            res_e[i-1] &lt;- ((q2-q1)/q1) / ((p2-p1)/p1)\n        }\n        summary(res_e)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n -4.229  -4.102  -3.624  -3.346  -2.689  -1.644 \n\n        # Calculate S1 price to maximize S1 profit based on full set of MNL model estimates\n# (We'll do this with grid search)\n        \n    # revenue\n    \n        s1dat &lt;- s1dat |&gt; mutate(revenue = price * quantity)\n        \n        p1 &lt;- ggplot(s1dat) + geom_point(aes(x=quantity, y=price)) + theme_bw()\n        p2 &lt;- ggplot(s1dat) + geom_point(aes(x=quantity, y=revenue)) + theme_bw()\n        \n        grid.arrange(p2, p1, ncol=1)\n\n\n\n        # notice that revenue increases, but starts to flatten out, as quantity increases\n        \n    # margin\n        \n        s1dat &lt;- s1dat |&gt; mutate(cost = mc1*quantity)\n        \n        p3 &lt;- ggplot(s1dat) + geom_point(aes(x=quantity, y=cost)) + theme_bw()\n        \n        grid.arrange(p3, p2, p1, ncol=1)\n\n\n\n        # note how cost is linear, so unlike revenue, it does not start to flatten out\n        # at higher quantities\n        \n        # profit, at a particular price, is the distance between the revenue and cost\n        # curves. Let's look at that distance graphically\n        \n        ggplot(s1dat) + \n            geom_line(aes(x=quantity, y=revenue), color=\"blue\") +\n            geom_point(aes(x=quantity, y=revenue), color=\"blue\") +\n            geom_line(aes(x=quantity, y=cost), color=\"red\") + \n            geom_point(aes(x=quantity, y=cost), color=\"red\") + \n            xlab(\"Quantity\") +\n            ylab(\"Dollars\") +\n            ggtitle(\"Revenue (blue) and Cost (red)\") +\n            theme_bw()\n\n\n\n        # the distance/gap is largest somewhere around a quantity of 3 million phones,\n        # which roughly corresponds to price in the $700-750.  Let's now calculate\n        # profit and the profit maximizing price more exactly.\n        \n    # profit\n        \n        s1dat &lt;- s1dat |&gt; mutate(profit = revenue - cost)\n        \n        p4 &lt;- ggplot(s1dat) + geom_point(aes(x=quantity, y=profit)) + theme_bw()\n        \n        grid.arrange(p4, p3, p2, p1, ncol=1)\n\n\n\n    # find S1-profit-maximizing quantity and price, and compare profit to $799 price\n        \n        s1dat |&gt; filter(price == 799)\n\n# A tibble: 1 × 7\n  scenario price share quantity revenue  cost profit\n     &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;\n1       21   799 0.232     2.32   1857. 1092.   765.\n\n        s1dat |&gt; filter(profit == max(profit))\n\n# A tibble: 1 × 7\n  scenario price share quantity revenue  cost profit\n     &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;\n1       12   709 0.349     3.49   2474. 1640.   834.\n\n\nWe see that the profit-maximizing price of $709 results $834 million of profits. While the price of $799 results in only 765 million of profits\nThis demonstration has concentrated on determining the profit-maximizing price for the smartphone model S1, solely considering the profits generated by S1. However, it is essential to recognize that Samsung is interested in the overall profitability of its entire smartphone product line. Thus, the analysis so far has excluded the consideration of model S2. We will now extend our analysis to incorporate the impact of S2 on the total profit from Samsung’s smartphone product line."
+  },
+  {
+    "objectID": "blog/project7/index.html#calculate-s1-price-to-maximize-total-samsung-smartphone-profit",
+    "href": "blog/project7/index.html#calculate-s1-price-to-maximize-total-samsung-smartphone-profit",
+    "title": "Project 7: Price Optimization Using Demand Models",
+    "section": "Calculate S1 price to maximize total Samsung smartphone profit",
+    "text": "Calculate S1 price to maximize total Samsung smartphone profit\n\n# The manager at Samsung reports that S2 marginal costs are $490\n        \n        mc2 &lt;- 490\n        \n    # Let's calculate quantity, revenue, cost, and profit for the S2 phone\n        \n        s2dat &lt;- tibble(scenario=1:length(pvec), price=899, share=smat[,4])\n        \n        s2dat &lt;- s2dat |&gt; mutate(quantity = share*M,\n                                  revenue = price * quantity,\n                                  cost = mc2*quantity,\n                                  profit = revenue - cost)\n        \n    # now we will aggregate across phones to get total Samsung smartphone profit\n        \n        s2dat &lt;- s2dat |&gt; mutate(price=0)\n        \n        sdat &lt;- rbind(s1dat, s2dat)\n        \n        sdat &lt;- sdat |&gt; group_by(scenario) |&gt; \n            summarize_all(sum)\n        \n    # find Samsung profit-maximizing quantity and price \n         \n         sdat |&gt; filter(price == 799)\n\n# A tibble: 1 × 7\n  scenario price share quantity revenue  cost profit\n     &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;\n1       21   799 0.352     3.52   2931. 1678.  1253.\n\n         sdat |&gt; filter(profit == max(profit))\n\n# A tibble: 1 × 7\n  scenario price share quantity revenue  cost profit\n     &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;\n1       16   749 0.404     4.04   3192. 1921.  1271.\n\n         # we get a profit maximizing price of $749 leading to $1,271 mil in profits, \n         # which is $18 million more than the profit of $1,253 when s1 is priced at $799\n\n    # why do we get different answer?\n         \n        # As you decrease the price of S1, S1 is estimated to garner a larger \n        # market share. The increase to S1's share results from decreases to\n        # other phones' market shares.  These other phone include competitors' \n        # phones like A1, A2, H1, and H2, but also Samsung's other phone S2.\n         \n        share_dat &lt;- as_tibble(cbind(S1_price=pvec+799, smat))\n        \n        share_dat &lt;- pivot_longer(share_dat, cols=A1:H2, names_to=\"phone\", values_to=\"share\")\n        \n        ggplot(share_dat, aes(x=S1_price, y=share, color=phone)) +\n            geom_line() + \n            geom_point() + \n            xlab(\"Price of S1 Phone\") + \n            ylab(\"Market Share\") + \n            ggtitle(\"Estimated Market Share Responses to S1 Price Change by Phone\") +\n            xlim(c(700,900)) + ylim(c(0,0.5)) + \n            theme_bw()\n\nWarning: Removed 126 rows containing missing values (`geom_line()`).\n\n\nWarning: Removed 126 rows containing missing values (`geom_point()`)."
+  },
+  {
+    "objectID": "blog/project7/index.html#conclusion",
+    "href": "blog/project7/index.html#conclusion",
+    "title": "Project 7: Price Optimization Using Demand Models",
+    "section": "Conclusion",
+    "text": "Conclusion\nTo determine the total profit-maximizing price for Samsung’s S1 smartphone, it is necessary to balance the increased revenue and profit from setting a low price for S1 against the potential loss of revenue and profit from customers switching from S2 to S1. Pricing S1 too low may attract buyers away from S2, thereby reducing the overall profitability of Samsung’s smartphone product line. Therefore, the optimal pricing strategy must consider both the direct profits from S1 and the indirect impact on S2 sales.\nThis script effectively demonstrates a comprehensive approach to price optimization using advanced econometric modeling. By employing the heterogeneous MNL model, the analysis provides insights into how price variations affect consumer demand for specific smartphone models. The results emphasize the importance of considering cross-product interactions and the overall product line profitability when making pricing decisions. This methodology can be applied to other product lines and industries to enhance pricing strategies and maximize overall profitability."
   },
   {
     "objectID": "blog/project6/index.html",
