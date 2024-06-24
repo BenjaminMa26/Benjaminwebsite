@@ -4,7 +4,7 @@
     "href": "Blog.html",
     "title": "My Projects",
     "section": "",
-    "text": "Project 4: Market Mapping through PCA\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nProject 5: Data Wranging for Customers Demand Estimation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nProject 7: Price Optimization Using Demand Models\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 2\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 6\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Project 4: Market Mapping through PCA\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nProject 5: Data Wranging for Customers Demand Estimation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nProject 7: Price Optimization Using Demand Models\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nProject 8: Price Optimization Using Demand Models\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 2\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is Project 6\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "blog/project5/index.html",
@@ -126,76 +126,6 @@
     "text": "I analyzed the data\n\nlibrary(tidyverse)\nmtcars |&gt; \n    ggplot(aes(x = wt, y= mpg)) + geom_point()"
   },
   {
-    "objectID": "resume.html",
-    "href": "resume.html",
-    "title": "Benjamin’s Resume",
-    "section": "",
-    "text": "Download PDF file."
-  },
-  {
-    "objectID": "resume/resume.html",
-    "href": "resume/resume.html",
-    "title": "Benjamin Ma’s resume",
-    "section": "",
-    "text": "Benjamin Ma\n\n\n\n\n\n Ben26msh@gmail.com\n github.com/BenjaminMa\n +1 2069307372\nFor more information, please contact me via email.\n\n\n\n\n\nExperienced in statistical analysis, business mapping methods.\nExperience with business analysis and market (inbound, outbound) research with CRM and Salesforce.\nSkilled in leadership\nSkilled in R, Stata, Excel, and SQL\n\n\n\n\nThis resume was made with the R package pagedown.\nLast updated on 2024-06-18."
-  },
-  {
-    "objectID": "resume/resume.html#contact",
-    "href": "resume/resume.html#contact",
-    "title": "Benjamin Ma’s resume",
-    "section": "",
-    "text": "Ben26msh@gmail.com\n github.com/BenjaminMa\n +1 2069307372\nFor more information, please contact me via email."
-  },
-  {
-    "objectID": "resume/resume.html#skills",
-    "href": "resume/resume.html#skills",
-    "title": "Benjamin Ma’s resume",
-    "section": "",
-    "text": "Experienced in statistical analysis, business mapping methods.\nExperience with business analysis and market (inbound, outbound) research with CRM and Salesforce.\nSkilled in leadership\nSkilled in R, Stata, Excel, and SQL"
-  },
-  {
-    "objectID": "resume/resume.html#disclaimer",
-    "href": "resume/resume.html#disclaimer",
-    "title": "Benjamin Ma’s resume",
-    "section": "",
-    "text": "This resume was made with the R package pagedown.\nLast updated on 2024-06-18."
-  },
-  {
-    "objectID": "resume/resume.html#title",
-    "href": "resume/resume.html#title",
-    "title": "Benjamin Ma’s resume",
-    "section": "Benjamin Ma",
-    "text": "Benjamin Ma\n\nSenior year UC SanDiego Student\nlooking for a skill related job (Business Analyst or marketing related)."
-  },
-  {
-    "objectID": "resume/resume.html#education",
-    "href": "resume/resume.html#education",
-    "title": "Benjamin Ma’s resume",
-    "section": "Education",
-    "text": "Education\n\nUniversity of California, San Diego\nB.S. Business Economics\nSan Diego, USA\n2022-2024\n\n\n\nUniversity of Edinburgh\nStudy Abroad\nEdinburgh, UK\n2023"
-  },
-  {
-    "objectID": "resume/resume.html#professional-experience",
-    "href": "resume/resume.html#professional-experience",
-    "title": "Benjamin Ma’s resume",
-    "section": "Professional Experience",
-    "text": "Professional Experience\n\nBusiness Analyst, intern\nCamal Group.\nSan Diego, USA\n2023\n\n\nSourcing, cleaning, and visualizing trade data from prospect.\nGenerating weekly summary report to assist make sale strategy decisions.\nExceeded KPIs and achieved multiple sales for the company.\nReceived return offer from company."
-  },
-  {
-    "objectID": "resume/resume.html#volunteer-experience",
-    "href": "resume/resume.html#volunteer-experience",
-    "title": "Benjamin Ma’s resume",
-    "section": "Volunteer Experience",
-    "text": "Volunteer Experience\n\nUnited Nations Volunteer Program (Goodness and Mercy Missions)\nParticipated in non-profit organization Developed marketing strategies with team. Negotiated fundrasing with government agencies and global institutions. Awarded with a certification\nNew York, USA\n11/01/2020-08/01/2021\n\n\nUnited Nations Volunteer Program (Cameroon Association of Active Youths)\n-Assisted facilitating donations from institutions -Led a safety equipment’s advisory group. -Cleaning donation data -Using data visualization tools for weekly project evaluation. -Received a certification and letter of appreciation.\nNew York, USA\n11/25/2020-03/25/2021"
-  },
-  {
-    "objectID": "resume/resume.html#skills-1",
-    "href": "resume/resume.html#skills-1",
-    "title": "Benjamin Ma’s resume",
-    "section": "Skills",
-    "text": "Skills\nCRM, Salesforce, Microsoft-office (Excel, Word, PowerPoint), SQL, STATA, R/Rstudio."
-  },
-  {
     "objectID": "blog/project7/index.html",
     "href": "blog/project7/index.html",
     "title": "Project 7: Price Optimization Using Demand Models",
@@ -264,6 +194,132 @@
     "title": "Project 7: Price Optimization Using Demand Models",
     "section": "Conclusion",
     "text": "Conclusion\nTo determine the total profit-maximizing price for Samsung’s S1 smartphone, it is necessary to balance the increased revenue and profit from setting a low price for S1 against the potential loss of revenue and profit from customers switching from S2 to S1. Pricing S1 too low may attract buyers away from S2, thereby reducing the overall profitability of Samsung’s smartphone product line. Therefore, the optimal pricing strategy must consider both the direct profits from S1 and the indirect impact on S2 sales.\nThis script effectively demonstrates a comprehensive approach to price optimization using advanced econometric modeling. By employing the heterogeneous MNL model, the analysis provides insights into how price variations affect consumer demand for specific smartphone models. The results emphasize the importance of considering cross-product interactions and the overall product line profitability when making pricing decisions. This methodology can be applied to other product lines and industries to enhance pricing strategies and maximize overall profitability."
+  },
+  {
+    "objectID": "resume/resume.html",
+    "href": "resume/resume.html",
+    "title": "Benjamin Ma’s resume",
+    "section": "",
+    "text": "Benjamin Ma\n\n\n\n\n\n Ben26msh@gmail.com\n github.com/BenjaminMa\n +1 2069307372\nFor more information, please contact me via email.\n\n\n\n\n\nExperienced in statistical analysis, business mapping methods.\nExperience with business analysis and market (inbound, outbound) research with CRM and Salesforce.\nSkilled in leadership\nSkilled in R, Stata, Excel, and SQL\n\n\n\n\nThis resume was made with the R package pagedown.\nLast updated on 2024-06-24."
+  },
+  {
+    "objectID": "resume/resume.html#contact",
+    "href": "resume/resume.html#contact",
+    "title": "Benjamin Ma’s resume",
+    "section": "",
+    "text": "Ben26msh@gmail.com\n github.com/BenjaminMa\n +1 2069307372\nFor more information, please contact me via email."
+  },
+  {
+    "objectID": "resume/resume.html#skills",
+    "href": "resume/resume.html#skills",
+    "title": "Benjamin Ma’s resume",
+    "section": "",
+    "text": "Experienced in statistical analysis, business mapping methods.\nExperience with business analysis and market (inbound, outbound) research with CRM and Salesforce.\nSkilled in leadership\nSkilled in R, Stata, Excel, and SQL"
+  },
+  {
+    "objectID": "resume/resume.html#disclaimer",
+    "href": "resume/resume.html#disclaimer",
+    "title": "Benjamin Ma’s resume",
+    "section": "",
+    "text": "This resume was made with the R package pagedown.\nLast updated on 2024-06-24."
+  },
+  {
+    "objectID": "resume/resume.html#title",
+    "href": "resume/resume.html#title",
+    "title": "Benjamin Ma’s resume",
+    "section": "Benjamin Ma",
+    "text": "Benjamin Ma\n\nSenior year UC SanDiego Student\nlooking for a skill related job (Business Analyst or marketing related)."
+  },
+  {
+    "objectID": "resume/resume.html#education",
+    "href": "resume/resume.html#education",
+    "title": "Benjamin Ma’s resume",
+    "section": "Education",
+    "text": "Education\n\nUniversity of California, San Diego\nB.S. Business Economics\nSan Diego, USA\n2022-2024\n\n\n\nUniversity of Edinburgh\nStudy Abroad\nEdinburgh, UK\n2023"
+  },
+  {
+    "objectID": "resume/resume.html#professional-experience",
+    "href": "resume/resume.html#professional-experience",
+    "title": "Benjamin Ma’s resume",
+    "section": "Professional Experience",
+    "text": "Professional Experience\n\nBusiness Analyst, intern\nCamal Group.\nSan Diego, USA\n2023\n\n\nSourcing, cleaning, and visualizing trade data from prospect.\nGenerating weekly summary report to assist make sale strategy decisions.\nExceeded KPIs and achieved multiple sales for the company.\nReceived return offer from company."
+  },
+  {
+    "objectID": "resume/resume.html#volunteer-experience",
+    "href": "resume/resume.html#volunteer-experience",
+    "title": "Benjamin Ma’s resume",
+    "section": "Volunteer Experience",
+    "text": "Volunteer Experience\n\nUnited Nations Volunteer Program (Goodness and Mercy Missions)\nParticipated in non-profit organization Developed marketing strategies with team. Negotiated fundrasing with government agencies and global institutions. Awarded with a certification\nNew York, USA\n11/01/2020-08/01/2021\n\n\nUnited Nations Volunteer Program (Cameroon Association of Active Youths)\n-Assisted facilitating donations from institutions -Led a safety equipment’s advisory group. -Cleaning donation data -Using data visualization tools for weekly project evaluation. -Received a certification and letter of appreciation.\nNew York, USA\n11/25/2020-03/25/2021"
+  },
+  {
+    "objectID": "resume/resume.html#skills-1",
+    "href": "resume/resume.html#skills-1",
+    "title": "Benjamin Ma’s resume",
+    "section": "Skills",
+    "text": "Skills\nCRM, Salesforce, Microsoft-office (Excel, Word, PowerPoint), SQL, STATA, R/Rstudio."
+  },
+  {
+    "objectID": "resume.html",
+    "href": "resume.html",
+    "title": "Benjamin’s Resume",
+    "section": "",
+    "text": "Download PDF file."
+  },
+  {
+    "objectID": "blog/project8/index.html",
+    "href": "blog/project8/index.html",
+    "title": "Project 8: Price Optimization Using Demand Models",
+    "section": "",
+    "text": "use the heterogeneous MNL from project 6 to assess whether company should hire a celebrity to affiliate with their brand.\n\n\nThe objective of this research project is to systematically analyze the impact of celebrity endorsements on the profitability of consumer electronics companies, specifically focusing on Samsung. This study aims to quantify the financial benefits derived from such marketing strategies, evaluate the cost-effectiveness of hiring celebrity endorsers, and provide strategic recommendations for optimizing marketing expenditures. By examining market trends, consumer behavior, and financial outcomes, this research will contribute to a deeper understanding of the role of celebrity endorsements in enhancing corporate profitability and market share.\n\n\n\n\n# Data Importing\nsuppressPackageStartupMessages(library(tidyverse))\nsuppressPackageStartupMessages(library(mlogit))\n# load \"enhanced\" dataset for fitting mnl model\n    load(\"~/Desktop/MGT100 folder/mnl_datasets.RData\")\n# get the product names for the 6 products\n  prod_vec &lt;- c(\"A1\", \"A2\", \"S1\", \"S2\", \"H1\", \"H2\")\n  # fit mnl data\n    out &lt;- mlogit(choice ~ apple:segment + \n                           samsung:segment + \n                           price:segment +\n                           screen_size:segment + \n                           price:total_minutes:segment | 0, data=mdat1)  \n\n\n\n\n\n# expected/predicted product-specific market shares\n pred1 &lt;- colMeans(predict(out, newdata = mdat1))\n    names(pred1) &lt;- prod_vec\n    round(pred1*100, 1)\n\n  A1   A2   S1   S2   H1   H2 \n24.9 10.7 23.2 11.9 17.2 12.0 \n\n# calculate baseline prices and product-specific profits\n    d1 &lt;- tibble(price1 = 799, \n                 share1 = pred1[3],\n                 price2 = 899,\n                 share2 = pred1[4])\n    \n # assumed market size\n    M &lt;- 10\n    \n    # calculate quantities and revenues\n    d1 &lt;- d1 %&gt;% mutate(q1 = share1*M, \n                        q2 = share2*M,\n                        rev1 = q1 * price1,\n                        rev2 = q2 * price2)\n    \n    # marginal cost for phones S1 and s2\n    mc1 &lt;- 440\n    mc2 &lt;- 470\n    \n    # calculate costs and profits\n    d1 &lt;- d1 %&gt;% mutate(cost1 = mc1 * q1,\n                        cost2 = mc2 * q2,\n                        profit1 = rev1 - cost1,\n                        profit2 = rev2 - cost2,\n                        total_profit = profit1 + profit2)\n    \n    # print the result\n    d1\n\n# A tibble: 1 × 13\n  price1 share1 price2 share2    q1    q2  rev1  rev2 cost1 cost2 profit1\n   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;\n1    799  0.232    899  0.119  2.32  1.19 1857. 1073. 1023.  561.    834.\n# ℹ 2 more variables: profit2 &lt;dbl&gt;, total_profit &lt;dbl&gt;\n\n  # calculate pure demand effect of association with a celebrity\n\n    # suppose we learn from other market research that a celebrity like \n    # Celebrity will improve our brand perception by an amount delta.\n    # And suppose we have done some work to convert delta into a \"CCE\"\n    # that is, a celebrity coefficient effect of size 0.005\n    \n    # celebrity coefficient effect\n    cce &lt;- 0.005\n    \n    # let's create an adjusted version of our model where we increase the \n    # samsung brand-intercept coefficients by the amount of the CCE\n    out_adj &lt;- out\n    out_adj$coefficients[4:6] &lt;- out_adj$coefficients[4:6] + cce\n    \n    # let's look at the original coefficients next to the adjusted ones, where\n    # we'll see that they are the same except the samsung:segment intercepts\n    # which are 0.005 higher\n    cbind(coef(out), coef(out_adj))\n\n                              [,1]          [,2]\napple:segment1        7.644964e-01  7.644964e-01\napple:segment2        8.806709e-01  8.806709e-01\napple:segment3        1.353091e+00  1.353091e+00\nsegment1:samsung      1.161551e+00  1.166551e+00\nsegment2:samsung      5.566730e-01  5.616730e-01\nsegment3:samsung      5.223327e-01  5.273327e-01\nsegment1:price       -1.597733e-02 -1.597733e-02\nsegment2:price       -3.093656e-02 -3.093656e-02\nsegment3:price       -2.899266e-02 -2.899266e-02\nsegment1:screen_size -5.171158e-01 -5.171158e-01\nsegment2:screen_size  1.574106e-01  1.574106e-01\nsegment3:screen_size -1.922263e-01 -1.922263e-01\nsegment1:price        8.262789e-06  8.262789e-06\nsegment2:price        1.902141e-05  1.902141e-05\nsegment3:price        1.702137e-05  1.702137e-05\n\n    # calculate revised predictions from this adjusted model\n    pred2 &lt;- colMeans(predict(out_adj, newdata = mdat1))\n    names(pred2) &lt;- prod_vec\n    \n    # calculate change in market shares\n    shr_change &lt;- pred2 - pred1\n    names(shr_change) &lt;- prod_vec\n    \n    # print original expected market shares, now with-celeb market shares,\n    # and their difference.  Notice that we multiple by 100, so the interpretation\n    # is that affiliation with Kaby leads to a 0.073% increase for the S1 phone and\n    # a 0.038% increase for the S2 phone\n    round(pred1*100, 2)\n\n   A1    A2    S1    S2    H1    H2 \n24.92 10.68 23.24 11.94 17.24 11.98 \n\n    round(pred2*100, 2)\n\n   A1    A2    S1    S2    H1    H2 \n24.88 10.66 23.32 11.98 17.21 11.95 \n\n    round(shr_change*100, 3)\n\n    A1     A2     S1     S2     H1     H2 \n-0.042 -0.018  0.073  0.038 -0.030 -0.021 \n\n    # let's plot a comparison of market shares with and without Kaby affiliation.\n    # You'll see the heights of the bars are very close.\n    pdat &lt;- rbind(\n        tibble(celeb=\"No\",  product=prod_vec, share=pred1),\n        tibble(celeb=\"Yes\", product=prod_vec, share=pred2)\n    )\n    \n    pdat &lt;- pdat %&gt;% mutate(celeb=fct_inorder(factor(celeb)))\n    ggplot(pdat) +\n        geom_col(aes(product, share, fill=celeb), position=\"dodge\") + \n        ggtitle(\"Pure Demand Effect\") +\n        ylab(\"Product-Specific Market Shares\") + \n        xlab(\"Product\") + \n        scale_fill_manual(\"Celebrity\", values=c(No=\"Firebrick\", Yes=\"Dodgerblue4\")) + \n        theme_bw()\n\n\n\n    # calculate new expected profit\n    d2 &lt;- tibble(price1 = 799, \n                 share1 = pred2[3],\n                 price2 = 899,\n                 share2 = pred2[4])\n    \n    # calculate quantities, revenues, costs, and profits\n    d2 &lt;- d2 %&gt;% mutate(q1 = share1*M, \n                        q2 = share2*M,\n                        rev1 = q1 * price1,\n                        rev2 = q2 * price2,\n                        cost1 = mc1 * q1,\n                        cost2 = mc2 * q2,\n                        profit1 = rev1 - cost1,\n                        profit2 = rev2 - cost2,\n                        total_profit = profit1 + profit2)\n    \n    # print the result\n    rbind(d1, d2)\n\n# A tibble: 2 × 13\n  price1 share1 price2 share2    q1    q2  rev1  rev2 cost1 cost2 profit1\n   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;\n1    799  0.232    899  0.119  2.32  1.19 1857. 1073. 1023.  561.    834.\n2    799  0.233    899  0.120  2.33  1.20 1863. 1077. 1026.  563.    837.\n# ℹ 2 more variables: profit2 &lt;dbl&gt;, total_profit &lt;dbl&gt;\n\n    # calculate the change in profit\n    d2$total_profit - d1$total_profit\n\n      S1 \n4.233878 \n\n\n\n\n\nThe analysis indicates that the engagement of a celebrity endorser results in a substantial profit increment of $4.23 million. Consequently, if the fee charged by the celebrity for endorsement services is less than this amount, it would be financially advantageous for Samsung to proceed with the hiring. This conclusion underscores the potential profitability and strategic value of celebrity endorsements in enhancing company revenue."
+  },
+  {
+    "objectID": "blog/project8/index.html#objective",
+    "href": "blog/project8/index.html#objective",
+    "title": "Project 8: Price Optimization Using Demand Models",
+    "section": "",
+    "text": "The objective of this research project is to systematically analyze the impact of celebrity endorsements on the profitability of consumer electronics companies, specifically focusing on Samsung. This study aims to quantify the financial benefits derived from such marketing strategies, evaluate the cost-effectiveness of hiring celebrity endorsers, and provide strategic recommendations for optimizing marketing expenditures. By examining market trends, consumer behavior, and financial outcomes, this research will contribute to a deeper understanding of the role of celebrity endorsements in enhancing corporate profitability and market share."
+  },
+  {
+    "objectID": "blog/project8/index.html#library-imports-and-data-preparation",
+    "href": "blog/project8/index.html#library-imports-and-data-preparation",
+    "title": "Project 8: Price Optimization Using Demand Models",
+    "section": "",
+    "text": "# Data Importing\nsuppressPackageStartupMessages(library(tidyverse))\nsuppressPackageStartupMessages(library(mlogit))\n# load \"enhanced\" dataset for fitting mnl model\n    load(\"~/Desktop/MGT100 folder/mnl_datasets.RData\")\n# get the product names for the 6 products\n  prod_vec &lt;- c(\"A1\", \"A2\", \"S1\", \"S2\", \"H1\", \"H2\")\n  # fit mnl data\n    out &lt;- mlogit(choice ~ apple:segment + \n                           samsung:segment + \n                           price:segment +\n                           screen_size:segment + \n                           price:total_minutes:segment | 0, data=mdat1)"
+  },
+  {
+    "objectID": "blog/project8/index.html#calculate-expected-profit-without-celebrity-affiliation",
+    "href": "blog/project8/index.html#calculate-expected-profit-without-celebrity-affiliation",
+    "title": "Project 8: Price Optimization Using Demand Models",
+    "section": "",
+    "text": "# expected/predicted product-specific market shares\n pred1 &lt;- colMeans(predict(out, newdata = mdat1))\n    names(pred1) &lt;- prod_vec\n    round(pred1*100, 1)\n\n  A1   A2   S1   S2   H1   H2 \n24.9 10.7 23.2 11.9 17.2 12.0 \n\n# calculate baseline prices and product-specific profits\n    d1 &lt;- tibble(price1 = 799, \n                 share1 = pred1[3],\n                 price2 = 899,\n                 share2 = pred1[4])\n    \n # assumed market size\n    M &lt;- 10\n    \n    # calculate quantities and revenues\n    d1 &lt;- d1 %&gt;% mutate(q1 = share1*M, \n                        q2 = share2*M,\n                        rev1 = q1 * price1,\n                        rev2 = q2 * price2)\n    \n    # marginal cost for phones S1 and s2\n    mc1 &lt;- 440\n    mc2 &lt;- 470\n    \n    # calculate costs and profits\n    d1 &lt;- d1 %&gt;% mutate(cost1 = mc1 * q1,\n                        cost2 = mc2 * q2,\n                        profit1 = rev1 - cost1,\n                        profit2 = rev2 - cost2,\n                        total_profit = profit1 + profit2)\n    \n    # print the result\n    d1\n\n# A tibble: 1 × 13\n  price1 share1 price2 share2    q1    q2  rev1  rev2 cost1 cost2 profit1\n   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;\n1    799  0.232    899  0.119  2.32  1.19 1857. 1073. 1023.  561.    834.\n# ℹ 2 more variables: profit2 &lt;dbl&gt;, total_profit &lt;dbl&gt;\n\n  # calculate pure demand effect of association with a celebrity\n\n    # suppose we learn from other market research that a celebrity like \n    # Celebrity will improve our brand perception by an amount delta.\n    # And suppose we have done some work to convert delta into a \"CCE\"\n    # that is, a celebrity coefficient effect of size 0.005\n    \n    # celebrity coefficient effect\n    cce &lt;- 0.005\n    \n    # let's create an adjusted version of our model where we increase the \n    # samsung brand-intercept coefficients by the amount of the CCE\n    out_adj &lt;- out\n    out_adj$coefficients[4:6] &lt;- out_adj$coefficients[4:6] + cce\n    \n    # let's look at the original coefficients next to the adjusted ones, where\n    # we'll see that they are the same except the samsung:segment intercepts\n    # which are 0.005 higher\n    cbind(coef(out), coef(out_adj))\n\n                              [,1]          [,2]\napple:segment1        7.644964e-01  7.644964e-01\napple:segment2        8.806709e-01  8.806709e-01\napple:segment3        1.353091e+00  1.353091e+00\nsegment1:samsung      1.161551e+00  1.166551e+00\nsegment2:samsung      5.566730e-01  5.616730e-01\nsegment3:samsung      5.223327e-01  5.273327e-01\nsegment1:price       -1.597733e-02 -1.597733e-02\nsegment2:price       -3.093656e-02 -3.093656e-02\nsegment3:price       -2.899266e-02 -2.899266e-02\nsegment1:screen_size -5.171158e-01 -5.171158e-01\nsegment2:screen_size  1.574106e-01  1.574106e-01\nsegment3:screen_size -1.922263e-01 -1.922263e-01\nsegment1:price        8.262789e-06  8.262789e-06\nsegment2:price        1.902141e-05  1.902141e-05\nsegment3:price        1.702137e-05  1.702137e-05\n\n    # calculate revised predictions from this adjusted model\n    pred2 &lt;- colMeans(predict(out_adj, newdata = mdat1))\n    names(pred2) &lt;- prod_vec\n    \n    # calculate change in market shares\n    shr_change &lt;- pred2 - pred1\n    names(shr_change) &lt;- prod_vec\n    \n    # print original expected market shares, now with-celeb market shares,\n    # and their difference.  Notice that we multiple by 100, so the interpretation\n    # is that affiliation with Kaby leads to a 0.073% increase for the S1 phone and\n    # a 0.038% increase for the S2 phone\n    round(pred1*100, 2)\n\n   A1    A2    S1    S2    H1    H2 \n24.92 10.68 23.24 11.94 17.24 11.98 \n\n    round(pred2*100, 2)\n\n   A1    A2    S1    S2    H1    H2 \n24.88 10.66 23.32 11.98 17.21 11.95 \n\n    round(shr_change*100, 3)\n\n    A1     A2     S1     S2     H1     H2 \n-0.042 -0.018  0.073  0.038 -0.030 -0.021 \n\n    # let's plot a comparison of market shares with and without Kaby affiliation.\n    # You'll see the heights of the bars are very close.\n    pdat &lt;- rbind(\n        tibble(celeb=\"No\",  product=prod_vec, share=pred1),\n        tibble(celeb=\"Yes\", product=prod_vec, share=pred2)\n    )\n    \n    pdat &lt;- pdat %&gt;% mutate(celeb=fct_inorder(factor(celeb)))\n    ggplot(pdat) +\n        geom_col(aes(product, share, fill=celeb), position=\"dodge\") + \n        ggtitle(\"Pure Demand Effect\") +\n        ylab(\"Product-Specific Market Shares\") + \n        xlab(\"Product\") + \n        scale_fill_manual(\"Celebrity\", values=c(No=\"Firebrick\", Yes=\"Dodgerblue4\")) + \n        theme_bw()\n\n\n\n    # calculate new expected profit\n    d2 &lt;- tibble(price1 = 799, \n                 share1 = pred2[3],\n                 price2 = 899,\n                 share2 = pred2[4])\n    \n    # calculate quantities, revenues, costs, and profits\n    d2 &lt;- d2 %&gt;% mutate(q1 = share1*M, \n                        q2 = share2*M,\n                        rev1 = q1 * price1,\n                        rev2 = q2 * price2,\n                        cost1 = mc1 * q1,\n                        cost2 = mc2 * q2,\n                        profit1 = rev1 - cost1,\n                        profit2 = rev2 - cost2,\n                        total_profit = profit1 + profit2)\n    \n    # print the result\n    rbind(d1, d2)\n\n# A tibble: 2 × 13\n  price1 share1 price2 share2    q1    q2  rev1  rev2 cost1 cost2 profit1\n   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;\n1    799  0.232    899  0.119  2.32  1.19 1857. 1073. 1023.  561.    834.\n2    799  0.233    899  0.120  2.33  1.20 1863. 1077. 1026.  563.    837.\n# ℹ 2 more variables: profit2 &lt;dbl&gt;, total_profit &lt;dbl&gt;\n\n    # calculate the change in profit\n    d2$total_profit - d1$total_profit\n\n      S1 \n4.233878"
+  },
+  {
+    "objectID": "blog/project8/index.html#summary",
+    "href": "blog/project8/index.html#summary",
+    "title": "Project 8: Price Optimization Using Demand Models",
+    "section": "",
+    "text": "The analysis indicates that the engagement of a celebrity endorser results in a substantial profit increment of $4.23 million. Consequently, if the fee charged by the celebrity for endorsement services is less than this amount, it would be financially advantageous for Samsung to proceed with the hiring. This conclusion underscores the potential profitability and strategic value of celebrity endorsements in enhancing company revenue."
+  },
+  {
+    "objectID": "blog/project8/index.html#hypothesis-employing-celebrity-to-optimize-pricing-strategies-for-samsung-phones",
+    "href": "blog/project8/index.html#hypothesis-employing-celebrity-to-optimize-pricing-strategies-for-samsung-phones",
+    "title": "Project 8: Price Optimization Using Demand Models",
+    "section": "Hypothesis: Employing Celebrity to Optimize Pricing Strategies for Samsung Phones",
+    "text": "Hypothesis: Employing Celebrity to Optimize Pricing Strategies for Samsung Phones\nIn this analysis, we will undertake an optimization exercise similar to the one conducted in the previous week. However, instead of focusing on finding the optimal price point for a single phone, this study will aim to determine the optimal pricing for both the S1 and S2 Samsung phones simultaneously. By employing Kaby, we seek to enhance our pricing strategy to maximize market share and revenue for these two phone models. This comprehensive approach will allow us to better understand the interplay between the prices of the two products and their combined impact on market dynamics and consumer behavior.\n\n# calculate market shares under hypothetical prices\n\n    \n# get a vector of price changes to use for each phone\npvec &lt;- seq(from=-150, to=150, by=10)\n\n# get all combinations of price changes for the two phones\nres &lt;- expand.grid(pvec, pvec)\n\n# and construct empty matrix to store shares at each price\nsmat &lt;- matrix(NA_real_, nrow=nrow(res), ncol=6)\ncolnames(smat) &lt;- c(\"A1\", \"A2\", \"S1\", \"S2\", \"H1\", \"H2\")\n\nres &lt;- cbind(res, smat)\n\n# loop over the 961 price change values\nfor(i in 1:nrow(res)) {\n    \n    # print progress (commented out)\n    # cat(\"Working on\", i, \"of\", nrow(res), \"\\n\")\n    \n    # get the price change amount\n    p1 &lt;- res[i,1]\n    p2 &lt;- res[i,2]\n    \n    # change prices for S1 phones\n    tempdat &lt;- as_tibble(mdat1)\n    tempdat &lt;- tempdat %&gt;% mutate(price = ifelse(phone_id == \"S1\", price + p1, price))\n    tempdat &lt;- tempdat %&gt;% mutate(price = ifelse(phone_id == \"S2\", price + p2, price))\n    \n    # make market share predictions with the temporarily-changed S1 and S2 prices\n    preds &lt;- predict(out_adj, newdata=tempdat)\n    \n    # calculate and store market shares\n    res[i,3:8] &lt;- colMeans(preds)\n}\n\n    # gather prices and estimated shares into a dataframe\n    d3 &lt;- tibble(scenario = 1:nrow(res), \n                   price1 = res[,1] + 799, \n                   share1 = res[,5],\n                   price2 = res[,2] + 899,\n                   share2 = res[,6])\n    \n    # calculate quantities, revenues, costs, and profits\n    d3 &lt;- d3 %&gt;% mutate(q1 = share1*M, \n                        q2 = share2*M,\n                        rev1 = q1 * price1,\n                        rev2 = q2 * price2,\n                        cost1 = mc1 * q1,\n                        cost2 = mc2 * q2,\n                        profit1 = rev1 - cost1,\n                        profit2 = rev2 - cost2,\n                        total_profit = profit1 + profit2)\n    \n    # plot heat map of profit\n    ggplot(d3) + \n        geom_tile(aes(x=price1, y=price2, fill=total_profit)) + \n        scale_fill_gradient(low=\"white\", high=\"blue\") + \n        xlab(\"S1 Price\") + \n        ylab(\"S2 Price\") + \n        ggtitle(\"Profit Heat Map by Product Pricing\") +\n        geom_point(data=d3 %&gt;% filter(total_profit == max(total_profit)), aes(price1, price2), color=\"white\", size=5) +\n        geom_point(data=d2, aes(price1, price2), color=\"red\", size=5) +\n        theme_bw()\n\n\n\n    # select profit-maximizing price combination and compare to prior calculations\n    d3 &lt;- d3 %&gt;% filter(total_profit == max(total_profit)) %&gt;% select(-scenario)\n    rbind(d1, d2, d3)\n\n# A tibble: 3 × 13\n  price1 share1 price2 share2    q1    q2  rev1  rev2 cost1 cost2 profit1\n   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;\n1    799  0.232    899  0.119  2.32  1.19 1857. 1073. 1023.  561.    834.\n2    799  0.233    899  0.120  2.33  1.20 1863. 1077. 1026.  563.    837.\n3    749  0.261    779  0.203  2.61  2.03 1955. 1585. 1149.  956.    807.\n# ℹ 2 more variables: profit2 &lt;dbl&gt;, total_profit &lt;dbl&gt;"
+  },
+  {
+    "objectID": "blog/project8/index.html#summary-1",
+    "href": "blog/project8/index.html#summary-1",
+    "title": "Project 8: Price Optimization Using Demand Models",
+    "section": "Summary",
+    "text": "Summary\nThe predictive model indicates that, under baseline conditions, Samsung’s profit is estimated to be $1.347 billion. In scenarios where Samsung engages a celebrity for promotional activities, the projected profit experiences a marginal increase, reaching $1.351 billion. However, this figure requires adjustment to account for the costs associated with hiring the celebrity. Furthermore, if Samsung not only hires a celebrity but also optimizes its pricing strategy in conjunction with the celebrity endorsement, the anticipated profit significantly increases to $1.435 billion."
+  },
+  {
+    "objectID": "blog/project8/index.html#calculating-change-in-profit-from-price-optimization",
+    "href": "blog/project8/index.html#calculating-change-in-profit-from-price-optimization",
+    "title": "Project 8: Price Optimization Using Demand Models",
+    "section": "Calculating Change in Profit from Price Optimization",
+    "text": "Calculating Change in Profit from Price Optimization\nProfit=(Price−Cost)×Quantity\nConsiderations Elasticity of Demand: The change in quantity sold due to the change in price should reflect the price elasticity of demand for the product. Fixed and Variable Costs: If there are significant fixed costs or if the cost per unit changes with the quantity produced, these should be incorporated into the calculation. Market Conditions: External factors such as competitor pricing, market trends, and consumer preferences should also be considered as they can impact the quantity sold at different price points.\n\nd3$total_profit - d2$total_profit\n\n      S1 \n84.28031"
   },
   {
     "objectID": "blog/project6/index.html",
