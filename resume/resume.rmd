@@ -44,9 +44,9 @@ Last updated on `r Sys.Date()`.
 
 ## Benjamin Ma {#title}
 
-### Senior year UC SanDiego Student
+### Undergraduate Student from UC SanDiego 
 
-looking for a skill related job (Business Analyst or marketing related).
+looking for a skill related job (Business & Marketing Analysis related).
 
 ## Education {data-icon="graduation-cap" data-concise="true"}
 
@@ -70,28 +70,68 @@ Edinburgh, UK
 
 ## Professional Experience {data-icon="suitcase"}
 
-### Business Analyst, intern
 
+### Data Science, intern
+Tymeline 
+
+Delaware, USA
+
+09/2024-Present
+
+- Go-to-market strategy development and product launches.
+- Market research to identify opportunities and assess impact.
+- Customer segmentation, ROI, and market analysis.
+- Analyzed trends and customer behavior for data-driven decisions.
+- Built marketing materials helps campaigns, boost visibility and engagement.
+
+### AI Training for Marketing Research
+Outlier AI
+
+San Francisco, USA
+
+04/2024-Present
+
+- Trained AI models for marketing research, enhancing the models' capability.
+- Instructed AI models in analyzing customer data and segmenting markets.
+- Developed training code for AI to identify high-value customers.
+- Ensuring continuous inprovement and accuracy in marketing research applications
+
+### Business Analyst, intern
+Entropy Technologies 
+
+Sydney, Australia 
+
+04/2024-09/2024
+
+- Data sourcing, cleaning, and analysis
+- Generated business maps for market segmentation using advanced data analysis tools.
+-	Utilized Tableau to visualize data and generated insights to the management team.
+- Built and optimized advertising landing pages based on weekly traffic analyzed results.
+- Increased daily click-through rates and traffic for promotional campaigns.
+
+
+### Business Analyst, intern
 Camal Group.
 
 San Diego, USA
 
-2023
+11/2023-03/2024
 
-::: concise
+
 -   Sourcing, cleaning, and visualizing trade data from prospect.
 -   Generating weekly summary report to assist make sale strategy decisions.
 -   Exceeded KPIs and achieved multiple sales for the company.
 -   Received return offer from company.
-:::
+
 
 ## Volunteer Experience {data-icon="chalkboard-teacher"}
 
 ### United Nations Volunteer Program (Goodness and Mercy Missions)
 
-Participated in non-profit organization Developed marketing strategies with team.
-Negotiated fundrasing with government agencies and global institutions.
-Awarded with a certification
+-Participated in non-profit organization 
+-Developed marketing strategies with team.
+-Negotiated fundrasing with government agencies and global institutions.
+-Awarded with a certification
 
 New York, USA
 
@@ -99,7 +139,8 @@ New York, USA
 
 ### United Nations Volunteer Program (Cameroon Association of Active Youths)
 
--Assisted facilitating donations from institutions -Led a safety equipment's advisory group.
+-Assisted facilitating donations from institutions 
+-Led a safety equipment's advisory group.
 -Cleaning donation data -Using data visualization tools for weekly project evaluation.
 -Received a certification and letter of appreciation.
 
@@ -109,4 +150,4 @@ New York, USA
 
 ## Skills {data-icon="file"}
 
-CRM, Salesforce, Microsoft-office (Excel, Word, PowerPoint), SQL, STATA, R/Rstudio.
+Business & Marketing Analysis, Data Visualization (Tableau, Power BI, Excel), Data Warehouse(Snowflake), Project Management(Jira,Linear, Asana), CRM, Salesforce, Microsoft-Office, SQL, STATA, R/RStudio.
