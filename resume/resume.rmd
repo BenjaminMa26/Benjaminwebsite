@@ -27,27 +27,30 @@ editor_options:
 -   <i class="fa fa-phone"></i> +1 2069307372
 -   For more information, please contact me via email.
 
+
 ## Skills {#skills}
 
--   Experienced in statistical analysis, business mapping methods.
+**Programming & Data Tools**  
+Python (NumPy, Pandas, scikit-learn, XGBoost, Matplotlib, Seaborn), R/RStudio, SQL (MySQL, PostgreSQL, BigQuery), Snowflake, Jupyter Notebook, STATA, SAS
 
--   Experience with business analysis and market (inbound, outbound) research with CRM and Salesforce.
+**Data Visualization**  
+Tableau, Power BI, Excel, Looker, Zoho Analytics
 
--   Skilled in leadership
+**Machine Learning & Analysis**  
+Regression (Linear, Multiple, Multinomial Logit), Clustering, A/B Testing, Hypothesis Testing
 
--   Skilled in R, Stata, Excel, and SQL
+**Project & Campaign Management**  
+Jira, Linear, Asana, Salesforce, Microsoft Office (Excel, Word, PowerPoint)
 
-## Disclaimer {#disclaimer}
+**Web & Analytics Platforms**  
+Google Analytics, Facebook Business Suite, BigQuery
 
-This resume was made with the R package [**pagedown**](https://github.com/rstudio/pagedown).
-
-Last updated on `r Sys.Date()`.
 
 # Main
 
-## Benjamin Ma {#title}
+## Benjamin (Songhao) Ma {#title}
 
-### Undergraduate Student from UC SanDiego 
+### Graduate Student from UC SanDiego 
 
 looking for a skill related job (Business & Marketing Analysis related).
 
@@ -55,11 +58,21 @@ looking for a skill related job (Business & Marketing Analysis related).
 
 ### University of California, San Diego
 
+M.S. Business Analytics
+
+San Diego, USA
+
+2025-2027
+
+------------------------------------------------------------------------
+
+### University of California, San Diego
+
 B.S. Business Economics
 
 San Diego, USA
 
-2022-2024
+2020-2024
 
 ------------------------------------------------------------------------
 
@@ -73,13 +86,24 @@ Edinburgh, UK
 
 ## Professional Experience {data-icon="suitcase"}
 
+### GTM Data Scientist
+Tymeline
 
-### Data Science, intern
+Austin, USA
+
+12/2024-07/2025
+
+- Led GTM strategy and product launches with data-driven planning.  
+- Conducted market research and ROI analysis to optimize targeting.  
+- Applied clustering and A/B testing to analyze trends and behavior.  
+- Built dashboards and marketing assets to drive visibility and engagement. 
+
+### Data Scientist, intern
 Tymeline 
 
-Delaware, USA
+Austin, USA
 
-09/2024-Present
+09/2024-12/2024
 
 - Go-to-market strategy development and product launches.
 - Market research to identify opportunities and assess impact.
@@ -87,44 +111,40 @@ Delaware, USA
 - Analyzed trends and customer behavior for data-driven decisions.
 - Built marketing materials helps campaigns, boost visibility and engagement.
 
-### AI Training for Marketing Research
-Outlier AI
+### AI Training for Marketing Research, freelance
+Outlier AI  
 
-San Francisco, USA
+San Francisco, USA 
 
-04/2024-Present
+04/2024–07/2024  
 
-- Trained AI models for marketing research, enhancing the models' capability.
-- Instructed AI models in analyzing customer data and segmenting markets.
-- Developed training code for AI to identify high-value customers.
-- Ensuring continuous inprovement and accuracy in marketing research applications
-
-### Business Analyst, intern
-Entropy Technologies 
-
-Sydney, Australia 
-
-04/2024-09/2024
-
-- Data sourcing, cleaning, and analysis
-- Generated business maps for market segmentation using advanced data analysis tools.
--	Utilized Tableau to visualize data and generated insights to the management team.
-- Built and optimized advertising landing pages based on weekly traffic analyzed results.
-- Increased daily click-through rates and traffic for promotional campaigns.
+- Trained AI models for customer segmentation using Python and scikit-learn.  
+- Built scripts to identify high-value customers and improve model accuracy. 
 
 
-### Business Analyst, intern
-Camal Group.
+### Business Analyst, Intern  
+Entropy Technologies  
 
-San Diego, USA
+Remote, Australia  
 
-11/2023-03/2024
+04/2024–09/2024  
+
+- Analyzed and visualized market data for segmentation and campaign strategy.  
+- Built business maps and dashboards using Tableau.  
+- Optimized ad landing pages, increasing click-through rates and traffic.  
 
 
--   Sourcing, cleaning, and visualizing trade data from prospect.
--   Generating weekly summary report to assist make sale strategy decisions.
--   Exceeded KPIs and achieved multiple sales for the company.
--   Received return offer from company.
+### Sales Data Analyst, Intern  
+Camal Group  
+
+Remote, USA  
+
+11/2023–03/2024  
+
+- Sourced and analyzed prospect data to support sales targeting and strategy.  
+- Created weekly trade reports and identified high-potential leads.  
+- Closed multiple deals and exceeded performance benchmarks.  
+
 
 
 ## Volunteer Experience {data-icon="chalkboard-teacher"}
@@ -151,6 +171,4 @@ New York, USA
 
 11/25/2020-03/25/2021
 
-## Skills {data-icon="file"}
 
-Business & Marketing Analysis, Data Visualization (Tableau, Power BI, Excel), Data Warehouse(Snowflake), Project Management(Jira,Linear, Asana), CRM, Salesforce, Microsoft-Office, SQL, STATA, R/RStudio.
