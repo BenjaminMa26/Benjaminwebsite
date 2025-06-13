@@ -1,0 +1,142 @@
+# This is Project 2
+
+## Section 1: Data
+data file:mtcars
+I use Kmean algorithm in this project to analyse market segmentation problems.
+
+## Section 2: Analysis
+
+[1]	mpg	Miles/(US) gallon
+[2]	cyl	Number of cylinders
+[3]	disp	Displacement (cu.in.)
+[4]	hp	Gross horsepower
+[5]	drat	Rear axle ratio
+[6]	wt	Weight (1000 lbs)
+[7]	qsec	1/4 mile time
+[8]	vs	Engine (0 = V-shaped, 1 = straight)
+[9]	am	Transmission (0 = automatic, 1 = manual)
+[10]	gear	Number of forward gears
+```{r}
+#| message: false
+
+library(tidyverse)
+mtcars
+
+
+sub <- mtcars %>% select(wt, mpg)
+sub
+
+scl <- sub %>% scale() %>% as_tibble()
+scl
+scl %>% summarize_all(mean) %>% round(3) 
+scl %>% summarize_all(sd)  
+#save the output from the kmeans() function into an object named "out"
+out <- kmeans(scl, centers=4, nstart=10)
+K <- 4
+D <- 10
+#set seed for random number generator 
+set.seed(1234)
+
+
+# "out" is a list.  This is common with model-fitting functions in R.  To get
+# a better sense for what's included in "out", let's run the structure function:
+out <- kmeans(scl, centers=K, nstart=D)
+str(out)
+
+
+# 3 ways to extract a list element -- returns the element
+str(out$cluster)
+str(out[["cluster"]])
+str(out[[1]])
+        
+# 2 related ways to subset a list into a one-element list (usually not what you want)
+str(out["cluster"])
+str(out[1])
+
+# out$centers is a k-by-J matrix with the coordinates of the
+# clusters' centers
+        
+str(out$centers)
+out$centers
+
+
+#enhancing plot by using the data above
+sub <- sub %>% mutate(cluster = factor(out$cluster))
+#comparing a count from our data to the kmeans() 'size' output
+sub %>% count(cluster)
+out$size
+#store the clusters' center locations in their own tibble/dataframe
+centers <- as_tibble(out$centers) 
+centers
+# calculate mean and sd
+SD   <- sub %>% select(wt, mpg) %>% summarize_all(sd)
+MEAN <- sub %>% select(wt, mpg) %>% summarize_all(mean)
+        
+SD
+MEAN
+#repeat/format the values so we can do math with centers 
+SD   <- SD   %>% unlist() %>% rep(K) %>% matrix(nrow=K, ncol=2, byrow=T)
+MEAN <- MEAN %>% unlist() %>% rep(K) %>% matrix(nrow=K, ncol=2, byrow=T)
+        
+SD
+MEAN
+# unscale the centers (convert back into original units)
+centers <- centers*SD + MEAN
+round(centers, 1)
+ggplot() + 
+        geom_point(data=sub,     aes(x=wt, y=mpg, color=cluster)) + 
+        geom_point(data=centers, aes(x=wt, y=mpg), size=4) + 
+        ggtitle("Kmeans cluster membership and centroids") + 
+        theme_minimal()
+
+# is k=4 the right number for k?
+# let's try k=1, k=2, ..., k=10
+res <- vector(length=10)
+# we loop over k=1 through k=10
+    for(i in 1:10) {
+        # run k means
+        out <- kmeans(scl, centers=i)
+        
+        # grab the WSS value, store it in the i'th position of res
+        res[i] <- out$tot.withinss
+    }
+    
+    # let's plot the WSS for each value of k
+    ggplot(data.frame(x=1:10, y=res), aes(x,y)) + 
+        geom_line(color="red") + 
+        geom_point(size=3) + 
+        xlab("Number of Clusters (K)") + 
+        ylab("Within-Group Sum of Squares (WSS)") + 
+        theme_minimal()
+```
+## Section 3: Iris dataset
+```{r}
+# Example with "iris" data
+#The Iris dataset comprises measurements of iris flowers from three different 
+#species: Setosa, Versicolor, and Virginica. Each sample consists of 
+#four features: sepal length, sepal width, petal length, and petal width. 
+#Additionally, each sample is labeled with its corresponding species.
+# load data
+data(iris)
+str(iris)
+# plot petal length vs petal width by species
+ggplot(iris) + 
+geom_point(aes(x=Petal.Length, y=Petal.Width, col=Species))
+# run kmeans
+out_iris <- iris %>% 
+select(Petal.Length, Petal.Width) %>% 
+kmeans(centers = 3, nstart = 10)
+# add segment membership
+iris <- iris %>% mutate(cluster = factor(out_iris$cluster))
+    
+# plot segmented data
+ggplot(iris, aes(x=Petal.Length, y=Petal.Width)) +
+geom_point(aes(col=cluster)) + 
+geom_point(data=as_tibble(out_iris$centers), size=4) + 
+theme_minimal()
+    
+# "confusion matrix" -- ie, a table of actual vs predicted
+iris %>% select(Species, cluster) %>% table()
+
+
+```

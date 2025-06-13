@@ -1,0 +1,291 @@
+# This is Project 3
+K-mean clustering algoritm practical using on customer segmentation in marketing research
+
+## Section 1: Objective
+This project leverages real-world data from T-Mobile to perform an advanced customer segmentation analysis using the K-means clustering algorithm. The focus is to understand the relationship between customers' hand sizes and their gaming durations on mobile devices, and how these insights can inform product customization for gamers.
+
+## Section 2: Data
+The analysis begins with a dataset from T-Mobile containing diverse customer attributes including biometric data. The data was processed using the R programming language and libraries from the tidyverse suite.
+
+## Section 3: Methodology
+Initial data exploration was conducted using basic commands to read and summarize the data.
+The K-means clustering algorithm was applied to segment customers based on gaming time and hand size. This included scaling the data, determining optimal cluster centers, and iterative refinement of these centers.
+The results were visualized using scatter plots, illustrating the clusters and their centroids.
+Further analysis included unscaling the cluster centers to interpret them in the context of the original data units.
+
+## section 4: Analysis
+```{r}
+library(tidyverse)
+cust_dat <- read_csv("./smartphone_customer_data.csv")
+sub <- cust_dat %>% select(gaming, handsize)
+head(sub)   
+
+ggplot(sub) +
+        geom_point(aes(gaming, handsize)) + 
+        theme_minimal()
+ scl <- sub %>% scale() %>% as_tibble()
+    scl
+    
+    # let's check that the scaling worked
+    
+    scl %>% summarize_all(mean) %>% round(3) # check means
+    scl %>% summarize_all(sd)                # check std devs
+     out <- kmeans(scl, centers=4, nstart=10)
+      K <- 4
+    D <- 10
+    
+    set.seed(1234)
+    out <- kmeans(scl, centers=K, nstart=D)
+ str(out)
+  # 3 ways to extract a list element -- returns the element
+        str(out$cluster)
+        str(out[["cluster"]])
+        str(out[[1]])
+        
+        # 2 related ways to subset a list into a one-element list (usually not what you want)
+        str(out["cluster"])
+        str(out[1])
+    
+    # We can also see that out$centers is a k-by-J matrix with the coordinates of the
+    # clusters' centers
+        
+        str(out$centers)
+        out$centers
+#grab the cluster membership as a variable and add it to our 
+    # dataset as a factor/categorical variable
+    sub <- sub %>% mutate(cluster = factor(out$cluster))
+     sub %>% count(cluster)
+    out$size
+     # Then, store the clusters' center locations in their own tibble/dataframe
+    centers <- as_tibble(out$centers) 
+    centers
+      # calculate mean and sd
+        SD   <- sub %>% select(gaming, handsize) %>% summarize_all(sd)
+        MEAN <- sub %>% select(gaming, handsize) %>% summarize_all(mean)
+        
+        SD
+        MEAN
+         # repeat/format the values so we can do math with centers (this is needed for line 129 below)
+        SD   <- SD   %>% unlist() %>% rep(K) %>% matrix(nrow=K, ncol=2, byrow=T)
+        MEAN <- MEAN %>% unlist() %>% rep(K) %>% matrix(nrow=K, ncol=2, byrow=T)
+        
+        SD
+        MEAN
+        
+        # unscale the centers (convert back into original units)
+        centers <- centers*SD + MEAN
+        round(centers, 1)
+        #plot the points (colored by cluster membership) and the cluster centers
+    ggplot() + 
+        geom_point(data=sub,     aes(x=gaming, y=handsize, color=cluster)) + 
+        geom_point(data=centers, aes(x=gaming, y=handsize), size=4) + 
+        ggtitle("Kmeans cluster membership and centroids") + 
+        theme_minimal()
+    
+
+    # Run this function to show initial cluster points, in scaled space
+    
+        fun1 <- function() { 
+            # specify a starting point for the cluster centroids
+            c1 <<- c(gaming=-1, handsize= 2)
+            c2 <<- c(gaming= 1, handsize= 1)
+            c3 <<- c(gaming=-1, handsize=-1)
+            c4 <<- c(gaming= 2, handsize=-1)
+            
+            # convert to a data.frame
+            cent_dat <<- data.frame(rbind(c1, c2, c3, c4))
+            
+            # pick colors
+            col4 <- c("magenta", "green", "cyan", "purple")
+            
+            # plot
+            p <- ggplot() +
+                geom_point(data=scl, aes(gaming, handsize)) +
+                geom_point(data=cent_dat, aes(gaming, handsize), 
+                           shape=21, fill=col4, color="black", size=5) + 
+                ggtitle("Kmeans centroids") + 
+                theme_minimal()
+            
+            print(p)
+            return(invisible())
+        }
+        
+        fun1()
+    
+    # Run this function to show assignment of points
+    
+        fun2 <- function() {
+            # get assignment criteria (euclidean distance to centroids)
+            c1ssq <- apply(scl, 1, function(x) sqrt(sum((x-c1)^2)))
+            c2ssq <- apply(scl, 1, function(x) sqrt(sum((x-c2)^2)))
+            c3ssq <- apply(scl, 1, function(x) sqrt(sum((x-c3)^2)))
+            c4ssq <- apply(scl, 1, function(x) sqrt(sum((x-c4)^2)))
+            
+            # pick closest centroid as cluster to which each point is assigned
+            clust <<- factor(apply(cbind(c1ssq, c2ssq, c3ssq, c4ssq), 1, which.min))
+            
+            # plot
+            p <- ggplot() +
+                geom_point(data=scl, aes(gaming, handsize, color=clust)) +
+                geom_point(data=cent_dat, aes(gaming, handsize), size=4) + 
+                ggtitle("Kmeans cluster membership and centroids") + 
+                theme_minimal() + 
+                theme(legend.position = "none")
+                
+            
+            print(p)
+            return(invisible())
+        }
+    
+        fun2()
+        
+    # run these functions a few times to show convergence
+    
+        fun3 <- function() {
+            # Update cluster centers
+            c1 <<- apply(scl[clust==1, ], 2, mean)
+            c2 <<- apply(scl[clust==2, ], 2, mean)
+            c3 <<- apply(scl[clust==3, ], 2, mean)
+            c4 <<- apply(scl[clust==4, ], 2, mean)
+            
+            cent_dat <<- data.frame(rbind(c1, c2, c3, c4))
+            
+            # plot
+            p <- ggplot() +
+                geom_point(data=scl, aes(gaming, handsize, color=clust)) +
+                geom_point(data=cent_dat, aes(gaming, handsize), size=4) + 
+                ggtitle("Kmeans cluster membership and centroids") + 
+                theme_minimal() + 
+                theme(legend.position = "none")
+            
+            print(p)
+            return(invisible())
+        }
+        
+        fun4 <- function() {
+            # get assignment criteria (euclidean distance to centroids)
+            c1ssq <- apply(scl, 1, function(x) sqrt(sum((x-c1)^2)))
+            c2ssq <- apply(scl, 1, function(x) sqrt(sum((x-c2)^2)))
+            c3ssq <- apply(scl, 1, function(x) sqrt(sum((x-c3)^2)))
+            c4ssq <- apply(scl, 1, function(x) sqrt(sum((x-c4)^2)))
+            
+            clust <<- factor(apply(cbind(c1ssq, c2ssq, c3ssq, c4ssq), 1, which.min))
+        
+            # plot
+            p <- ggplot() +
+                geom_point(data=scl, aes(gaming, handsize, color=clust)) +
+                geom_point(data=cent_dat, aes(gaming, handsize), size=4) + 
+                ggtitle("Kmeans cluster membership and centroids") + 
+                theme_minimal() + 
+                theme(legend.position = "none")
+            
+            print(p)
+            return(invisible())
+        }
+        
+        fun3()
+        fun4()
+        
+        fun3()
+        fun4()
+        
+        fun3()
+        fun4()
+        
+        fun3()
+        fun4()
+        
+        fun3()
+        fun4()
+        
+        fun3()
+        fun4()
+        
+        fun3()
+        fun4()
+        
+        fun3()
+        fun4()
+# You can keep doing it and see the points moving 
+        
+        
+    # clean up
+    rm(cent_dat, centers, c1, c2, c3, c4, clust)
+    
+    
+# add labels back to data
+    
+    cust_dat <- cust_dat %>% mutate(cluster = factor(out$cluster))
+    head(cust_dat)
+
+# Also can do other market research
+# Profile the segments by demographics.  Specifically:
+# summarize the segments by age, gender, height, and time spent chatting
+    
+    # For numeric variables, we can simply take means. 
+    # For categorical variables, we calculate a proportion by taking the mean over the number of 
+    # times something is "true"
+    
+    cdat <- cust_dat %>% 
+                group_by(cluster) %>% 
+                summarize(mean_age    = mean(age), 
+                          prop_female = mean(gender=="female"), 
+                          mean_height = mean(height),
+                          mean_chat   = mean(chat))
+    
+    # view results
+    cdat
+    
+    # We see that cluster two of the clusters chat substantially more than the other two clusters
+    # And we see that two of the clusters have a lower percentage of females than the other two clusters
+    
+    # We can plot some of these relationships
+    
+    ggplot(cdat) + 
+        geom_col(aes(y=mean_chat, x=cluster, fill=cluster)) + 
+        ggtitle("Time spent in chat apps by segment") + 
+        theme_minimal()
+    
+    
+    
+# Similar to privious project lets fiture out what is the best K number by using elbow plot.
+    
+    # we might want more information on which to base our choice of k
+    # One thing we might do is try many different values of k, and evaluate
+    # the performance of the algorithm for each k.  Here, our performance
+    # criteria will be the within-group sum of squares (WSS) from the model.
+    # As k increases, the WSS will decrease. The question is:
+    # how fast does it decrease?
+    
+    # let's try k=1, k=2, ..., k=10
+    
+    # we'll create a vector named 'res' to store our results
+    res <- vector(length=10)
+    
+    # we loop over k=1 through k=10
+    for(i in 1:10) {
+        # run k means
+        out <- kmeans(scl, centers=i)
+        
+        # grab the WSS value, store it in the i'th position of res
+        res[i] <- out$tot.withinss
+    }
+    
+    # let's plot the WSS for each value of k
+    ggplot(data.frame(x=1:10, y=res), aes(x,y)) + 
+        geom_line(color="grey") + 
+        geom_point(size=3) + 
+        xlab("Number of Clusters (K)") + 
+        ylab("Within-Group Sum of Squares (WSS)") + 
+        theme_minimal()
+  
+        
+```
+## Section 5: Summary
+This Customer Segmentation Analysis project utilizes the K-means clustering algorithm to segment customers based on their gaming habits and hand size, drawing from a dataset that includes various customer attributes. Initially, the dataset is imported and displayed for preliminary inspection. The analysis proceeds by subsetting data relevant to gaming time and hand size, followed by visualization through a scatter plot to understand the distribution before clustering. The data is then standardized to neutralize scale discrepancies, ensuring that clustering reflects genuine patterns rather than differences in measurement units. K-means clustering is applied to this standardized data to determine distinct customer groups, with iterative adjustments of cluster centroids to optimize within-cluster homogeneity. This segmentation allows for targeted product development and marketing strategies, particularly for designing smartphones that cater to the ergonomic and usage preferences of gamers. The success of this approach in identifying meaningful customer segments demonstrates the versatility of K-means clustering, suggesting its applicability across different industries to meet varied market and industrial needs.
+
+
+
+
+
+

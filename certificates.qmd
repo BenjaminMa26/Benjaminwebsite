@@ -1,0 +1,66 @@
+---
+title: "Certificates"
+format:
+  html:
+    toc: false
+    page-layout: full
+---
+<div class="image-gallery">
+
+<!-- 🔶 HIGHLIGHTED CERTIFICATES -->
+<a href="certificates/Deloitte_Certificate.jpg" data-lightbox="certs" data-title="Deloitte">
+  <img src="certificates/Deloitte_Certificate.jpg" class="highlighted full-cert" alt="Deloitte">
+</a>
+
+<a href="certificates/Google Data Analytics.jpg" data-lightbox="certs" data-title="Google Data Analytics">
+  <img src="certificates/Google Data Analytics.jpg" class="highlighted" alt="Google Data Analytics">
+</a>
+
+<a href="certificates/Google Advanced Data Analytics.jpg" data-lightbox="certs" data-title="Google Advanced">
+  <img src="certificates/Google Advanced Data Analytics.jpg" class="highlighted" alt="Google Advanced">
+</a>
+
+<!-- 🔹 OTHER CERTIFICATES -->
+<a href="certificates/Foundations of Data Science.jpg" data-lightbox="certs" data-title="Foundations">
+  <img src="certificates/Foundations of Data Science.jpg" alt="Foundations">
+</a>
+
+<a href="certificates/Get Started with Python.jpg" data-lightbox="certs" data-title="Python">
+  <img src="certificates/Get Started with Python.jpg" alt="Python">
+</a>
+
+<a href="certificates/Analyze Data to Answer Questions.jpg" data-lightbox="certs" data-title="Analyze Data">
+  <img src="certificates/Analyze Data to Answer Questions.jpg" alt="Analyze Data">
+</a>
+
+<a href="certificates/Data Analysis with R Programming.jpg" data-lightbox="certs" data-title="R Programming">
+  <img src="certificates/Data Analysis with R Programming.jpg" alt="R Programming">
+</a>
+
+<a href="certificates/Go Beyond the Numbers- Translate Data into Insights.jpg" data-lightbox="certs" data-title="Translate Data">
+  <img src="certificates/Go Beyond the Numbers- Translate Data into Insights.jpg" alt="Translate Data">
+</a>
+
+<a href="certificates/Prepare Data for Exploration.jpg" data-lightbox="certs" data-title="Prepare Data">
+  <img src="certificates/Prepare Data for Exploration.jpg" alt="Prepare Data">
+</a>
+
+<a href="certificates/Process Data from Dirty to Clean.jpg" data-lightbox="certs" data-title="Clean Data">
+  <img src="certificates/Process Data from Dirty to Clean.jpg" alt="Clean Data">
+</a>
+
+<a href="certificates/Regression Analysis- Simplify Complex Data Relationships.jpg" data-lightbox="certs" data-title="Regression">
+  <img src="certificates/Regression Analysis- Simplify Complex Data Relationships.jpg" alt="Regression">
+</a>
+
+<a href="certificates/The Power of Statistics.jpg" data-lightbox="certs" data-title="Power of Statistics">
+  <img src="certificates/The Power of Statistics.jpg" alt="Power of Statistics">
+</a>
+
+<a href="certificates/Working with BigQuery.jpg" data-lightbox="certs" data-title="BigQuery">
+  <img src="certificates/Working with BigQuery.jpg" alt="BigQuery">
+</a>
+
+<!-- (Add the rest here similarly) -->
+
+</div>

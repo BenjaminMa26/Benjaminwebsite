@@ -1,0 +1,174 @@
+---
+title: "Benjamin Ma's resume"
+author: Benjamin Ma
+date: "`r Sys.Date()`"
+output:
+  pagedown::html_resume:
+    html_document:
+    includes:
+      in_header: "favicon.html" 
+    # set it to true for a self-contained HTML page but it'll take longer to render
+    self_contained: true
+#uncomment this line to produce HTML and PDF in RStudio:
+knit: pagedown::chrome_print
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+# Aside
+
+![Benjamin Ma](https://avatars1.githubusercontent.com/u/895125?s=400&v=4){width="80%"}
+
+## Contact Info {#contact}
+
+-   <i class="fa fa-envelope"></i> [Ben26msh\@gmail.com](mailto:Ben26msh@gmail.com){.email}
+-   <i class="fa fa-github"></i> [github.com/BenjaminMa](https://github.com/BenjaminMa26)
+-   <i class="fa fa-phone"></i> +1 2069307372
+-   For more information, please contact me via email.
+
+
+## Skills {#skills}
+
+**Programming & Data Tools**  
+Python (NumPy, Pandas, scikit-learn, XGBoost, Matplotlib, Seaborn), R/RStudio, SQL (MySQL, PostgreSQL, BigQuery), Snowflake, Jupyter Notebook, STATA, SAS
+
+**Data Visualization**  
+Tableau, Power BI, Excel, Looker, Zoho Analytics
+
+**Machine Learning & Analysis**  
+Regression (Linear, Multiple, Multinomial Logit), Clustering, A/B Testing, Hypothesis Testing
+
+**Project & Campaign Management**  
+Jira, Linear, Asana, Salesforce, Microsoft Office (Excel, Word, PowerPoint)
+
+**Web & Analytics Platforms**  
+Google Analytics, Facebook Business Suite, BigQuery
+
+
+# Main
+
+## Benjamin (Songhao) Ma {#title}
+
+### Graduate Student from UC SanDiego 
+
+looking for a skill related job (Business & Marketing Analysis related).
+
+## Education {data-icon="graduation-cap" data-concise="true"}
+
+### University of California, San Diego
+
+M.S. Business Analytics
+
+San Diego, USA
+
+2025-2027
+
+------------------------------------------------------------------------
+
+### University of California, San Diego
+
+B.S. Business Economics
+
+San Diego, USA
+
+2020-2024
+
+------------------------------------------------------------------------
+
+### University of Edinburgh
+
+Study Abroad
+
+Edinburgh, UK
+
+2023
+
+## Professional Experience {data-icon="suitcase"}
+
+### GTM Data Scientist
+Tymeline
+
+Austin, USA
+
+12/2024-07/2025
+
+- Led GTM strategy and product launches with data-driven planning.  
+- Conducted market research and ROI analysis to optimize targeting.  
+- Applied clustering and A/B testing to analyze trends and behavior.  
+- Built dashboards and marketing assets to drive visibility and engagement. 
+
+### Data Scientist, intern
+Tymeline 
+
+Austin, USA
+
+09/2024-12/2024
+
+- Go-to-market strategy development and product launches.
+- Market research to identify opportunities and assess impact.
+- Customer segmentation, ROI, and market analysis.
+- Analyzed trends and customer behavior for data-driven decisions.
+- Built marketing materials helps campaigns, boost visibility and engagement.
+
+### AI Training for Marketing Research, freelance
+Outlier AI  
+
+San Francisco, USA 
+
+04/2024–07/2024  
+
+- Trained AI models for customer segmentation using Python and scikit-learn.  
+- Built scripts to identify high-value customers and improve model accuracy. 
+
+
+### Business Analyst, Intern  
+Entropy Technologies  
+
+Remote, Australia  
+
+04/2024–09/2024  
+
+- Analyzed and visualized market data for segmentation and campaign strategy.  
+- Built business maps and dashboards using Tableau.  
+- Optimized ad landing pages, increasing click-through rates and traffic.  
+
+
+### Sales Data Analyst, Intern  
+Camal Group  
+
+Remote, USA  
+
+11/2023–03/2024  
+
+- Sourced and analyzed prospect data to support sales targeting and strategy.  
+- Created weekly trade reports and identified high-potential leads.  
+- Closed multiple deals and exceeded performance benchmarks.  
+
+
+
+## Volunteer Experience {data-icon="chalkboard-teacher"}
+
+### United Nations Volunteer Program (Goodness and Mercy Missions)
+
+-Participated in non-profit organization 
+-Developed marketing strategies with team.
+-Negotiated fundrasing with government agencies and global institutions.
+-Awarded with a certification
+
+New York, USA
+
+11/01/2020-08/01/2021
+
+### United Nations Volunteer Program (Cameroon Association of Active Youths)
+
+-Assisted facilitating donations from institutions 
+-Led a safety equipment's advisory group.
+-Cleaning donation data -Using data visualization tools for weekly project evaluation.
+-Received a certification and letter of appreciation.
+
+New York, USA
+
+11/25/2020-03/25/2021
+
+

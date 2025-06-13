@@ -1,0 +1,135 @@
+[
+  {
+    "objectID": "Blog.html",
+    "href": "Blog.html",
+    "title": "My Projects",
+    "section": "",
+    "text": "This is Project 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Benjamin Ma",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+  },
+  {
+    "objectID": "resume/Untitled.html",
+    "href": "resume/Untitled.html",
+    "title": "Untitled",
+    "section": "",
+    "text": "This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.\nWhen you click the Knit button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:\n\nsummary(cars)\n\n     speed           dist       \n Min.   : 4.0   Min.   :  2.00  \n 1st Qu.:12.0   1st Qu.: 26.00  \n Median :15.0   Median : 36.00  \n Mean   :15.4   Mean   : 42.98  \n 3rd Qu.:19.0   3rd Qu.: 56.00  \n Max.   :25.0   Max.   :120.00"
+  },
+  {
+    "objectID": "resume/Untitled.html#r-markdown",
+    "href": "resume/Untitled.html#r-markdown",
+    "title": "Untitled",
+    "section": "",
+    "text": "This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.\nWhen you click the Knit button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:\n\nsummary(cars)\n\n     speed           dist       \n Min.   : 4.0   Min.   :  2.00  \n 1st Qu.:12.0   1st Qu.: 26.00  \n Median :15.0   Median : 36.00  \n Mean   :15.4   Mean   : 42.98  \n 3rd Qu.:19.0   3rd Qu.: 56.00  \n Max.   :25.0   Max.   :120.00"
+  },
+  {
+    "objectID": "resume/Untitled.html#including-plots",
+    "href": "resume/Untitled.html#including-plots",
+    "title": "Untitled",
+    "section": "Including Plots",
+    "text": "Including Plots\nYou can also embed plots, for example:\n\n\n\n\n\nNote that the echo = FALSE parameter was added to the code chunk to prevent printing of the R code that generated the plot."
+  },
+  {
+    "objectID": "resume.html",
+    "href": "resume.html",
+    "title": "Benjamin’s Resume",
+    "section": "",
+    "text": "This browser does not support PDFs. Please download the PDF to view it: &lt;a href=\"resume/resume.pdf\"&gt;Download PDF&lt;/a&gt;"
+  },
+  {
+    "objectID": "resume/resume .html",
+    "href": "resume/resume .html",
+    "title": "Benjamin Ma’s resume",
+    "section": "",
+    "text": "Lijia Yu\n\n\n\n\n\n Ben26msh@gmail.com\n github.com/yulijia\n +1 000-000-0000\nFor more information, please contact me via email.\n\n\n\n\n\nExperienced in statistical analysis, statistical learning models, and optimization methods.\nFull experience with next generation sequencing data analysis.\nHighly skilled in R, Bash, Perl, Python, LaTeX\n\n\n\n\nThis resume was made with the R package pagedown.\nLast updated on 2024-03-15."
+  },
+  {
+    "objectID": "resume/resume .html#contact",
+    "href": "resume/resume .html#contact",
+    "title": "Benjamin Ma’s resume",
+    "section": "",
+    "text": "Ben26msh@gmail.com\n github.com/yulijia\n +1 000-000-0000\nFor more information, please contact me via email."
+  },
+  {
+    "objectID": "resume/resume .html#skills",
+    "href": "resume/resume .html#skills",
+    "title": "Benjamin Ma’s resume",
+    "section": "",
+    "text": "Experienced in statistical analysis, statistical learning models, and optimization methods.\nFull experience with next generation sequencing data analysis.\nHighly skilled in R, Bash, Perl, Python, LaTeX"
+  },
+  {
+    "objectID": "resume/resume .html#disclaimer",
+    "href": "resume/resume .html#disclaimer",
+    "title": "Benjamin Ma’s resume",
+    "section": "",
+    "text": "This resume was made with the R package pagedown.\nLast updated on 2024-03-15."
+  },
+  {
+    "objectID": "resume/resume .html#title",
+    "href": "resume/resume .html#title",
+    "title": "Benjamin Ma’s resume",
+    "section": "Benjamin Ma",
+    "text": "Benjamin Ma\n\nCurrently searching for a PhD student position\nPlease note that this is a real resume, and I’m really looking for a PhD student position at the moment. I made this resume because Yihui asked me if I’d like to test the pagedown package with my resume. If you are interested in my background and skills, please feel free to contact me."
+  },
+  {
+    "objectID": "resume/resume .html#education",
+    "href": "resume/resume .html#education",
+    "title": "Benjamin Ma’s resume",
+    "section": "Education",
+    "text": "Education\n\nUniversity of California, San Diego\nB.S. Business Economics\nSan Diego, USA\n2022-present\n\n\nUniversity of Chinese Academy of Sciences\nM.S. in Bioinformatics\nBeijing, China\n2014\nThesis: A multi-omics study for intra-individual divergence of the distributions between mRNA isoforms in mammals"
+  },
+  {
+    "objectID": "resume/resume .html#research-experience",
+    "href": "resume/resume .html#research-experience",
+    "title": "Benjamin Ma’s resume",
+    "section": "Research Experience",
+    "text": "Research Experience\n\nGraduate Research Assistant\nBeijing Institute of Genomics, Chinese Academy of Sciences\nBeijing, China\n2011 - 2014\n\nPerformed computational biology research towards understanding regulation of alternative splicing in human and mouse transcriptome.\nFound EGFR pathway related mutations, aimed to understand the impacts of cancer mutations on EGFR signaling pathway.\n\n\n\nBioinformatican\nMy Health Gene Technology Co., Ltd.\nBeijing, China\n2015 - 2016\n\nInvestigated how cancer cells spread to other parts of the body at the single cell level.\n\n\n\nVisiting Scientist\nUniversity of Alabama at Birmingham\nAL, USA\n2016 - 2018\n\nInvestigated the role of mitochondria in development of cancer.\nInvestigated the evolution of genome architecture and its role in important evolutionary events.\nDetected thrombotic thrombocytopenic purpura related mutations in mutiple patients’ blood genome."
+  },
+  {
+    "objectID": "resume/resume .html#professional-experience",
+    "href": "resume/resume .html#professional-experience",
+    "title": "Benjamin Ma’s resume",
+    "section": "Professional Experience",
+    "text": "Professional Experience\n\nData Scientist, intern\nSupStat Inc.\nBeijing, China\n2014\n\n\nTaught R language to beginners.\nWrote Shiny app demos.\nConverted statistical tutorials from SPSS to R language.\n\n\n\n\nBioinformatician\nMy Health Gene Technology Co., Ltd.\nBeijing, China\n2015 - 2016\n\n\nAnalyzed whole-exome sequencing data.\nWrote analysis pipelines of ChIP-seq, single cell DNA-seq and single cell RNA-seq.\nStudied tumor metastasis and wrote research reports.\nAlso did case studies to identify the genetic defect causing rare disease."
+  },
+  {
+    "objectID": "resume/resume .html#teaching-experience",
+    "href": "resume/resume .html#teaching-experience",
+    "title": "Benjamin Ma’s resume",
+    "section": "Teaching Experience",
+    "text": "Teaching Experience\n\nIntroduction to R Language for Beginners.\nInstructor of R and Data Mining Training Courses at SupStat Inc.\nBeijing, China\n2014\n\n\nComputational Biology and Bioinformatics.\nTeaching assistant of GBS CB2-201 courses at UAB\nAL, USA\n2016 - 2017"
+  },
+  {
+    "objectID": "resume/resume .html#selected-publications-and-posters",
+    "href": "resume/resume .html#selected-publications-and-posters",
+    "title": "Benjamin Ma’s resume",
+    "section": "Selected Publications and Posters",
+    "text": "Selected Publications and Posters\n\nGenetic and epigenetic signals are found predictive to the distribution of intra-individual divergence of alternative splicing.\nPoster for 2013 International Conference of Genomics\nQingdao, China\n2014\nYu L, Chen B, Zhang Z.\n\n\nESCRT-0 complex modulates Rbf mutant cell survival by regulating Rhomboid endosomal trafficking and EGFR signaling.\nJ Cell Sci. 2016 May 15;129(10):2075-84.\nN/A\n2016\nSheng Z, Yu L, Zhang T, Pei X, Li X, Zhang Z and Du W."
+  },
+  {
+    "objectID": "blog/project1/index.html",
+    "href": "blog/project1/index.html",
+    "title": "This is Project 1",
+    "section": "",
+    "text": "I Clean some data\n\n\n\nI analyzed the data\n\nlibrary(tidyverse)\nmtcars |&gt; \n    ggplot(aes(x = wt, y= mpg)) + geom_point()"
+  },
+  {
+    "objectID": "blog/project1/index.html#section-1-data",
+    "href": "blog/project1/index.html#section-1-data",
+    "title": "This is Project 1",
+    "section": "",
+    "text": "I Clean some data"
+  },
+  {
+    "objectID": "blog/project1/index.html#section-2-analysis",
+    "href": "blog/project1/index.html#section-2-analysis",
+    "title": "This is Project 1",
+    "section": "",
+    "text": "I analyzed the data\n\nlibrary(tidyverse)\nmtcars |&gt; \n    ggplot(aes(x = wt, y= mpg)) + geom_point()"
+  }
+]
