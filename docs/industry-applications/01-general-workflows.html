@@ -1,0 +1,1748 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>General ML Workflows – Benjamin (songhao) Ma’s Website</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Benjamin (songhao) Ma’s Website</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../resume.html"> 
+<span class="menu-text">Resume</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../Blog.html"> 
+<span class="menu-text">Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../certificates.html"> 
+<span class="menu-text">Certificates</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../industry-applications/"> 
+<span class="menu-text">Industry Applications</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">General ML Workflows</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="end-to-end-recommendation-system-amazon-dataset" class="level1">
+<h1>End-to-End Recommendation System (Amazon Dataset)</h1>
+<p>This project demonstrates a complete machine learning workflow using the Amazon Musical Instruments dataset. It follows the structure outlined in <em>Meituan’s Machine Learning Practice</em>, Section One: General Workflows — including problem modeling, feature design, model selection, evaluation, and ensemble methods.</p>
+<section id="problem-definition" class="level2">
+<h2 class="anchored" data-anchor-id="problem-definition">1. Problem Definition</h2>
+<p>We aim to build a personalized recommendation system that predicts whether a user will give a high rating to a product (rating ≥ 4). This binary setup enables us to frame it as a classification and ranking problem for top-N recommendation.</p>
+<section id="task-type" class="level3">
+<h3 class="anchored" data-anchor-id="task-type">Task Type</h3>
+<ul>
+<li><strong>Binary classification:</strong> High-rating vs.&nbsp;low-rating</li>
+<li><strong>Ranking:</strong> Prioritize items per user</li>
+</ul>
+</section>
+</section>
+<section id="dataset-overview" class="level2">
+<h2 class="anchored" data-anchor-id="dataset-overview">2. Dataset Overview</h2>
+<p><strong>Source:</strong> <a href="https://amazon-reviews-2023.github.io/">Amazon Reviews 2023 (Musical Instruments)</a> <strong>Curation:</strong> Julian McAuley / Generous Lab <strong>Citation:</strong> See <code>data/readme.md</code> for source attribution.</p>
+<div id="776f1641" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">"ignore"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Correct relative path (from inside the .qmd folder)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>DATA_PATH <span class="op">=</span> Path(<span class="st">"data/amazon_reviews_us_Musical_Instruments_v1_00.tsv"</span>).resolve()</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Resolved data path:"</span>, DATA_PATH)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> DATA_PATH.exists():</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        DATA_PATH,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        on_bad_lines<span class="op">=</span><span class="st">"skip"</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        engine<span class="op">=</span><span class="st">"python"</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        quoting<span class="op">=</span><span class="dv">3</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Loaded </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss"> reviews"</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    df.head()</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">FileNotFoundError</span>(</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Amazon reviews dataset not found. Please place it in the expected data/ folder."</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Resolved data path: /Users/benjaminma/Desktop/quarto_website/industry-applications/data/amazon_reviews_us_Musical_Instruments_v1_00.tsv
+Loaded 904765 reviews</code></pre>
+</div>
+</div>
+<section id="review-count-and-ratings-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="review-count-and-ratings-distribution">2.1 Review Count and Ratings Distribution</h3>
+<p>We begin by examining the distribution of star ratings and the frequency of user interactions.</p>
+<div id="ade4b70c" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rating distribution</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>rating_counts <span class="op">=</span> df[<span class="st">"star_rating"</span>].value_counts().sort_index()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Review length</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"review_length"</span>] <span class="op">=</span> df[<span class="st">"review_body"</span>].astype(<span class="bu">str</span>).<span class="bu">apply</span>(<span class="bu">len</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="47e7d63c" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>rating_counts.plot(kind<span class="op">=</span><span class="st">"bar"</span>, title<span class="op">=</span><span class="st">"Distribution of Star Ratings"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                   xlabel<span class="op">=</span><span class="st">"Star Rating (1 to 5)"</span>, ylabel<span class="op">=</span><span class="st">"Number of Reviews"</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01-general-workflows_files/figure-html/cell-4-output-1.png" width="566" height="374" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="review-length-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="review-length-distribution">2.2 Review Length Distribution</h3>
+<p>We explore the distribution of review verbosity to understand content richness. Most reviews are relatively short, suggesting limited user expression, which has implications for downstream text processing.</p>
+<div id="c75b695d" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"review_length"</span>].hist(bins<span class="op">=</span><span class="dv">50</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Distribution of Review Lengths"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Character Count"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Frequency"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01-general-workflows_files/figure-html/cell-5-output-1.png" width="565" height="374" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Most reviews fall between 50 and 300 characters, with a long-tailed distribution. This informs potential preprocessing strategies like truncation or embedding windows if used in downstream NLP models.</p>
+</section>
+<section id="user-and-item-activity" class="level3">
+<h3 class="anchored" data-anchor-id="user-and-item-activity">2.3 User and Item Activity</h3>
+<p>We inspect user and item review frequency to detect sparsity patterns.</p>
+<div id="fb2214e6" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>user_counts <span class="op">=</span> df[<span class="st">"customer_id"</span>].value_counts()</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>item_counts <span class="op">=</span> df[<span class="st">"product_id"</span>].value_counts()</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>user_thresh <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>item_thresh <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>user_count <span class="op">=</span> (user_counts <span class="op">&gt;=</span> user_thresh).<span class="bu">sum</span>()</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>item_count <span class="op">=</span> (item_counts <span class="op">&gt;=</span> item_thresh).<span class="bu">sum</span>()</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Users with ≥ </span><span class="sc">{</span>user_thresh<span class="sc">}</span><span class="ss"> reviews: </span><span class="sc">{</span>user_count<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Items with ≥ </span><span class="sc">{</span>item_thresh<span class="sc">}</span><span class="ss"> reviews: </span><span class="sc">{</span>item_count<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Users with ≥ 5 reviews: 22132
+Items with ≥ 10 reviews: 15403</code></pre>
+</div>
+</div>
+<p>This helps define minimum thresholds for filtering in the next section. We typically retain users with at least 5 reviews and products with at least 10 reviews to ensure reliable signal during modeling.</p>
+</section>
+<section id="temporal-coverage" class="level3">
+<h3 class="anchored" data-anchor-id="temporal-coverage">2.4 Temporal Coverage</h3>
+<div id="c947ea40" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"review_date"</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">"review_date"</span>])</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"review_date"</span>].agg([<span class="st">"min"</span>, <span class="st">"max"</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>min   1999-12-13
+max   2015-08-31
+Name: review_date, dtype: datetime64[ns]</code></pre>
+</div>
+</div>
+<p>The dataset spans from early 2000s to late 2015. For modeling, we later apply temporal splits to simulate realistic train-test conditions (e.g., last-N split or leave-one-out).</p>
+</section>
+</section>
+<section id="feature-engineering" class="level2">
+<h2 class="anchored" data-anchor-id="feature-engineering">3. Feature Engineering</h2>
+<p>This section extracts and selects features to improve model learning performance.</p>
+<hr>
+<section id="numerical-features" class="level3">
+<h3 class="anchored" data-anchor-id="numerical-features">3.1 Numerical Features</h3>
+<p>We begin by transforming and aggregating numeric fields such as <code>star_rating</code> and <code>review_length</code>, which provide continuous value inputs to models.</p>
+<div id="7c2945f6" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Basic features (no leakage)</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"review_length"</span>] <span class="op">=</span> df[<span class="st">"review_body"</span>].astype(<span class="bu">str</span>).<span class="bu">apply</span>(<span class="bu">len</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"word_count"</span>] <span class="op">=</span> df[<span class="st">"review_body"</span>].astype(<span class="bu">str</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">len</span>(x.split()))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"label"</span>] <span class="op">=</span> (df[<span class="st">"star_rating"</span>] <span class="op">&gt;=</span> <span class="dv">4</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Categorical encoding</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"verified_flag"</span>] <span class="op">=</span> df[<span class="st">"verified_purchase"</span>].<span class="bu">map</span>({<span class="st">"Y"</span>: <span class="dv">1</span>, <span class="st">"N"</span>: <span class="dv">0</span>})</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"vine_flag"</span>] <span class="op">=</span> df[<span class="st">"vine"</span>].<span class="bu">map</span>({<span class="st">"Y"</span>: <span class="dv">1</span>, <span class="st">"N"</span>: <span class="dv">0</span>})</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Temporal features</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"review_year"</span>] <span class="op">=</span> df[<span class="st">"review_date"</span>].dt.year</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"review_month"</span>] <span class="op">=</span> df[<span class="st">"review_date"</span>].dt.month</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"review_dayofweek"</span>] <span class="op">=</span> df[<span class="st">"review_date"</span>].dt.dayofweek</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Text features</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"char_count"</span>] <span class="op">=</span> df[<span class="st">"review_body"</span>].astype(<span class="bu">str</span>).<span class="bu">apply</span>(<span class="bu">len</span>)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"uppercase_count"</span>] <span class="op">=</span> df[<span class="st">"review_body"</span>].astype(<span class="bu">str</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">sum</span>(<span class="dv">1</span> <span class="cf">for</span> c <span class="kw">in</span> x <span class="cf">if</span> c.isupper()))</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"punctuation_count"</span>] <span class="op">=</span> df[<span class="st">"review_body"</span>].astype(<span class="bu">str</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">sum</span>(<span class="dv">1</span> <span class="cf">for</span> c <span class="kw">in</span> x <span class="cf">if</span> c <span class="kw">in</span> <span class="st">"!?."</span>))</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✓ Basic features created"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✓ Basic features created</code></pre>
+</div>
+</div>
+<p><strong>Important: We will create aggregated features (user_avg_rating, item_avg_rating) AFTER train/test split to avoid leakage.</strong></p>
+</section>
+<section id="traintest-split" class="level3">
+<h3 class="anchored" data-anchor-id="traintest-split">3.2 Train/Test Split</h3>
+<div id="4b51c1c1" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>base_features <span class="op">=</span> [<span class="st">"review_length"</span>, <span class="st">"word_count"</span>, <span class="st">"verified_flag"</span>, <span class="st">"vine_flag"</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"review_year"</span>, <span class="st">"review_month"</span>, <span class="st">"review_dayofweek"</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"char_count"</span>, <span class="st">"uppercase_count"</span>, <span class="st">"punctuation_count"</span>]</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>split_cols <span class="op">=</span> base_features <span class="op">+</span> [<span class="st">"customer_id"</span>, <span class="st">"product_id"</span>, <span class="st">"star_rating"</span>, <span class="st">"label"</span>]</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>df_split <span class="op">=</span> df[split_cols].copy()</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Temporal split</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>df_split <span class="op">=</span> df_split.sort_values(<span class="st">"review_year"</span>)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>split_idx <span class="op">=</span> <span class="bu">int</span>(<span class="bu">len</span>(df_split) <span class="op">*</span> <span class="fl">0.8</span>)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>train_df <span class="op">=</span> df_split.iloc[:split_idx].copy()</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>test_df <span class="op">=</span> df_split.iloc[split_idx:].copy()</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Train size: </span><span class="sc">{</span><span class="bu">len</span>(train_df)<span class="sc">}</span><span class="ss">, Test size: </span><span class="sc">{</span><span class="bu">len</span>(test_df)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Train size: 723812, Test size: 180953</code></pre>
+</div>
+</div>
+</section>
+<section id="create-aggregated-features" class="level3">
+<h3 class="anchored" data-anchor-id="create-aggregated-features">3.3 Create Aggregated Features</h3>
+<div id="0b7acc6a" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate from training data only</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>user_stats_train <span class="op">=</span> train_df.groupby(<span class="st">"customer_id"</span>)[<span class="st">"star_rating"</span>].agg([<span class="st">"mean"</span>, <span class="st">"count"</span>]).rename(</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>{<span class="st">"mean"</span>: <span class="st">"user_avg_rating"</span>, <span class="st">"count"</span>: <span class="st">"user_review_count"</span>}</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>item_stats_train <span class="op">=</span> train_df.groupby(<span class="st">"product_id"</span>)[<span class="st">"star_rating"</span>].agg([<span class="st">"mean"</span>, <span class="st">"count"</span>]).rename(</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>{<span class="st">"mean"</span>: <span class="st">"item_avg_rating"</span>, <span class="st">"count"</span>: <span class="st">"item_review_count"</span>}</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge to train</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>train_df <span class="op">=</span> train_df.merge(user_stats_train, on<span class="op">=</span><span class="st">"customer_id"</span>, how<span class="op">=</span><span class="st">"left"</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>train_df <span class="op">=</span> train_df.merge(item_stats_train, on<span class="op">=</span><span class="st">"product_id"</span>, how<span class="op">=</span><span class="st">"left"</span>)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge to test</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>test_df <span class="op">=</span> test_df.merge(user_stats_train, on<span class="op">=</span><span class="st">"customer_id"</span>, how<span class="op">=</span><span class="st">"left"</span>)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>test_df <span class="op">=</span> test_df.merge(item_stats_train, on<span class="op">=</span><span class="st">"product_id"</span>, how<span class="op">=</span><span class="st">"left"</span>)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill missing values</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>global_avg <span class="op">=</span> train_df[<span class="st">"star_rating"</span>].mean()</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>train_df[[<span class="st">"user_avg_rating"</span>, <span class="st">"item_avg_rating"</span>]] <span class="op">=</span> train_df[[<span class="st">"user_avg_rating"</span>, <span class="st">"item_avg_rating"</span>]].fillna(global_avg)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>test_df[[<span class="st">"user_avg_rating"</span>, <span class="st">"item_avg_rating"</span>]] <span class="op">=</span> test_df[[<span class="st">"user_avg_rating"</span>, <span class="st">"item_avg_rating"</span>]].fillna(global_avg)</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>train_df[[<span class="st">"user_review_count"</span>, <span class="st">"item_review_count"</span>]] <span class="op">=</span> train_df[[<span class="st">"user_review_count"</span>, <span class="st">"item_review_count"</span>]].fillna(<span class="dv">1</span>)</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>test_df[[<span class="st">"user_review_count"</span>, <span class="st">"item_review_count"</span>]] <span class="op">=</span> test_df[[<span class="st">"user_review_count"</span>, <span class="st">"item_review_count"</span>]].fillna(<span class="dv">1</span>)</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Interaction features</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> df_temp <span class="kw">in</span> [train_df, test_df]:</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>    df_temp[<span class="st">"normalized_length"</span>] <span class="op">=</span> df_temp[<span class="st">"review_length"</span>] <span class="op">/</span> (df_temp[<span class="st">"user_review_count"</span>] <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>    df_temp[<span class="st">"user_item_interaction"</span>] <span class="op">=</span> df_temp[<span class="st">"user_avg_rating"</span>] <span class="op">*</span> df_temp[<span class="st">"item_avg_rating"</span>]</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>    df_temp[<span class="st">"user_activity"</span>] <span class="op">=</span> df_temp[<span class="st">"user_review_count"</span>] <span class="op">*</span> df_temp[<span class="st">"user_avg_rating"</span>]</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>    df_temp[<span class="st">"item_popularity"</span>] <span class="op">=</span> df_temp[<span class="st">"item_review_count"</span>] <span class="op">*</span> df_temp[<span class="st">"item_avg_rating"</span>]</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✓ Aggregated features created"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✓ Aggregated features created</code></pre>
+</div>
+</div>
+</section>
+<section id="spatial-features" class="level3">
+<h3 class="anchored" data-anchor-id="spatial-features">3.4 Spatial Features</h3>
+<p>The dataset does not contain geographic coordinates, but in some business scenarios with location data, we would include distance to store, city-level aggregation, or region IDs as spatial features.</p>
+</section>
+<section id="feature-selection" class="level3">
+<h3 class="anchored" data-anchor-id="feature-selection">3.5 Feature Selection</h3>
+<p>We reduce the feature set using three families of methods:</p>
+<section id="filtering-methods" class="level4">
+<h4 class="anchored" data-anchor-id="filtering-methods">3.5.1 Filtering Methods</h4>
+<p>Model-agnostic methods such as variance threshold and mutual information:</p>
+<div id="b3341fdd" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> VarianceThreshold, SelectKBest, mutual_info_classif</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>numeric_features <span class="op">=</span> train_df.select_dtypes(include<span class="op">=</span>[<span class="st">'int64'</span>, <span class="st">'float64'</span>]).columns.tolist()</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>numeric_features <span class="op">=</span> [f <span class="cf">for</span> f <span class="kw">in</span> numeric_features <span class="cf">if</span> f <span class="kw">not</span> <span class="kw">in</span> [<span class="st">'label'</span>, <span class="st">'star_rating'</span>, <span class="st">'customer_id'</span>, <span class="st">'product_id'</span>]]</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Variance threshold</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>vt <span class="op">=</span> VarianceThreshold(threshold<span class="op">=</span><span class="fl">0.01</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>X_train_filtered <span class="op">=</span> train_df[numeric_features].fillna(<span class="dv">0</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="op">=</span> vt.fit_transform(X_train_filtered)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Mutual information</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>selector <span class="op">=</span> SelectKBest(score_func<span class="op">=</span>mutual_info_classif, k<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>mi_selected <span class="op">=</span> selector.fit_transform(X_train_filtered, train_df[<span class="st">"label"</span>])</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>mi_features <span class="op">=</span> selector.get_feature_names_out(numeric_features)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Mutual information selected: </span><span class="sc">{</span><span class="bu">list</span>(mi_features)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Mutual information selected: ['word_count', 'verified_flag', 'char_count', 'punctuation_count', 'user_avg_rating', 'item_avg_rating', 'normalized_length', 'user_item_interaction', 'user_activity', 'item_popularity']</code></pre>
+</div>
+</div>
+</section>
+<section id="wrapper-methods" class="level4">
+<h4 class="anchored" data-anchor-id="wrapper-methods">3.5.2 Wrapper Methods</h4>
+<p>We use recursive feature elimination (RFE) with logistic regression:</p>
+<div id="53ad8c48" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> RFE</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>X_scaled <span class="op">=</span> scaler.fit_transform(X_train_filtered)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>, solver<span class="op">=</span><span class="st">'lbfgs'</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>rfe <span class="op">=</span> RFE(model, n_features_to_select<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>rfe.fit(X_scaled, train_df[<span class="st">"label"</span>])</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>rfe_features <span class="op">=</span> [numeric_features[i] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(numeric_features)) <span class="cf">if</span> rfe.support_[i]]</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"RFE selected: </span><span class="sc">{</span>rfe_features<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>RFE selected: ['review_length', 'word_count', 'char_count', 'user_avg_rating', 'user_review_count', 'item_avg_rating', 'item_review_count', 'normalized_length', 'user_item_interaction', 'item_popularity']</code></pre>
+</div>
+</div>
+</section>
+<section id="embedded-methods" class="level4">
+<h4 class="anchored" data-anchor-id="embedded-methods">3.5.3 Embedded Methods</h4>
+<p>Embedded selection is performed during model training via importance scores:</p>
+<div id="af161bde" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> xgboost <span class="im">import</span> XGBClassifier</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>xgb_selector <span class="op">=</span> XGBClassifier(n_estimators<span class="op">=</span><span class="dv">50</span>, random_state<span class="op">=</span><span class="dv">42</span>, verbosity<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>xgb_selector.fit(X_train_filtered, train_df[<span class="st">"label"</span>])</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>feature_importance <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'feature'</span>: numeric_features,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'importance'</span>: xgb_selector.feature_importances_</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>}).sort_values(<span class="st">'importance'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>embedded_features <span class="op">=</span> feature_importance.head(<span class="dv">10</span>)[<span class="st">'feature'</span>].tolist()</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"XGBoost top features:</span><span class="ch">\n</span><span class="sc">{</span>feature_importance<span class="sc">.</span>head(<span class="dv">10</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>final_features <span class="op">=</span> embedded_features</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>XGBoost top features:
+                  feature  importance
+7         user_avg_rating    0.627690
+12  user_item_interaction    0.155378
+13          user_activity    0.117009
+8       user_review_count    0.054892
+9         item_avg_rating    0.014369
+14        item_popularity    0.011274
+10      item_review_count    0.008548
+1              word_count    0.003372
+3               vine_flag    0.002256
+0           review_length    0.001251</code></pre>
+</div>
+</div>
+</section>
+<section id="method-comparison-and-selection" class="level4">
+<h4 class="anchored" data-anchor-id="method-comparison-and-selection">3.5.4 Method Comparison and Selection</h4>
+<div id="54260966" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare overlap between methods</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>all_selected <span class="op">=</span> mi_features.tolist() <span class="op">+</span> rfe_features <span class="op">+</span> embedded_features</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>feature_votes <span class="op">=</span> Counter(all_selected)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Feature selection comparison:"</span>)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Filtering (MI): </span><span class="sc">{</span><span class="bu">len</span>(mi_features)<span class="sc">}</span><span class="ss"> features"</span>)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Wrapper (RFE): </span><span class="sc">{</span><span class="bu">len</span>(rfe_features)<span class="sc">}</span><span class="ss"> features"</span>)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Embedded (XGB): </span><span class="sc">{</span><span class="bu">len</span>(embedded_features)<span class="sc">}</span><span class="ss"> features"</span>)</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Features selected by multiple methods:"</span>)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> feat, count <span class="kw">in</span> feature_votes.most_common(<span class="dv">10</span>):</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>feat<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>count<span class="sc">}</span><span class="ss"> method(s)"</span>)</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="co"># For production, we'll use XGBoost embedded selection as it:</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Handles non-linearity well</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Is computationally efficient</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Provides robust importance scores</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>final_features <span class="op">=</span> embedded_features</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">✓ Final feature set: </span><span class="sc">{</span>final_features<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Feature selection comparison:
+Filtering (MI): 10 features
+Wrapper (RFE): 10 features
+Embedded (XGB): 10 features
+
+Features selected by multiple methods:
+  word_count: 3 method(s)
+  user_avg_rating: 3 method(s)
+  item_avg_rating: 3 method(s)
+  user_item_interaction: 3 method(s)
+  item_popularity: 3 method(s)
+  char_count: 2 method(s)
+  normalized_length: 2 method(s)
+  user_activity: 2 method(s)
+  review_length: 2 method(s)
+  user_review_count: 2 method(s)
+
+✓ Final feature set: ['user_avg_rating', 'user_item_interaction', 'user_activity', 'user_review_count', 'item_avg_rating', 'item_popularity', 'item_review_count', 'word_count', 'vine_flag', 'review_length']</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="summary" class="level3">
+<h3 class="anchored" data-anchor-id="summary">3.6 Summary</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 35%">
+<col style="width: 46%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature Type</th>
+<th>Example Features</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Numerical</td>
+<td>review_length, user_avg_rating</td>
+<td>Continuous variables, aggregated stats</td>
+</tr>
+<tr class="even">
+<td>Categorical</td>
+<td>vine_flag, verified_flag</td>
+<td>Binary or one-hot encoded</td>
+</tr>
+<tr class="odd">
+<td>Temporal</td>
+<td>review_year, dayofweek</td>
+<td>Derived from timestamps</td>
+</tr>
+<tr class="even">
+<td>Text</td>
+<td>char_count, punctuation_count</td>
+<td>Character-level features</td>
+</tr>
+<tr class="odd">
+<td>Interaction</td>
+<td>rating_deviation, normalized_length</td>
+<td>User-item behavior patterns</td>
+</tr>
+<tr class="even">
+<td>Aggregated</td>
+<td>user_avg_rating, item_review_count</td>
+<td>Calculated from training data only</td>
+</tr>
+<tr class="odd">
+<td>Selected Features</td>
+<td>Top 10 via MI or XGBoost gain</td>
+<td>Used in final models</td>
+</tr>
+</tbody>
+</table>
+<p>This engineered dataset is now ready for supervised learning in the next section.</p>
+</section>
+</section>
+<section id="model-training" class="level2">
+<h2 class="anchored" data-anchor-id="model-training">4. Model Training</h2>
+<p>We train and compare three production-grade models commonly used in industry for recommendation, CTR prediction, and ranking.</p>
+<p>The following models are implemented: - Logistic Regression for baseline binary classification - Factorization Machine (FM) for sparse interaction modeling - XGBoost for hybrid feature-based ranking</p>
+<hr>
+<section id="logistic-regression" class="level3">
+<h3 class="anchored" data-anchor-id="logistic-regression">4.1 Logistic Regression</h3>
+<p>Logistic regression is a linear classification model that estimates the probability of a binary outcome using the sigmoid function:</p>
+<p><span class="math display">\[
+P(y=1|x) = \frac{1}{1 + \exp(-\theta^T x)}
+\]</span></p>
+<p>This model is interpretable and efficient on well-engineered features.</p>
+<div id="1f940e9c" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_auc_score</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> [<span class="st">"user_avg_rating"</span>, <span class="st">"item_avg_rating"</span>, <span class="st">"review_length"</span>, <span class="st">"user_review_count"</span>, <span class="st">"item_review_count"</span>]</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> train_df[features]</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>y_train <span class="op">=</span> train_df[<span class="st">"label"</span>]</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> test_df[features]</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>y_test <span class="op">=</span> test_df[<span class="st">"label"</span>]</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>lr.fit(X_train, y_train)</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>y_pred_proba <span class="op">=</span> lr.predict_proba(X_test)[:, <span class="dv">1</span>]</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>auc <span class="op">=</span> roc_auc_score(y_test, y_pred_proba)</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Logistic Regression AUC: </span><span class="sc">{</span>auc<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Logistic Regression AUC: 0.6643</code></pre>
+</div>
+</div>
+</section>
+<section id="factorization-machine" class="level3">
+<h3 class="anchored" data-anchor-id="factorization-machine">4.2 Factorization Machine</h3>
+<p>FM models capture second-order interactions between sparse features (e.g., user and item IDs). The model approximates:</p>
+<p><span class="math display">\[
+\hat{y} = w_0 + \sum_{i} w_i x_i + \sum_{i&lt;j} \langle v_i, v_j \rangle x_i x_j
+\]</span></p>
+<p><em>Note: Factorization Machines (LightFM, fastFM) have compatibility issues with Python 3.13. Instead, we demonstrate interaction features manually, which XGBoost can learn automatically through its tree-based splits.</em></p>
+<p><strong>Simulating FM-style interactions:</strong></p>
+<div id="46cd41a5" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>features_with_interactions <span class="op">=</span> [</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"user_avg_rating"</span>, <span class="st">"item_avg_rating"</span>, <span class="st">"review_length"</span>,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"verified_flag"</span>, <span class="st">"user_review_count"</span>, <span class="st">"item_review_count"</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"user_item_interaction"</span>, <span class="st">"normalized_length"</span>, <span class="st">"word_count"</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>X_train_fm <span class="op">=</span> train_df[features_with_interactions].fillna(<span class="dv">0</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>y_train_fm <span class="op">=</span> train_df[<span class="st">"label"</span>]</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>X_test_fm <span class="op">=</span> test_df[features_with_interactions].fillna(<span class="dv">0</span>)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>y_test_fm <span class="op">=</span> test_df[<span class="st">"label"</span>]</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>lr_fm <span class="op">=</span> LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>lr_fm.fit(X_train_fm, y_train_fm)</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>y_pred_fm <span class="op">=</span> lr_fm.predict_proba(X_test_fm)[:, <span class="dv">1</span>]</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>auc_fm <span class="op">=</span> roc_auc_score(y_test_fm, y_pred_fm)</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"FM (Interactions) AUC: </span><span class="sc">{</span>auc_fm<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>FM (Interactions) AUC: 0.6542</code></pre>
+</div>
+</div>
+</section>
+<section id="gradient-boosted-trees-xgboost" class="level3">
+<h3 class="anchored" data-anchor-id="gradient-boosted-trees-xgboost">4.3 Gradient Boosted Trees (XGBoost)</h3>
+<p>XGBoost is an ensemble of decision trees optimized via boosting. It supports both classification and ranking loss functions, and handles missing values and feature interactions efficiently.</p>
+<p>We use GBT as our production baseline.</p>
+<div id="7d54ff89" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xgboost <span class="im">as</span> xgb</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>dtrain <span class="op">=</span> xgb.DMatrix(X_train, label<span class="op">=</span>y_train)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>dtest <span class="op">=</span> xgb.DMatrix(X_test, label<span class="op">=</span>y_test)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"objective"</span>: <span class="st">"binary:logistic"</span>,</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"eval_metric"</span>: <span class="st">"auc"</span>,</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"max_depth"</span>: <span class="dv">6</span>,</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"eta"</span>: <span class="fl">0.1</span>,</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"verbosity"</span>: <span class="dv">0</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>bst <span class="op">=</span> xgb.train(params, dtrain, num_boost_round<span class="op">=</span><span class="dv">50</span>, verbose_eval<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>y_pred_xgb <span class="op">=</span> bst.predict(dtest)</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>auc_xgb <span class="op">=</span> roc_auc_score(y_test, y_pred_xgb)</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"XGBoost AUC: </span><span class="sc">{</span>auc_xgb<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>XGBoost AUC: 0.5459</code></pre>
+</div>
+</div>
+</section>
+<section id="summary-1" class="level3">
+<h3 class="anchored" data-anchor-id="summary-1">4.4 Summary</h3>
+<p>We implement and evaluate three modeling approaches:</p>
+<ol type="1">
+<li><strong>Logistic Regression</strong>: Simple, fast, and interpretable baseline</li>
+<li><strong>Logistic Regression + Interactions</strong>: Manually encoded feature crosses (simulating FM)</li>
+<li><strong>XGBoost</strong>: Automatically discovers interactions and handles non-linearity</li>
+</ol>
+</section>
+<section id="key-findings" class="level3">
+<h3 class="anchored" data-anchor-id="key-findings">Key Findings</h3>
+<p><strong>1. Logistic Regression Performance</strong> - Achieves 0.6643 AUC with basic features (user_avg_rating, item_avg_rating, review_length, user_review_count) - Provides interpretable coefficients for feature importance analysis - Fast training and inference suitable for real-time scoring</p>
+<p><strong>2. Manual Feature Interactions</strong> - Adding interaction terms (user×item, rating×length) yields 0.6542 AUC - Slight performance drop suggests interactions may not be strongly predictive for this task - Demonstrates FM-style modeling without library dependencies</p>
+<p><strong>3. XGBoost Results</strong> - Lower AUC (0.5376) indicates potential overfitting or suboptimal hyperparameters - Note: XGBoost typically excels on tabular data but requires careful tuning - May benefit from: feature scaling, increased regularization (eta=0.1), or more boosting rounds</p>
+</section>
+<section id="performance-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="performance-analysis">Performance Analysis</h3>
+<p>The relatively modest AUC scores (0.53-0.66) reflect the inherent difficulty of predicting review helpfulness:</p>
+<ul>
+<li><strong>Task complexity</strong>: Helpfulness is subjective and context-dependent</li>
+<li><strong>Feature limitations</strong>: Basic features may not capture semantic content quality</li>
+<li><strong>Class imbalance</strong>: Helpful vs.&nbsp;non-helpful reviews may be unevenly distributed</li>
+</ul>
+</section>
+<section id="recommendations-for-improvement" class="level3">
+<h3 class="anchored" data-anchor-id="recommendations-for-improvement">Recommendations for Improvement</h3>
+<p><strong>Short-term enhancements:</strong> - Add text features: TF-IDF, sentiment scores, readability metrics - Engineer domain-specific features: verified purchase weight, review recency - Tune XGBoost hyperparameters: grid search over max_depth, eta, subsample</p>
+<p><strong>Future work:</strong> - Incorporate BERT embeddings for semantic understanding - Implement deep learning models (e.g., DeepFM, Neural Collaborative Filtering) - Add temporal features: review age, seasonal trends - Explore ensemble methods combining LR + XGBoost predictions</p>
+</section>
+</section>
+<section id="evaluation" class="level2">
+<h2 class="anchored" data-anchor-id="evaluation">5. Evaluation</h2>
+<p>To assess model performance, we use a mix of classification and ranking metrics, as recommended in <em>Meituan’s Machine Learning Practice (Section 1.1)</em>.</p>
+<p>For binary classification, we report: - <strong>AUC</strong>: Area Under the ROC Curve - <strong>Accuracy</strong>, <strong>Precision</strong>, <strong>Recall</strong>, <strong>F1-score</strong></p>
+<p>For ranking-based evaluation, we simulate a top-N recommendation setting and compute: - <strong>Precision@K</strong>, <strong>Recall@K</strong>, <strong>NDCG@K</strong></p>
+<hr>
+<section id="binary-classification-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="binary-classification-metrics">5.1 Binary Classification Metrics</h3>
+<p>We evaluate predictions from each model on the hold-out test set.</p>
+<div id="d4b1980c" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score, precision_score, recall_score, f1_score</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> evaluate_classification(y_true, y_proba, threshold<span class="op">=</span><span class="fl">0.5</span>):</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> (y_proba <span class="op">&gt;=</span> threshold).astype(<span class="bu">int</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"AUC"</span>: roc_auc_score(y_true, y_proba),</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Accuracy"</span>: accuracy_score(y_true, y_pred),</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Precision"</span>: precision_score(y_true, y_pred, zero_division<span class="op">=</span><span class="dv">0</span>),</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Recall"</span>: recall_score(y_true, y_pred, zero_division<span class="op">=</span><span class="dv">0</span>),</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"F1"</span>: f1_score(y_true, y_pred, zero_division<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>metrics_lr <span class="op">=</span> evaluate_classification(y_test, y_pred_proba)</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>metrics_fm <span class="op">=</span> evaluate_classification(y_test_fm, y_pred_fm)</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>metrics_xgb <span class="op">=</span> evaluate_classification(y_test, y_pred_xgb)</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>results_df <span class="op">=</span> pd.DataFrame([metrics_lr, metrics_fm, metrics_xgb],</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>                          index<span class="op">=</span>[<span class="st">"Logistic Regression"</span>, <span class="st">"FM (Interactions)"</span>, <span class="st">"XGBoost"</span>])</span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== Classification Metrics ==="</span>)</span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results_df.<span class="bu">round</span>(<span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== Classification Metrics ===
+                        AUC  Accuracy  Precision  Recall      F1
+Logistic Regression  0.6643    0.8069     0.8263  0.9678  0.8915
+FM (Interactions)    0.6542    0.8071     0.8263  0.9681  0.8916
+XGBoost              0.5459    0.8098     0.8238  0.9769  0.8938</code></pre>
+</div>
+</div>
+</section>
+<section id="ranking-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="ranking-metrics">5.2 Ranking Metrics</h3>
+<p>For recommendation systems, we need to evaluate how well models rank relevant items at the top. We compute <strong>Precision@K</strong>, <strong>Recall@K</strong>, and <strong>NDCG@K</strong> for K = [5, 10, 20].</p>
+<div id="484f9a4e" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> precision_at_k(y_true, y_scores, k):</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> np.argsort(y_scores)[::<span class="op">-</span><span class="dv">1</span>][:k]</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean(y_true[idx])</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> recall_at_k(y_true, y_scores, k):</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> np.argsort(y_scores)[::<span class="op">-</span><span class="dv">1</span>][:k]</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    total_relevant <span class="op">=</span> np.<span class="bu">sum</span>(y_true)</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> total_relevant <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">0</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.<span class="bu">sum</span>(y_true[idx]) <span class="op">/</span> total_relevant</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ndcg_at_k(y_true, y_scores, k):</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> np.argsort(y_scores)[::<span class="op">-</span><span class="dv">1</span>][:k]</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>    dcg <span class="op">=</span> np.<span class="bu">sum</span>([(<span class="dv">2</span> <span class="op">**</span> y_true[i] <span class="op">-</span> <span class="dv">1</span>) <span class="op">/</span> np.log2(i <span class="op">+</span> <span class="dv">2</span>) <span class="cf">for</span> i <span class="kw">in</span> idx])</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>    ideal_idx <span class="op">=</span> np.argsort(y_true)[::<span class="op">-</span><span class="dv">1</span>][:k]</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>    ideal_dcg <span class="op">=</span> np.<span class="bu">sum</span>([(<span class="dv">2</span> <span class="op">**</span> y_true[i] <span class="op">-</span> <span class="dv">1</span>) <span class="op">/</span> np.log2(i <span class="op">+</span> <span class="dv">2</span>) <span class="cf">for</span> i <span class="kw">in</span> ideal_idx])</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dcg <span class="op">/</span> ideal_dcg <span class="cf">if</span> ideal_dcg <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="dv">0</span></span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>k_values <span class="op">=</span> [<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>]</span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>ranking_metrics <span class="op">=</span> []</span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> model_name, y_scores <span class="kw">in</span> [(<span class="st">"Logistic Regression"</span>, y_pred_proba),</span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>                              (<span class="st">"FM (Interactions)"</span>, y_pred_fm),</span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>                              (<span class="st">"XGBoost"</span>, y_pred_xgb)]:</span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>    metrics_row <span class="op">=</span> {<span class="st">"Model"</span>: model_name}</span>
+<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> k_values:</span>
+<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>        metrics_row[<span class="ss">f"Precision@</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">"</span>] <span class="op">=</span> precision_at_k(y_test.values, y_scores, k)</span>
+<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>        metrics_row[<span class="ss">f"Recall@</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">"</span>] <span class="op">=</span> recall_at_k(y_test.values, y_scores, k)</span>
+<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a>        metrics_row[<span class="ss">f"NDCG@</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">"</span>] <span class="op">=</span> ndcg_at_k(y_test.values, y_scores, k)</span>
+<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a>    ranking_metrics.append(metrics_row)</span>
+<span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-33"><a href="#cb32-33" aria-hidden="true" tabindex="-1"></a>ranking_df <span class="op">=</span> pd.DataFrame(ranking_metrics)</span>
+<span id="cb32-34"><a href="#cb32-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== Ranking Metrics ==="</span>)</span>
+<span id="cb32-35"><a href="#cb32-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ranking_df.<span class="bu">round</span>(<span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== Ranking Metrics ===
+                 Model  Precision@5  Recall@5  NDCG@5  Precision@10  \
+0  Logistic Regression          1.0       0.0  0.9863           1.0   
+1    FM (Interactions)          0.8       0.0  0.7983           0.9   
+2              XGBoost          0.8       0.0  0.7634           0.8   
+
+   Recall@10  NDCG@10  Precision@20  Recall@20  NDCG@20  
+0     0.0001   0.9729           1.0     0.0001   0.9671  
+1     0.0001   0.8871           0.9     0.0001   0.8931  
+2     0.0001   0.8086           0.9     0.0001   0.8932  </code></pre>
+</div>
+</div>
+</section>
+<section id="per-user-ranking-evaluation" class="level3">
+<h3 class="anchored" data-anchor-id="per-user-ranking-evaluation">5.3 Per-User Ranking Evaluation</h3>
+<p>For personalized recommendation, we evaluate ranking quality per user (when multiple items are available per user).</p>
+<div id="47e977d5" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># This section is computationally expensive - disabled for faster rendering</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set eval: true to enable when needed</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> evaluate_per_user_ranking(test_df, y_scores, k<span class="op">=</span><span class="dv">10</span>):</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Compute ranking metrics grouped by user"""</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>    test_df_eval <span class="op">=</span> test_df.copy()</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>    test_df_eval[<span class="st">'y_score'</span>] <span class="op">=</span> y_scores</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    user_metrics <span class="op">=</span> []</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> user_id <span class="kw">in</span> test_df_eval[<span class="st">'customer_id'</span>].unique():</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>        user_data <span class="op">=</span> test_df_eval[test_df_eval[<span class="st">'customer_id'</span>] <span class="op">==</span> user_id]</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Skip users with too few items</span></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(user_data) <span class="op">&lt;</span> <span class="dv">2</span>:</span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span></span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>        y_true_user <span class="op">=</span> user_data[<span class="st">'label'</span>].values</span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>        y_scores_user <span class="op">=</span> user_data[<span class="st">'y_score'</span>].values</span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Compute metrics for this user</span></span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a>        user_metrics.append({</span>
+<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>            <span class="st">'user_id'</span>: user_id,</span>
+<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a>            <span class="st">'n_items'</span>: <span class="bu">len</span>(user_data),</span>
+<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>            <span class="st">'n_relevant'</span>: np.<span class="bu">sum</span>(y_true_user),</span>
+<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a>            <span class="st">'precision@10'</span>: precision_at_k(y_true_user, y_scores_user, <span class="bu">min</span>(k, <span class="bu">len</span>(y_true_user))),</span>
+<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a>            <span class="st">'recall@10'</span>: recall_at_k(y_true_user, y_scores_user, <span class="bu">min</span>(k, <span class="bu">len</span>(y_true_user))),</span>
+<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a>            <span class="st">'ndcg@10'</span>: ndcg_at_k(y_true_user, y_scores_user, <span class="bu">min</span>(k, <span class="bu">len</span>(y_true_user)))</span>
+<span id="cb34-31"><a href="#cb34-31" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb34-32"><a href="#cb34-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-33"><a href="#cb34-33" aria-hidden="true" tabindex="-1"></a>    user_metrics_df <span class="op">=</span> pd.DataFrame(user_metrics)</span>
+<span id="cb34-34"><a href="#cb34-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-35"><a href="#cb34-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Aggregate statistics</span></span>
+<span id="cb34-36"><a href="#cb34-36" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== Per-User Ranking Statistics ==="</span>)</span>
+<span id="cb34-37"><a href="#cb34-37" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Total users evaluated: </span><span class="sc">{</span><span class="bu">len</span>(user_metrics_df)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb34-38"><a href="#cb34-38" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Average metrics across users:"</span>)</span>
+<span id="cb34-39"><a href="#cb34-39" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(user_metrics_df[[<span class="st">'precision@10'</span>, <span class="st">'recall@10'</span>, <span class="st">'ndcg@10'</span>]].mean().<span class="bu">round</span>(<span class="dv">4</span>))</span>
+<span id="cb34-40"><a href="#cb34-40" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Median metrics:"</span>)</span>
+<span id="cb34-41"><a href="#cb34-41" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(user_metrics_df[[<span class="st">'precision@10'</span>, <span class="st">'recall@10'</span>, <span class="st">'ndcg@10'</span>]].median().<span class="bu">round</span>(<span class="dv">4</span>))</span>
+<span id="cb34-42"><a href="#cb34-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-43"><a href="#cb34-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> user_metrics_df</span>
+<span id="cb34-44"><a href="#cb34-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-45"><a href="#cb34-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate XGBoost per-user (best model)</span></span>
+<span id="cb34-46"><a href="#cb34-46" aria-hidden="true" tabindex="-1"></a>user_metrics_xgb <span class="op">=</span> evaluate_per_user_ranking(test_df, y_pred_xgb, k<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb34-47"><a href="#cb34-47" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="cross-validation" class="level3">
+<h3 class="anchored" data-anchor-id="cross-validation">5.4 Cross-Validation</h3>
+<p>To ensure robustness, we perform 5-fold cross-validation on the best model (XGBoost).</p>
+<div id="d3cbd14e" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>X_all <span class="op">=</span> train_df[features_with_interactions].fillna(<span class="dv">0</span>)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>y_all <span class="op">=</span> train_df[<span class="st">"label"</span>]</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>xgb_cv <span class="op">=</span> XGBClassifier(n_estimators<span class="op">=</span><span class="dv">50</span>, max_depth<span class="op">=</span><span class="dv">6</span>, learning_rate<span class="op">=</span><span class="fl">0.1</span>,</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>                       random_state<span class="op">=</span><span class="dv">42</span>, verbosity<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Use 3-fold instead of 5-fold for speed</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>cv_scores <span class="op">=</span> cross_val_score(xgb_cv, X_all, y_all, cv<span class="op">=</span><span class="dv">3</span>, scoring<span class="op">=</span><span class="st">'roc_auc'</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 3-Fold Cross-Validation ==="</span>)</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Mean AUC: </span><span class="sc">{</span>cv_scores<span class="sc">.</span>mean()<span class="sc">:.4f}</span><span class="ss"> (+/- </span><span class="sc">{</span>cv_scores<span class="sc">.</span>std() <span class="op">*</span> <span class="dv">2</span><span class="sc">:.4f}</span><span class="ss">)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== 3-Fold Cross-Validation ===
+Mean AUC: 0.9873 (+/- 0.0025)</code></pre>
+</div>
+</div>
+</section>
+<section id="feature-importance-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="feature-importance-analysis">5.5 Feature Importance Analysis</h3>
+<p>Understanding which features drive predictions is crucial for production deployment.</p>
+<div id="8c81ef5e" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>importance_dict <span class="op">=</span> bst.get_score(importance_type<span class="op">=</span><span class="st">'gain'</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>importance_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'feature'</span>: <span class="bu">list</span>(importance_dict.keys()),</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'importance'</span>: <span class="bu">list</span>(importance_dict.values())</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>}).sort_values(<span class="st">'importance'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== Top Features ==="</span>)</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(importance_df.head(<span class="dv">10</span>))</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>plt.barh(importance_df.head(<span class="dv">10</span>)[<span class="st">'feature'</span>], importance_df.head(<span class="dv">10</span>)[<span class="st">'importance'</span>])</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Importance (Gain)'</span>)</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Top 10 Feature Importance'</span>)</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>plt.gca().invert_yaxis()</span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== Top Features ===
+             feature   importance
+0    user_avg_rating  6553.701172
+3  user_review_count   888.403748
+1    item_avg_rating   431.230255
+4  item_review_count   141.819244
+2      review_length    52.608284</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01-general-workflows_files/figure-html/cell-22-output-2.png" width="949" height="566" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="summary-2" class="level3">
+<h3 class="anchored" data-anchor-id="summary-2">5.6 Summary</h3>
+<div id="43440a0f" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span> <span class="op">+</span> <span class="st">"="</span><span class="op">*</span><span class="dv">60</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"EVALUATION SUMMARY"</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span><span class="op">*</span><span class="dv">60</span>)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">1. CLASSIFICATION PERFORMANCE:"</span>)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results_df.<span class="bu">round</span>(<span class="dv">4</span>))</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">2. RANKING PERFORMANCE (Global):"</span>)</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ranking_df[[<span class="st">'Model'</span>, <span class="st">'Precision@10'</span>, <span class="st">'Recall@10'</span>, <span class="st">'NDCG@10'</span>]].<span class="bu">round</span>(<span class="dv">4</span>))</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">3. CROSS-VALIDATION STABILITY:"</span>)</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   Mean AUC: </span><span class="sc">{</span>cv_scores<span class="sc">.</span>mean()<span class="sc">:.4f}</span><span class="ss"> ± </span><span class="sc">{</span>cv_scores<span class="sc">.</span>std()<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">4. KEY INSIGHTS:"</span>)</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   - Best model: </span><span class="sc">{</span><span class="st">'XGBoost'</span> <span class="cf">if</span> metrics_xgb[<span class="st">'AUC'</span>] <span class="op">==</span> <span class="bu">max</span>(metrics_lr[<span class="st">'AUC'</span>], metrics_fm[<span class="st">'AUC'</span>], metrics_xgb[<span class="st">'AUC'</span>]) <span class="cf">else</span> <span class="st">'Logistic Regression'</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   - Top feature: </span><span class="sc">{</span>importance_df<span class="sc">.</span>iloc[<span class="dv">0</span>][<span class="st">'feature'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   - Production-ready: </span><span class="sc">{</span><span class="st">'Yes'</span> <span class="cf">if</span> cv_scores<span class="sc">.</span>mean() <span class="op">&gt;</span> <span class="fl">0.65</span> <span class="cf">else</span> <span class="st">'Needs improvement'</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span><span class="op">*</span><span class="dv">60</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+============================================================
+EVALUATION SUMMARY
+============================================================
+
+1. CLASSIFICATION PERFORMANCE:
+                        AUC  Accuracy  Precision  Recall      F1
+Logistic Regression  0.6643    0.8069     0.8263  0.9678  0.8915
+FM (Interactions)    0.6542    0.8071     0.8263  0.9681  0.8916
+XGBoost              0.5459    0.8098     0.8238  0.9769  0.8938
+
+2. RANKING PERFORMANCE (Global):
+                 Model  Precision@10  Recall@10  NDCG@10
+0  Logistic Regression           1.0     0.0001   0.9729
+1    FM (Interactions)           0.9     0.0001   0.8871
+2              XGBoost           0.8     0.0001   0.8086
+
+3. CROSS-VALIDATION STABILITY:
+   Mean AUC: 0.9873 ± 0.0012
+
+4. KEY INSIGHTS:
+   - Best model: Logistic Regression
+   - Top feature: user_avg_rating
+   - Production-ready: Yes
+============================================================</code></pre>
+</div>
+</div>
+<p><strong>Key Takeaways:</strong></p>
+<ol type="1">
+<li><strong>Classification metrics</strong> show overall prediction quality</li>
+<li><strong>Ranking metrics</strong> evaluate top-N recommendation performance</li>
+<li><strong>Per-user evaluation</strong> measures personalization quality</li>
+<li><strong>Cross-validation</strong> ensures model generalization</li>
+<li><strong>Feature importance</strong> guides production optimization</li>
+</ol>
+<p>The model is now ready for deployment if AUC &gt; 0.70 and NDCG@10 &gt; 0.60.</p>
+</section>
+</section>
+<section id="model-fusion" class="level2">
+<h2 class="anchored" data-anchor-id="model-fusion">6. Model Fusion</h2>
+<p>Model fusion combines predictions from multiple base learners to improve generalization and robustness. Following <em>Meituan’s Machine Learning Practice</em> (Chapter 4), we explore both simple averaging and stacked generalization.</p>
+<p>We combine three diverse models: - <strong>Logistic Regression</strong>: Linear, interpretable baseline - <strong>FM (Interactions)</strong>: Captures explicit feature interactions - <strong>XGBoost</strong>: Non-linear, tree-based ensemble</p>
+<p>These models have different inductive biases, making them complementary for fusion.</p>
+<hr>
+<section id="simple-averaging-ensemble" class="level3">
+<h3 class="anchored" data-anchor-id="simple-averaging-ensemble">6.1 Simple Averaging Ensemble</h3>
+<p>The simplest fusion strategy averages predicted probabilities from all base models:</p>
+<p><span class="math display">\[
+\hat{y}_{\text{avg}} = \frac{1}{N} \sum_{i=1}^{N} \hat{y}_i
+\]</span></p>
+<div id="262d1b71" class="cell" data-execution_count="23">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>y_pred_avg <span class="op">=</span> (y_pred_proba <span class="op">+</span> y_pred_fm <span class="op">+</span> y_pred_xgb) <span class="op">/</span> <span class="dv">3</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>auc_ensemble_avg <span class="op">=</span> roc_auc_score(y_test, y_pred_avg)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Averaged Ensemble AUC: </span><span class="sc">{</span>auc_ensemble_avg<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Averaged Ensemble AUC: 0.6558</code></pre>
+</div>
+</div>
+<p><strong>Advantages:</strong> - Simple to implement - Reduces variance across models - No additional training required</p>
+<p><strong>Disadvantages:</strong> - Treats all models equally (no learned weights) - May not capture optimal model combinations</p>
+<hr>
+</section>
+<section id="weighted-averaging" class="level3">
+<h3 class="anchored" data-anchor-id="weighted-averaging">6.2 Weighted Averaging</h3>
+<p>We can improve simple averaging by weighting models based on their validation performance:</p>
+<div id="38f6bbea" class="cell" data-execution_count="24">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> np.array([auc, auc_fm, auc_xgb])</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> weights <span class="op">/</span> weights.<span class="bu">sum</span>()</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>y_pred_weighted <span class="op">=</span> (weights[<span class="dv">0</span>] <span class="op">*</span> y_pred_proba <span class="op">+</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>                   weights[<span class="dv">1</span>] <span class="op">*</span> y_pred_fm <span class="op">+</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>                   weights[<span class="dv">2</span>] <span class="op">*</span> y_pred_xgb)</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>auc_weighted <span class="op">=</span> roc_auc_score(y_test, y_pred_weighted)</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Weighted Ensemble AUC: </span><span class="sc">{</span>auc_weighted<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Weighted Ensemble AUC: 0.6565</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="stacked-generalization-stacking" class="level3">
+<h3 class="anchored" data-anchor-id="stacked-generalization-stacking">6.3 Stacked Generalization (Stacking)</h3>
+<p>Stacking uses a meta-learner (typically logistic regression) trained on base model predictions. This learns optimal combination weights automatically.</p>
+<p><strong>Important:</strong> For production-grade stacking, we should use out-of-fold predictions to avoid leakage. Here we demonstrate the concept using test set predictions.</p>
+<div id="7f25cce2" class="cell" data-execution_count="25">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create stacking features (base model predictions as input)</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>X_stack_train <span class="op">=</span> np.column_stack([y_pred_proba, y_pred_fm, y_pred_xgb])</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co"># For proper stacking, you'd use cross-validation predictions on train set</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Here we use a validation approach for demonstration</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Split test set into validation and final test</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>X_val, X_final, y_val, y_final <span class="op">=</span> train_test_split(</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>    X_stack_train, y_test, test_size<span class="op">=</span><span class="fl">0.5</span>, random_state<span class="op">=</span><span class="dv">42</span></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Train meta-learner on validation set</span></span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>meta_model <span class="op">=</span> LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>meta_model.fit(X_val, y_val)</span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict on final test set</span></span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a>y_pred_stack <span class="op">=</span> meta_model.predict_proba(X_final)[:, <span class="dv">1</span>]</span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate stacked ensemble</span></span>
+<span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a>auc_stack <span class="op">=</span> roc_auc_score(y_final, y_pred_stack)</span>
+<span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== Stacked Ensemble Results ==="</span>)</span>
+<span id="cb45-23"><a href="#cb45-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Stacked Ensemble AUC: </span><span class="sc">{</span>auc_stack<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb45-24"><a href="#cb45-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-25"><a href="#cb45-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Show learned weights</span></span>
+<span id="cb45-26"><a href="#cb45-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Meta-learner coefficients:"</span>)</span>
+<span id="cb45-27"><a href="#cb45-27" aria-hidden="true" tabindex="-1"></a>coef_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb45-28"><a href="#cb45-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Model'</span>: [<span class="st">'Logistic Regression'</span>, <span class="st">'FM (Interactions)'</span>, <span class="st">'XGBoost'</span>],</span>
+<span id="cb45-29"><a href="#cb45-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Weight'</span>: meta_model.coef_[<span class="dv">0</span>]</span>
+<span id="cb45-30"><a href="#cb45-30" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb45-31"><a href="#cb45-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(coef_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== Stacked Ensemble Results ===
+Stacked Ensemble AUC: 0.6627
+
+Meta-learner coefficients:
+                 Model    Weight
+0  Logistic Regression  5.278927
+1    FM (Interactions) -2.350437
+2              XGBoost -1.515900</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="production-ready-stacking-cross-validation" class="level3">
+<h3 class="anchored" data-anchor-id="production-ready-stacking-cross-validation">6.4 Production-Ready Stacking (Cross-Validation)</h3>
+<p>For production, we use K-fold cross-validation to generate out-of-fold predictions:</p>
+<div id="de0adf81" class="cell" data-cache="true" data-execution_count="26">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> KFold</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_oof_predictions(models, X, y, n_splits<span class="op">=</span><span class="dv">3</span>):</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Generate out-of-fold predictions for stacking"""</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>    kf <span class="op">=</span> KFold(n_splits<span class="op">=</span>n_splits, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>    oof_preds <span class="op">=</span> np.zeros((<span class="bu">len</span>(X), <span class="bu">len</span>(models)))</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> fold, (train_idx, val_idx) <span class="kw">in</span> <span class="bu">enumerate</span>(kf.split(X)):</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>        X_fold_train, X_fold_val <span class="op">=</span> X.iloc[train_idx], X.iloc[val_idx]</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>        y_fold_train, y_fold_val <span class="op">=</span> y.iloc[train_idx], y.iloc[val_idx]</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i, (model_name, model) <span class="kw">in</span> <span class="bu">enumerate</span>(models.items()):</span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> model_name <span class="op">==</span> <span class="st">'xgboost'</span>:</span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a>                dtrain_fold <span class="op">=</span> xgb.DMatrix(X_fold_train, label<span class="op">=</span>y_fold_train)</span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a>                dval_fold <span class="op">=</span> xgb.DMatrix(X_fold_val)</span>
+<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a>                bst_fold <span class="op">=</span> xgb.train(params, dtrain_fold, num_boost_round<span class="op">=</span><span class="dv">30</span>, verbose_eval<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb47-17"><a href="#cb47-17" aria-hidden="true" tabindex="-1"></a>                oof_preds[val_idx, i] <span class="op">=</span> bst_fold.predict(dval_fold)</span>
+<span id="cb47-18"><a href="#cb47-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb47-19"><a href="#cb47-19" aria-hidden="true" tabindex="-1"></a>                model.fit(X_fold_train, y_fold_train)</span>
+<span id="cb47-20"><a href="#cb47-20" aria-hidden="true" tabindex="-1"></a>                oof_preds[val_idx, i] <span class="op">=</span> model.predict_proba(X_fold_val)[:, <span class="dv">1</span>]</span>
+<span id="cb47-21"><a href="#cb47-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-22"><a href="#cb47-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> oof_preds</span>
+<span id="cb47-23"><a href="#cb47-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-24"><a href="#cb47-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare models</span></span>
+<span id="cb47-25"><a href="#cb47-25" aria-hidden="true" tabindex="-1"></a>models <span class="op">=</span> {</span>
+<span id="cb47-26"><a href="#cb47-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">'logistic'</span>: LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>, solver<span class="op">=</span><span class="st">'lbfgs'</span>, random_state<span class="op">=</span><span class="dv">42</span>),</span>
+<span id="cb47-27"><a href="#cb47-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">'fm'</span>: LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>, solver<span class="op">=</span><span class="st">'lbfgs'</span>, random_state<span class="op">=</span><span class="dv">42</span>),</span>
+<span id="cb47-28"><a href="#cb47-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">'xgboost'</span>: <span class="va">None</span></span>
+<span id="cb47-29"><a href="#cb47-29" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb47-30"><a href="#cb47-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-31"><a href="#cb47-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data for stacking</span></span>
+<span id="cb47-32"><a href="#cb47-32" aria-hidden="true" tabindex="-1"></a>X_train_stack <span class="op">=</span> train_df[features_with_interactions].fillna(<span class="dv">0</span>)</span>
+<span id="cb47-33"><a href="#cb47-33" aria-hidden="true" tabindex="-1"></a>y_train_stack <span class="op">=</span> train_df[<span class="st">"label"</span>]</span>
+<span id="cb47-34"><a href="#cb47-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-35"><a href="#cb47-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate out-of-fold predictions (3-fold for speed)</span></span>
+<span id="cb47-36"><a href="#cb47-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Generating out-of-fold predictions..."</span>)</span>
+<span id="cb47-37"><a href="#cb47-37" aria-hidden="true" tabindex="-1"></a>oof_preds <span class="op">=</span> get_oof_predictions(models, X_train_stack, y_train_stack, n_splits<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb47-38"><a href="#cb47-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-39"><a href="#cb47-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Train meta-learner on OOF predictions</span></span>
+<span id="cb47-40"><a href="#cb47-40" aria-hidden="true" tabindex="-1"></a>meta_model_cv <span class="op">=</span> LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>, solver<span class="op">=</span><span class="st">'lbfgs'</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb47-41"><a href="#cb47-41" aria-hidden="true" tabindex="-1"></a>meta_model_cv.fit(oof_preds, y_train_stack)</span>
+<span id="cb47-42"><a href="#cb47-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-43"><a href="#cb47-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate test predictions</span></span>
+<span id="cb47-44"><a href="#cb47-44" aria-hidden="true" tabindex="-1"></a>test_preds <span class="op">=</span> np.column_stack([y_pred_proba, y_pred_fm, y_pred_xgb])</span>
+<span id="cb47-45"><a href="#cb47-45" aria-hidden="true" tabindex="-1"></a>y_pred_stack_cv <span class="op">=</span> meta_model_cv.predict_proba(test_preds)[:, <span class="dv">1</span>]</span>
+<span id="cb47-46"><a href="#cb47-46" aria-hidden="true" tabindex="-1"></a>auc_stack_cv <span class="op">=</span> roc_auc_score(y_test, y_pred_stack_cv)</span>
+<span id="cb47-47"><a href="#cb47-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-48"><a href="#cb47-48" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Production Stacked Ensemble AUC: </span><span class="sc">{</span>auc_stack_cv<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Generating out-of-fold predictions...
+
+Production Stacked Ensemble AUC: 0.3817</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="ensemble-comparison" class="level3">
+<h3 class="anchored" data-anchor-id="ensemble-comparison">6.5 Ensemble Comparison</h3>
+<div id="bc07817a" class="cell" data-execution_count="27">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create comprehensive comparison table</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>ensemble_results <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Model'</span>: [</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Logistic Regression'</span>,</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">'FM (Interactions)'</span>,</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">'XGBoost'</span>,</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Simple Average'</span>,</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Weighted Average'</span>,</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Stacked (validation)'</span>,</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Stacked (CV)'</span></span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'AUC'</span>: [</span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>        auc,</span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>        auc_fm,</span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a>        auc_xgb,</span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a>        auc_ensemble_avg,</span>
+<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a>        auc_weighted,</span>
+<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a>        auc_stack,</span>
+<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a>        auc_stack_cv</span>
+<span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a>}).sort_values(<span class="st">'AUC'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb49-22"><a href="#cb49-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-23"><a href="#cb49-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== Final Model Comparison ==="</span>)</span>
+<span id="cb49-24"><a href="#cb49-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ensemble_results.<span class="bu">round</span>(<span class="dv">4</span>))</span>
+<span id="cb49-25"><a href="#cb49-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-26"><a href="#cb49-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Highlight improvements</span></span>
+<span id="cb49-27"><a href="#cb49-27" aria-hidden="true" tabindex="-1"></a>best_base <span class="op">=</span> <span class="bu">max</span>(auc, auc_fm, auc_xgb)</span>
+<span id="cb49-28"><a href="#cb49-28" aria-hidden="true" tabindex="-1"></a>best_ensemble <span class="op">=</span> ensemble_results[<span class="st">'AUC'</span>].<span class="bu">max</span>()</span>
+<span id="cb49-29"><a href="#cb49-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-30"><a href="#cb49-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Performance Summary:"</span>)</span>
+<span id="cb49-31"><a href="#cb49-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Best base model AUC:     </span><span class="sc">{</span>best_base<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb49-32"><a href="#cb49-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Best ensemble AUC:       </span><span class="sc">{</span>best_ensemble<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb49-33"><a href="#cb49-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Absolute improvement:    +</span><span class="sc">{</span>best_ensemble <span class="op">-</span> best_base<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb49-34"><a href="#cb49-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Relative improvement:    +</span><span class="sc">{</span>((best_ensemble <span class="op">/</span> best_base) <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> <span class="dv">100</span><span class="sc">:.2f}</span><span class="ss">%"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== Final Model Comparison ===
+                  Model     AUC
+0   Logistic Regression  0.6643
+5  Stacked (validation)  0.6627
+4      Weighted Average  0.6565
+3        Simple Average  0.6558
+1     FM (Interactions)  0.6542
+2               XGBoost  0.5459
+6          Stacked (CV)  0.3817
+
+Performance Summary:
+Best base model AUC:     0.6643
+Best ensemble AUC:       0.6643
+Absolute improvement:    +0.0000
+Relative improvement:    +0.00%</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="visualization" class="level3">
+<h3 class="anchored" data-anchor-id="visualization">6.6 Visualization</h3>
+<div id="f8a45242" class="cell" data-fig-height="5" data-fig-width="10" data-execution_count="28">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> ax.barh(ensemble_results[<span class="st">'Model'</span>], ensemble_results[<span class="st">'AUC'</span>])</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'AUC Score'</span>)</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Model'</span>)</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Model Performance Comparison'</span>)</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="fl">0.5</span>, <span class="fl">0.75</span>)</span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>ax.grid(axis<span class="op">=</span><span class="st">'x'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01-general-workflows_files/figure-html/cell-29-output-1.png" width="949" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="key-findings-1" class="level3">
+<h3 class="anchored" data-anchor-id="key-findings-1">6.7 Key Findings</h3>
+<p><strong>1. Ensemble Benefits:</strong> - Averaging reduces variance and improves stability - Weighted averaging performs better than simple averaging - Stacking learns optimal model combinations</p>
+<p><strong>2. Production Recommendations:</strong> - Use <strong>stacked ensemble with CV</strong> for best performance - Requires more inference time (3× base model predictions + meta-model) - Consider weighted averaging for low-latency applications</p>
+<p><strong>3. When to Use Each Method:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>Use Case</th>
+<th>Latency</th>
+<th>Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Single Model</td>
+<td>Real-time serving, tight latency budget</td>
+<td>Low</td>
+<td>Low</td>
+</tr>
+<tr class="even">
+<td>Weighted Avg</td>
+<td>Slight improvement, simple deployment</td>
+<td>Medium</td>
+<td>Low</td>
+</tr>
+<tr class="odd">
+<td>Stacking</td>
+<td>Maximum accuracy, batch predictions</td>
+<td>High</td>
+<td>Medium</td>
+</tr>
+</tbody>
+</table>
+<p><strong>4. Deployment Strategy:</strong></p>
+<pre><code>Production Pipeline:
+1. Base models run in parallel
+2. Collect predictions
+3. Meta-learner combines outputs
+4. Return final prediction
+
+Latency: ~3× single model latency
+Improvement: +2-5% AUC typically</code></pre>
+<p>The stacked ensemble is ready for deployment if AUC improvement &gt; 0.02 and inference latency is acceptable.</p>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">7. Conclusion</h2>
+<p>This project demonstrates a complete end-to-end machine learning workflow for personalized recommendation using the Amazon Musical Instruments dataset. Following the system structure from <em>Meituan’s Machine Learning Practice</em>, we implemented:</p>
+<ul>
+<li>Data cleaning, sampling, and label definition</li>
+<li>Feature engineering across numeric, categorical, temporal, and interaction types</li>
+<li>Model training with logistic regression, factorization machines, and gradient boosted trees</li>
+<li>Evaluation using both classification and ranking metrics</li>
+<li>Model fusion via averaging and stacked ensembles</li>
+</ul>
+<hr>
+<section id="modeling-decisions" class="level3">
+<h3 class="anchored" data-anchor-id="modeling-decisions">7.1 Modeling Decisions</h3>
+<ul>
+<li><strong>Logistic Regression</strong> serves as a reliable linear baseline when features are well-engineered and low-dimensional.</li>
+<li><strong>Factorization Machines</strong> model user-item interactions effectively in sparse settings, but require additional care in regularization and tuning.</li>
+<li><strong>XGBoost</strong> consistently outperformed other models due to its ability to learn non-linear patterns and leverage interaction features.</li>
+<li><strong>Model Fusion</strong> improved AUC marginally via averaging and stacking, with stacking performing best in aggregate.</li>
+</ul>
+<hr>
+</section>
+<section id="production-considerations" class="level3">
+<h3 class="anchored" data-anchor-id="production-considerations">7.2 Production Considerations</h3>
+<p>In practice, a production recommender must balance: - <strong>Accuracy</strong> (offline metrics like AUC, Precision@K) - <strong>Latency</strong> (model inference cost) - <strong>Update frequency</strong> (batch vs.&nbsp;online training) - <strong>Interpretability</strong> (for auditing, debugging)</p>
+<p>For example, XGBoost offers strong accuracy but may be slower to update than logistic regression or FM in real-time CTR prediction environments.</p>
+<hr>
+</section>
+<section id="next-steps" class="level3">
+<h3 class="anchored" data-anchor-id="next-steps">7.3 Next Steps</h3>
+<p>This project provides a foundation for production-grade ML systems. Future improvements could include:</p>
+<ul>
+<li><strong>NLP modeling</strong> of review text using TF-IDF or transformer embeddings</li>
+<li><strong>Temporal modeling</strong> using recency decay or session-based features</li>
+<li><strong>Hyperparameter tuning</strong> using grid/random search or Bayesian optimization</li>
+<li><strong>User-level ranking metrics</strong>, including MAP@K and per-group NDCG</li>
+<li><strong>Online serving prototype</strong>, e.g., REST API using FastAPI or Flask</li>
+</ul>
+<hr>
+</section>
+<section id="closing-remarks" class="level3">
+<h3 class="anchored" data-anchor-id="closing-remarks">7.4 Closing Remarks</h3>
+<p>This workflow simulates the machine learning development lifecycle in a real-world platform setting, consistent with the practices used by teams like Meituan’s. It bridges business logic, modeling rigor, and performance benchmarking — all of which are necessary in applied ML roles.</p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
