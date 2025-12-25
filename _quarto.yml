@@ -14,6 +14,8 @@ website:
         text: Projects
       - href: certificates.qmd
         text: Certificates
+      - href: Industry-Applications/
+        text: Industry Applications
 
 format:
   html:

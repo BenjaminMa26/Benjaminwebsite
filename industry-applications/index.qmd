@@ -1,0 +1,31 @@
+---
+title: "Industry Applications"
+format: html
+page-layout: full
+---
+
+This section presents applied machine learning systems inspired by production environments, particularly those documented in *Meituan’s Machine Learning Practice*. Projects are organized by domain and reflect real-world workflows such as feature engineering, search ranking, ad optimization, and deployment-oriented deep learning.
+
+Each project emphasizes practical problem solving, systems thinking, and performance evaluation in context.
+
+## Sections
+
+### General ML Workflows
+[01-general-workflows.qmd](01-general-workflows.qmd)
+End-to-end ML pipelines, problem formulation, model evaluation, and ensemble methods.
+
+### Data Mining and User Profiling
+[02-data-mining.qmd](02-data-mining.qmd)
+User segmentation, POI linking, and opinion mining using structured and unstructured data.
+
+### Search and Recommendation Systems
+[03-search-and-recommendation.qmd](03-search-and-recommendation.qmd)
+Learning-to-rank models, semantic query understanding, and personalized recommendation strategies.
+
+### Computational Advertising
+[04-computational-advertising.qmd](04-computational-advertising.qmd)
+Bidding algorithms, targeting systems, and business-value aligned optimization in ad delivery.
+
+### Deep Learning Applications
+[05-deep-learning.qmd](05-deep-learning.qmd)
+Applied deep learning for text, vision, and relevance modeling in large-scale service systems.
