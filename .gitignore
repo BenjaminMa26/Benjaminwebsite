@@ -19,3 +19,22 @@ industry-applications/data/*.csv
 *.h5
 *.pkl
 # Type this and press Enter:
+# Ignore R metadata files
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# Ignore Quarto notebooks
+**/*.quarto_ipynb
+
+# Ignore large datasets and artifacts
+industry-applications/data/*.tsv
+industry-applications/data/*.csv
+*.h5
+*.pkl
+
+# Allow specific tracked files
+!industry-applications/data/README.md
+
+
