@@ -1,3 +1,14 @@
+---
+title: "Project 4: Market Mapping through PCA"
+description: "Apply Principal Component Analysis (PCA) for market dimension reduction."
+date: 2025-12-24
+format: html
+categories: [PCA, dimensionality reduction, visualization]
+---
+
+
+
+
 # Project 4: Market Mapping through PCA
 
 ##  Project Overview
@@ -19,23 +30,23 @@ Over time, how does the relationship between hand size and phone size evolve?
 library(tidyverse)
 library(ggrepel)
 cust_dat <- read_csv("./smartphone_customer_data.csv")
-#map phones in 1D attribute space based on their screen sizes 
+#map phones in 1D attribute space based on their screen sizes
 
 # create a small dataset with one row per phone
-    sub <- cust_dat |> 
-            select(years_ago, brand, screen_size, size_cat, phone_id) |> 
-            arrange(years_ago, brand, screen_size, size_cat, phone_id) |> 
+    sub <- cust_dat |>
+            select(years_ago, brand, screen_size, size_cat, phone_id) |>
+            arrange(years_ago, brand, screen_size, size_cat, phone_id) |>
             distinct()
    head(sub)
   # plot phones by size, one facet per year
-    ggplot(sub, aes(x=screen_size, y=0)) +        
+    ggplot(sub, aes(x=screen_size, y=0)) +
         facet_grid(rows=vars(years_ago)) +        # facet_grid to create separate plots by years_ago
-        geom_point(size=2) +                      
+        geom_point(size=2) +
         geom_hline(yintercept=0) +                # horizontal line at y=0
         geom_text_repel(aes(label=phone_id)) +    # using ggrepel package, adds texts to points
         theme_bw()                                # theme
-    
-    
+
+
 ```
 ##   Summary
 In this one-dimensional analysis, several key trends are evident:
@@ -45,13 +56,13 @@ Not only are the phones getting larger each year, but the variability in phone s
 Despite these changes in size, the relative ordering of phones by size remains stable from year to year.
 
 
-# In-Depth Analysis 
+# In-Depth Analysis
 
 We will calculate the average hand size per phone, treating it as an unobserved product attribute. This metric will help us understand how different phone models potentially cater to varying consumer physical preferences, providing deeper insights into product design and market positioning strategies.
 ```{r}
- sub <- cust_dat |> 
-            group_by(years_ago, brand, screen_size, size_cat, phone_id) |> 
-            summarize(mhs = mean(handsize)) |> 
+ sub <- cust_dat |>
+            group_by(years_ago, brand, screen_size, size_cat, phone_id) |>
+            summarize(mhs = mean(handsize)) |>
             arrange(years_ago, brand, screen_size, size_cat, phone_id)
 
 ```
@@ -75,18 +86,18 @@ We will calculate the average hand size per phone, treating it as an unobserved 
 
 ```{r}
 # Plot consumers' screensize vs handsize, facet by phone, for only years_ago==1
-    ggplot(cust_dat |> filter(years_ago==1)) + 
-        geom_histogram(aes(handsize), bins=50) + 
-        facet_grid(rows=vars(screen_size)) + 
-        ggtitle("Hand Size Distributions by Screen Size") + 
+    ggplot(cust_dat |> filter(years_ago==1)) +
+        geom_histogram(aes(handsize), bins=50) +
+        facet_grid(rows=vars(screen_size)) +
+        ggtitle("Hand Size Distributions by Screen Size") +
         theme_bw()
  # Plot/map phones in screensize x handsize space
-    ggplot(sub, aes(x=screen_size, y=mhs)) +   # 
+    ggplot(sub, aes(x=screen_size, y=mhs)) +   #
         geom_point() +                         #
         facet_grid(rows=vars(years_ago)) +     # different plots for different years_ago
         geom_smooth(method="lm", se=F) +       # add linear trend (ie regression) line
         geom_text_repel(aes(label=phone_id)) + #
-        theme_bw()                        
+        theme_bw()
 ```
 
 ## Observations Summary
@@ -101,7 +112,7 @@ Conversely, the S1 and A2 models have differing screen sizes but are frequently 
 Evolving Trends: Over time, the strength of this relationship appears to be diminishing slightly, as evidenced by a gradual flattening of the trend line.
 
 
-## PCA 
+## PCA
 
 
 ```{r}
@@ -109,43 +120,43 @@ Evolving Trends: Over time, the strength of this relationship appears to be dimi
 pca_out1 <- sub |> ungroup() |> filter(years_ago == 1) |> select(screen_size, mhs) |> prcomp()
 pca_out2 <- sub |> ungroup() |> filter(years_ago == 2) |> select(screen_size, mhs) |> prcomp()
 pca_out3 <- sub |> ungroup() |> filter(years_ago == 3) |> select(screen_size, mhs) |> prcomp()
-    
+
 summary(pca_out1)
 summary(pca_out2)
 summary(pca_out3)
 
  # We see that one component explains the majority of variance in the data
     # This is because mean-handsize and screen size are highly correlated
-    
+
     sub |> group_by(years_ago) |> summarize(cor=cor(mhs, screen_size))
-    
-    # Let's also compare the variance along the principal components to the 
+
+    # Let's also compare the variance along the principal components to the
     # variance alone the original dimensions
-    
+
     summary(pca_out1)
     sub |> ungroup() |> select(screen_size, mhs) |> summarize_all(sd)
-    
+
     # we see that the original data varied along both variables, while the rotated
     # data varies mostly along the first principal component
-    
-    
+
+
     # the rotated data is in pca$x
     # we can use the first column of x for our 1D plot
-    
+
     # first, "extract" x into a tibble, to make it easier to work with
     pcs1 <- as_tibble(pca_out1$x)
     pcs2 <- as_tibble(pca_out2$x)
     pcs3 <- as_tibble(pca_out3$x)
-    
+
     # and append these tibbles together
     pcs <- bind_rows(pcs1, pcs2, pcs3, .id="years_ago")
-    
+
     # now we can plot in 1D space
-    ggplot(pcs, aes(x=PC1, y=0)) + 
-        facet_grid(rows=vars(years_ago)) + 
-        geom_point(size=3) + 
-        geom_hline(yintercept=0) + 
-        geom_text_repel(aes(label=sub$phone_id)) + 
+    ggplot(pcs, aes(x=PC1, y=0)) +
+        facet_grid(rows=vars(years_ago)) +
+        geom_point(size=3) +
+        geom_hline(yintercept=0) +
+        geom_text_repel(aes(label=sub$phone_id)) +
         theme_bw()
 ```
 

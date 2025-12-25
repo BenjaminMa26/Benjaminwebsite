@@ -1,9 +1,20 @@
-# Project 7: Price Optimization Using Demand Models 
+---
+title: "Project 7: Pricing Optimization"
+description: "Use demand models to optimize prices and identify value segments."
+date: 2025-12-24
+format: html
+categories: [pricing, modeling, R]
+---
 
-use the heterogeneous MNL from project 6 to optimize prices. 
 
 
-## Objective 
+
+# Project 7: Price Optimization Using Demand Models
+
+use the heterogeneous MNL from project 6 to optimize prices.
+
+
+## Objective
 
 This script aims to optimize the pricing strategy for Samsung's smartphone models using a heterogeneous Multinomial Logit (MNL) model. The analysis focuses on understanding consumer choice behavior in response to price variations and seeks to maximize the overall profitability of Samsung's smartphone product line.
 
@@ -39,18 +50,18 @@ Incremental Economic Value of X
 Consider benefits and non-price costs. Price of x doesn't enter the calculation
 
 
-Split the benefit 
+Split the benefit
 Contrib margin (profit) VS con. surplus (growth) Fairness, pperceived vs actual benefit, etc
 
 
 Can do this by segment
 y and EVC can vary across customer segments. If EVC<0, reconsider your product or target customer.
 
-summary: 
-The Economic Value to the Customer (EVC) method is a pricing strategy that determines the maximum price a customer is willing to pay based on the total value they derive from the product. The cost is the expense incurred to produce the product, while the price is set above the cost to ensure profitability. The perceived value is the customer's assessment of the product's worth, often higher than the price, providing the inducement to buy, which is the extra value perceived by the customer. The contribution margin is the profit margin between the cost and the price. The best available alternative (best avail. alt y) represents the value of the closest competing product. The area of negotiation is the range between the cost and the EVC, where the final price can be adjusted based on market dynamics and customer willingness to pay. 
+summary:
+The Economic Value to the Customer (EVC) method is a pricing strategy that determines the maximum price a customer is willing to pay based on the total value they derive from the product. The cost is the expense incurred to produce the product, while the price is set above the cost to ensure profitability. The perceived value is the customer's assessment of the product's worth, often higher than the price, providing the inducement to buy, which is the extra value perceived by the customer. The contribution margin is the profit margin between the cost and the price. The best available alternative (best avail. alt y) represents the value of the closest competing product. The area of negotiation is the range between the cost and the EVC, where the final price can be adjusted based on market dynamics and customer willingness to pay.
 
 
-# Example of EVC practice 
+# Example of EVC practice
 In an academic project focused on pricing strategy, how can we determine the Economic Value to the Customer (EVC) and set an optimal price for a product that extends the lifespan of AA batteries by 800%, given the production cost and typical battery prices?
 
 The Economic Value to the Customer (EVC) for the Batteriser, a device extending AA battery life by 800%, is calculated based on the savings it provides. Given that one Batteriser enables one AA battery to replace eight, the savings equate to the cost of eight batteries ($0.50 each), totaling $4.00. With a production cost of $1.00 per Batteriser, an optimal price point would be around $3.00. This price not only provides significant perceived value to the customer but also ensures a profitable margin for the company. Therefore, the EVC of the Batteriser is $4.00, and the recommended price is $3.00 to balance customer savings and business profitability.
@@ -89,7 +100,7 @@ The Economic Value to the Customer (EVC) for the Batteriser, a device extending 
 
 
 ```{r}
-# Data Importing 
+# Data Importing
 suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(library(mlogit))
 suppressPackageStartupMessages(library(gridExtra))
@@ -100,13 +111,13 @@ cust_dat <- read_csv("~//Desktop/MGT100 folder/smartphone_customer_data.csv", sh
 # load "enhanced" dataset for fitting mnl model
     load("~/Desktop/MGT100 folder/mnl_datasets.RData")
      # fit mnl data
-    out <- mlogit(choice ~ apple:segment + 
-                           samsung:segment + 
+    out <- mlogit(choice ~ apple:segment +
+                           samsung:segment +
                            price:segment +
-                           screen_size:segment + 
-                           price:total_minutes:segment | 0, data=mdat1)  
-    
-    
+                           screen_size:segment +
+                           price:total_minutes:segment | 0, data=mdat1)
+
+
 
 ```
 
@@ -115,7 +126,7 @@ cust_dat <- read_csv("~//Desktop/MGT100 folder/smartphone_customer_data.csv", sh
 Construct the estimated demand curve for the small Samsung phone (S1).
     That means we will vary the price of S1 while holding everything else constant,
     and track how its market share changes as we change its price.
-    
+
 Recall that last year S1 had a price of $799 and a market share of 25.3%.
 ```{r}
 
@@ -132,33 +143,33 @@ invisible(capture.output({
   for (i in 1:length(pvec)) {
     # Print progress (this will be suppressed)
     cat("Working on", i, "of", length(pvec), "\n")
-    
+
     # Get the price change amount
     p <- pvec[i]
-    
+
     # Change prices for S1 phones
     tempdat <- as_tibble(mdat1) |> mutate(price = ifelse(phone_id == "S1", price + p, price))
-    
+
     # Make market share predictions with the temporarily-changed S1 prices
     preds <- predict(out, newdata = tempdat)
-    
+
     # Calculate and store market shares
     smat[i, ] <- colMeans(preds)
   }
 }, file = NULL))
 
-    
+
     # gather our prices and estimated shares into a dataframe
     relcol <- which(colnames(smat) == "S1")
     s1dat <- tibble(scenario=1:length(pvec), price=pvec+799, share=smat[,relcol])
-    
+
     # plot S1's inverse demand curve
     ggplot(s1dat, aes(x=share, y=price)) +
-        geom_point() + 
-        geom_line() + 
+        geom_point() +
+        geom_line() +
         labs(x="Share", y="Price") +
         theme_bw()
-    
+
 ```
 
 
@@ -175,203 +186,203 @@ It is important to observe that the model-predicted market share may not perfect
 
 # actual market shares
        invisible({ cust_dat |> filter(years_ago == 1) |> count(phone_id) |> mutate(shr = n / sum(n))})
-        
+
         # predicted market shares at 0 price change
         smat[21,] |> round(3)
-        
+
         # Convert shares to number of phones
-    
+
     # Suppose the market size is such that 150 million smartphones are sold in the US each year
     # and further suppose that the college-age demographic that we've measured with our
     # dataset comprises 1 out of every 15 smartphone sales, or 10 million phones.
-    
+
     M <- 10
 
     # Let's scale our demand curve to be in the price-quantity space instead of the price-share space
-    
+
     s1dat <- s1dat |> mutate(quantity = share*M)
 
-    ggplot(s1dat, aes(x=quantity, y=price)) + 
-        geom_point() + 
-        geom_line() + 
+    ggplot(s1dat, aes(x=quantity, y=price)) +
+        geom_point() +
+        geom_line() +
         labs(x="Quantity", y="Price") +
         theme_bw()
-    
+
 # Calculate S1 price to maximize S1 profits based on own-price elasticity
      # Marginal cost
-    
-        # We need to know our marginal cost function. Suppose that a manager 
-        # at Samsung informs us that it costs $470 to manufacture, transport, 
-        # and advertise one S1 phone, regardless of how many S1 phones are produced. 
-    
+
+        # We need to know our marginal cost function. Suppose that a manager
+        # at Samsung informs us that it costs $470 to manufacture, transport,
+        # and advertise one S1 phone, regardless of how many S1 phones are produced.
+
         mc1 <- 470
-        
+
     # Calculate own-price elasticity at +/- $10 from actual price of $799
-    
+
         p1 <- s1dat |> filter(price==799-10) |> pull(price)
         q1 <- s1dat |> slice(20) |> pull(quantity)
-        
+
         p2 <- s1dat |> slice(22) |> pull(price)
         q2 <- s1dat |> slice(22) |> pull(quantity)
-        
+
         elasticity <- ((q2-q1)/q1) / ((p2-p1)/p1)
         elasticity
-        
+
     # Approximate optimal price using the elasticity rule
-    
+
         mc1 * 1 / (1 - 1/abs(elasticity))
-        
-        # this approach suggests that S1 price should be set much lower ($649) than its 
+
+        # this approach suggests that S1 price should be set much lower ($649) than its
         # current value ($799). However, it is based on an assumption of constant demand elasticity,
         # whereas our estimated demand model does not restrict price elasticity to be constant
-    
+
     # As an aside: check elasticity over full range of prices considered
-        
+
         # total calc
         p1 <- s1dat |> slice(1) |> pull(price)
         q1 <- s1dat |> slice(1) |> pull(quantity)
-        
+
         p2 <- s1dat |> slice(41) |> pull(price)
         q2 <- s1dat |> slice(41) |> pull(quantity)
-        
+
         elasticity <- ((q2-q1)/q1) / ((p2-p1)/p1)
         elasticity
-        
+
         # one-window at a time calc
         res_e <- vector(length=39)
         for(i in 2:40) {
             p1 <- s1dat |> slice(i-1) |> pull(price)
             q1 <- s1dat |> slice(i-1) |> pull(quantity)
-            
+
             p2 <- s1dat |> slice(i+1) |> pull(price)
             q2 <- s1dat |> slice(i+1) |> pull(quantity)
-            
+
             res_e[i-1] <- ((q2-q1)/q1) / ((p2-p1)/p1)
         }
         summary(res_e)
-        
+
         # Calculate S1 price to maximize S1 profit based on full set of MNL model estimates
 # (We'll do this with grid search)
-        
+
     # revenue
-    
+
         s1dat <- s1dat |> mutate(revenue = price * quantity)
-        
+
         p1 <- ggplot(s1dat) + geom_point(aes(x=quantity, y=price)) + theme_bw()
         p2 <- ggplot(s1dat) + geom_point(aes(x=quantity, y=revenue)) + theme_bw()
-        
+
         grid.arrange(p2, p1, ncol=1)
-        
+
         # notice that revenue increases, but starts to flatten out, as quantity increases
-        
+
     # margin
-        
+
         s1dat <- s1dat |> mutate(cost = mc1*quantity)
-        
+
         p3 <- ggplot(s1dat) + geom_point(aes(x=quantity, y=cost)) + theme_bw()
-        
+
         grid.arrange(p3, p2, p1, ncol=1)
-        
+
         # note how cost is linear, so unlike revenue, it does not start to flatten out
         # at higher quantities
-        
+
         # profit, at a particular price, is the distance between the revenue and cost
         # curves. Let's look at that distance graphically
-        
-        ggplot(s1dat) + 
+
+        ggplot(s1dat) +
             geom_line(aes(x=quantity, y=revenue), color="blue") +
             geom_point(aes(x=quantity, y=revenue), color="blue") +
-            geom_line(aes(x=quantity, y=cost), color="red") + 
-            geom_point(aes(x=quantity, y=cost), color="red") + 
+            geom_line(aes(x=quantity, y=cost), color="red") +
+            geom_point(aes(x=quantity, y=cost), color="red") +
             xlab("Quantity") +
             ylab("Dollars") +
             ggtitle("Revenue (blue) and Cost (red)") +
             theme_bw()
-        
+
         # the distance/gap is largest somewhere around a quantity of 3 million phones,
         # which roughly corresponds to price in the $700-750.  Let's now calculate
         # profit and the profit maximizing price more exactly.
-        
+
     # profit
-        
+
         s1dat <- s1dat |> mutate(profit = revenue - cost)
-        
+
         p4 <- ggplot(s1dat) + geom_point(aes(x=quantity, y=profit)) + theme_bw()
-        
+
         grid.arrange(p4, p3, p2, p1, ncol=1)
 
-        
+
     # find S1-profit-maximizing quantity and price, and compare profit to $799 price
-        
+
         s1dat |> filter(price == 799)
         s1dat |> filter(profit == max(profit))
-       
+
 ```
 
 
 
  We see that the profit-maximizing price of $709 results $834 million of profits.
  While the price of $799 results in only 765 million of profits
- 
- 
+
+
 This demonstration has concentrated on determining the profit-maximizing price for the smartphone model S1, solely considering the profits generated by S1. However, it is essential to recognize that Samsung is interested in the overall profitability of its entire smartphone product line. Thus, the analysis so far has excluded the consideration of model S2. We will now extend our analysis to incorporate the impact of S2 on the total profit from Samsung's smartphone product line.
 
 
 
-## Calculate S1 price to maximize total Samsung smartphone profit   
+## Calculate S1 price to maximize total Samsung smartphone profit
 
 
 ```{r}
 # The manager at Samsung reports that S2 marginal costs are $490
-        
+
         mc2 <- 490
-        
+
     # Let's calculate quantity, revenue, cost, and profit for the S2 phone
-        
+
         s2dat <- tibble(scenario=1:length(pvec), price=899, share=smat[,4])
-        
+
         s2dat <- s2dat |> mutate(quantity = share*M,
                                   revenue = price * quantity,
                                   cost = mc2*quantity,
                                   profit = revenue - cost)
-        
+
     # now we will aggregate across phones to get total Samsung smartphone profit
-        
+
         s2dat <- s2dat |> mutate(price=0)
-        
+
         sdat <- rbind(s1dat, s2dat)
-        
-        sdat <- sdat |> group_by(scenario) |> 
+
+        sdat <- sdat |> group_by(scenario) |>
             summarize_all(sum)
-        
-    # find Samsung profit-maximizing quantity and price 
-         
+
+    # find Samsung profit-maximizing quantity and price
+
          sdat |> filter(price == 799)
          sdat |> filter(profit == max(profit))
-         
-         # we get a profit maximizing price of $749 leading to $1,271 mil in profits, 
+
+         # we get a profit maximizing price of $749 leading to $1,271 mil in profits,
          # which is $18 million more than the profit of $1,253 when s1 is priced at $799
 
     # why do we get different answer?
-         
-        # As you decrease the price of S1, S1 is estimated to garner a larger 
+
+        # As you decrease the price of S1, S1 is estimated to garner a larger
         # market share. The increase to S1's share results from decreases to
-        # other phones' market shares.  These other phone include competitors' 
+        # other phones' market shares.  These other phone include competitors'
         # phones like A1, A2, H1, and H2, but also Samsung's other phone S2.
-         
+
         share_dat <- as_tibble(cbind(S1_price=pvec+799, smat))
-        
+
         share_dat <- pivot_longer(share_dat, cols=A1:H2, names_to="phone", values_to="share")
-        
+
         ggplot(share_dat, aes(x=S1_price, y=share, color=phone)) +
-            geom_line() + 
-            geom_point() + 
-            xlab("Price of S1 Phone") + 
-            ylab("Market Share") + 
+            geom_line() +
+            geom_point() +
+            xlab("Price of S1 Phone") +
+            ylab("Market Share") +
             ggtitle("Estimated Market Share Responses to S1 Price Change by Phone") +
-            xlim(c(700,900)) + ylim(c(0,0.5)) + 
+            xlim(c(700,900)) + ylim(c(0,0.5)) +
             theme_bw()
-      
+
 
 ```
 

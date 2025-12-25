@@ -1,3 +1,13 @@
+---
+title: "Project 1: Data Cleaning"
+description: "Clean and summarize messy data using R and tidyverse."
+date: 2025-12-24
+format: html
+categories: [data cleaning, R]
+---
+
+
+
 # This is Project 1
 
 ## Section 1: Data
@@ -12,6 +22,6 @@ I analyzed the data
 #| message: false
 
 library(tidyverse)
-mtcars |> 
+mtcars |>
     ggplot(aes(x = wt, y= mpg)) + geom_point()
 ```

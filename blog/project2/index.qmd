@@ -1,3 +1,13 @@
+---
+title: "Project 2: Market Segmentation"
+description: "Segment customer data using K-means clustering to analyze market groups."
+date: 2025-12-24
+format: html
+categories: [clustering, segmentation, R]
+---
+
+
+
 # This is Project 2
 
 ## Section 1: Data
@@ -28,13 +38,13 @@ sub
 
 scl <- sub %>% scale() %>% as_tibble()
 scl
-scl %>% summarize_all(mean) %>% round(3) 
-scl %>% summarize_all(sd)  
+scl %>% summarize_all(mean) %>% round(3)
+scl %>% summarize_all(sd)
 #save the output from the kmeans() function into an object named "out"
 out <- kmeans(scl, centers=4, nstart=10)
 K <- 4
 D <- 10
-#set seed for random number generator 
+#set seed for random number generator
 set.seed(1234)
 
 
@@ -48,14 +58,14 @@ str(out)
 str(out$cluster)
 str(out[["cluster"]])
 str(out[[1]])
-        
+
 # 2 related ways to subset a list into a one-element list (usually not what you want)
 str(out["cluster"])
 str(out[1])
 
 # out$centers is a k-by-J matrix with the coordinates of the
 # clusters' centers
-        
+
 str(out$centers)
 out$centers
 
@@ -66,27 +76,27 @@ sub <- sub %>% mutate(cluster = factor(out$cluster))
 sub %>% count(cluster)
 out$size
 #store the clusters' center locations in their own tibble/dataframe
-centers <- as_tibble(out$centers) 
+centers <- as_tibble(out$centers)
 centers
 # calculate mean and sd
 SD   <- sub %>% select(wt, mpg) %>% summarize_all(sd)
 MEAN <- sub %>% select(wt, mpg) %>% summarize_all(mean)
-        
+
 SD
 MEAN
-#repeat/format the values so we can do math with centers 
+#repeat/format the values so we can do math with centers
 SD   <- SD   %>% unlist() %>% rep(K) %>% matrix(nrow=K, ncol=2, byrow=T)
 MEAN <- MEAN %>% unlist() %>% rep(K) %>% matrix(nrow=K, ncol=2, byrow=T)
-        
+
 SD
 MEAN
 # unscale the centers (convert back into original units)
 centers <- centers*SD + MEAN
 round(centers, 1)
-ggplot() + 
-        geom_point(data=sub,     aes(x=wt, y=mpg, color=cluster)) + 
-        geom_point(data=centers, aes(x=wt, y=mpg), size=4) + 
-        ggtitle("Kmeans cluster membership and centroids") + 
+ggplot() +
+        geom_point(data=sub,     aes(x=wt, y=mpg, color=cluster)) +
+        geom_point(data=centers, aes(x=wt, y=mpg), size=4) +
+        ggtitle("Kmeans cluster membership and centroids") +
         theme_minimal()
 
 # is k=4 the right number for k?
@@ -96,45 +106,45 @@ res <- vector(length=10)
     for(i in 1:10) {
         # run k means
         out <- kmeans(scl, centers=i)
-        
+
         # grab the WSS value, store it in the i'th position of res
         res[i] <- out$tot.withinss
     }
-    
+
     # let's plot the WSS for each value of k
-    ggplot(data.frame(x=1:10, y=res), aes(x,y)) + 
-        geom_line(color="red") + 
-        geom_point(size=3) + 
-        xlab("Number of Clusters (K)") + 
-        ylab("Within-Group Sum of Squares (WSS)") + 
+    ggplot(data.frame(x=1:10, y=res), aes(x,y)) +
+        geom_line(color="red") +
+        geom_point(size=3) +
+        xlab("Number of Clusters (K)") +
+        ylab("Within-Group Sum of Squares (WSS)") +
         theme_minimal()
 ```
 ## Section 3: Iris dataset
 ```{r}
 # Example with "iris" data
-#The Iris dataset comprises measurements of iris flowers from three different 
-#species: Setosa, Versicolor, and Virginica. Each sample consists of 
-#four features: sepal length, sepal width, petal length, and petal width. 
+#The Iris dataset comprises measurements of iris flowers from three different
+#species: Setosa, Versicolor, and Virginica. Each sample consists of
+#four features: sepal length, sepal width, petal length, and petal width.
 #Additionally, each sample is labeled with its corresponding species.
 # load data
 data(iris)
 str(iris)
 # plot petal length vs petal width by species
-ggplot(iris) + 
+ggplot(iris) +
 geom_point(aes(x=Petal.Length, y=Petal.Width, col=Species))
 # run kmeans
-out_iris <- iris %>% 
-select(Petal.Length, Petal.Width) %>% 
+out_iris <- iris %>%
+select(Petal.Length, Petal.Width) %>%
 kmeans(centers = 3, nstart = 10)
 # add segment membership
 iris <- iris %>% mutate(cluster = factor(out_iris$cluster))
-    
+
 # plot segmented data
 ggplot(iris, aes(x=Petal.Length, y=Petal.Width)) +
-geom_point(aes(col=cluster)) + 
-geom_point(data=as_tibble(out_iris$centers), size=4) + 
+geom_point(aes(col=cluster)) +
+geom_point(data=as_tibble(out_iris$centers), size=4) +
 theme_minimal()
-    
+
 # "confusion matrix" -- ie, a table of actual vs predicted
 iris %>% select(Species, cluster) %>% table()
 
