@@ -1,0 +1,16 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+/.quarto/
+
+**/*.quarto_ipynb
+
+# Large datasets
+industry-applications/data/*.tsv
+industry-applications/data/*.csv
+*.h5
+*.pkl
+!industry-applications/data/README.md
+
