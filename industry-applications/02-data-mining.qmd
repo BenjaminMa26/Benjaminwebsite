@@ -1,16 +1,13 @@
 ---
 title: "Data Mining for Recommendation Systems"
-subtitle: "User Profiling, POI Linking, and Review Mining"
 format:
   html:
-    toc: true
-    toc-depth: 3
-    code-fold: false
-    code-tools: true
+    embed-resources: true
+jupyter: python3
 execute:
-  cache: true
-  freeze: auto
+  echo: true
   warning: false
+  cache: false
 ---
 
 ## Overview
@@ -210,15 +207,21 @@ for seg in range(4):
 ### 2.5 Segment Visualization
 
 ```{python}
+#| label: fig-user-segments
+#| fig-cap: "User Segmentation Analysis"
 #| fig-width: 12
 #| fig-height: 8
 
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Create figure
 fig, axes = plt.subplots(2, 2, figsize=(12, 8))
 
 # Plot 1: Avg Rating vs Review Count (USER-LEVEL)
 scatter1 = axes[0, 0].scatter(
     user_profile['review_count'],
-    user_profile['avg_rating'],  # Use avg_rating, not star_rating
+    user_profile['avg_rating'],
     c=user_profile['user_segment'],
     cmap='viridis',
     alpha=0.6,
@@ -230,17 +233,15 @@ axes[0, 0].set_xlabel('Review Count (log scale)', fontsize=11, fontweight='bold'
 axes[0, 0].set_ylabel('Average Rating', fontsize=11, fontweight='bold')
 axes[0, 0].set_title('Review Activity vs Rating Tendency', fontsize=12, fontweight='bold')
 axes[0, 0].set_xscale('log')
-axes[0, 0].set_ylim(0.5, 5.5)  # Proper rating range
+axes[0, 0].set_ylim(0.5, 5.5)
 axes[0, 0].grid(alpha=0.3, linestyle='--')
-
-# Add colorbar
 cbar1 = plt.colorbar(scatter1, ax=axes[0, 0])
 cbar1.set_label('Segment', fontsize=10)
 
 # Plot 2: Rating Std vs Verified Ratio (USER-LEVEL)
 scatter2 = axes[0, 1].scatter(
     user_profile['verified_ratio'],
-    user_profile['rating_std'],  # Use rating_std from user_profile
+    user_profile['rating_std'],
     c=user_profile['user_segment'],
     cmap='viridis',
     alpha=0.6,
@@ -253,8 +254,6 @@ axes[0, 1].set_ylabel('Rating Std Dev', fontsize=11, fontweight='bold')
 axes[0, 1].set_title('Purchase Verification vs Rating Consistency', fontsize=12, fontweight='bold')
 axes[0, 1].set_xlim(-0.05, 1.05)
 axes[0, 1].grid(alpha=0.3, linestyle='--')
-
-# Add colorbar
 cbar2 = plt.colorbar(scatter2, ax=axes[0, 1])
 cbar2.set_label('Segment', fontsize=10)
 
@@ -267,13 +266,11 @@ axes[1, 0].set_title('User Segment Distribution', fontsize=12, fontweight='bold'
 axes[1, 0].set_xticklabels(axes[1, 0].get_xticklabels(), rotation=0)
 axes[1, 0].grid(axis='y', alpha=0.3, linestyle='--')
 
-# Add count labels on bars
 for i, (idx, count) in enumerate(segment_counts.items()):
     axes[1, 0].text(i, count + 200, f'{count:,}',
                     ha='center', va='bottom', fontsize=10, fontweight='bold')
 
 # Plot 4: Helpful Votes vs Review Length (USER-LEVEL)
-# Filter out zero values for better visualization
 user_profile_plot = user_profile[
     (user_profile['avg_review_length'] > 0) &
     (user_profile['avg_helpful_votes'] >= 0)
@@ -293,24 +290,19 @@ axes[1, 1].set_xlabel('Avg Review Length (chars, log scale)', fontsize=11, fontw
 axes[1, 1].set_ylabel('Avg Helpful Votes', fontsize=11, fontweight='bold')
 axes[1, 1].set_title('Review Quality Indicators', fontsize=12, fontweight='bold')
 axes[1, 1].set_xscale('log')
-axes[1, 1].set_yscale('symlog', linthresh=1)  # Handle zeros gracefully
+axes[1, 1].set_yscale('symlog', linthresh=1)
 axes[1, 1].grid(alpha=0.3, linestyle='--')
-
-# Add colorbar
 cbar4 = plt.colorbar(scatter4, ax=axes[1, 1])
 cbar4.set_label('Segment', fontsize=10)
 
-plt.tight_layout()
 plt.show()
 
-# Print diagnostic info
-print("\n=== Visualization Diagnostics ===")
-print(f"Total users plotted: {len(user_profile):,}")
-print(f"Avg rating range: {user_profile['avg_rating'].min():.2f} to {user_profile['avg_rating'].max():.2f}")
-print(f"Review count range: {user_profile['review_count'].min()} to {user_profile['review_count'].max()}")
-print(f"Users with helpful votes: {(user_profile['avg_helpful_votes'] > 0).sum():,}")
 ```
 
+```{python}
+plt.tight_layout()
+fig
+```
 
 **Segment Interpretation:**
 
@@ -622,29 +614,40 @@ print(confusion_matrix(y_test, y_pred_lr))
 ### 4.7 Advanced Model: XGBoost
 
 ```{python}
+#| output: false
 #| cache: true
 
 import xgboost as xgb
 from sklearn.metrics import roc_auc_score, classification_report
 
 # Build DMatrix
-dtrain = xgb.DMatrix(X_train, label=y_train)
-dtest = xgb.DMatrix(X_test, label=y_test)
+dtrain = xgb.DMatrix(X_train, label=y_train, feature_names=text_features)
+dtest = xgb.DMatrix(X_test, label=y_test, feature_names=text_features)
 
 # XGBoost parameters
 params = {
     "objective": "binary:logistic",
     "eval_metric": "auc",
-    "max_depth": 6,
+    "max_depth": 4,
     "eta": 0.1,
+    "min_child_weight": 1,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
     "verbosity": 0,
+    "seed": 42
 }
 
-# Train model
+# Train
+evals = [(dtrain, 'train'), (dtest, 'test')]
+evals_result = {}
+
 bst = xgb.train(
     params=params,
     dtrain=dtrain,
-    num_boost_round=50
+    num_boost_round=100,
+    evals=evals,
+    evals_result=evals_result,
+    verbose_eval=False
 )
 
 # Predictions
@@ -653,154 +656,171 @@ y_pred_xgb = (y_proba_xgb >= 0.5).astype(int)
 
 # Evaluation
 auc_xgb = roc_auc_score(y_test, y_proba_xgb)
-
-print("=== XGBoost Results ===")
-print(f"AUC: {auc_xgb:.4f}")
-print(f"Improvement over LR: +{auc_xgb - auc_lr:.4f}")
-print("\nClassification Report:")
-print(
-    classification_report(
-        y_test,
-        y_pred_xgb,
-        target_names=["Low Rating", "High Rating"],
-        zero_division=0
-    )
-)
-
 ```
+
+```{python}
+#| label: fig-xgboost-training
+#| fig-cap: "XGBoost Training Progress"
+#| fig-width: 10
+#| fig-height: 5
+
+import matplotlib.pyplot as plt
+
+print(f"XGBoost AUC: {auc_xgb:.4f}")
+print(f"Improvement over Logistic Regression: +{auc_xgb - auc_lr:.4f}")
+
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred_xgb,
+                          target_names=["Low Rating", "High Rating"],
+                          zero_division=0))
+
+# Training curve
+plt.close('all')
+fig, ax = plt.subplots(figsize=(10, 5))
+
+epochs = range(len(evals_result['train']['auc']))
+
+ax.plot(epochs, evals_result['train']['auc'], 'b-', label='Train AUC', linewidth=2)
+ax.plot(epochs, evals_result['test']['auc'], 'r-', label='Test AUC', linewidth=2)
+ax.set_xlabel('Boosting Round', fontsize=12, fontweight='bold')
+ax.set_ylabel('AUC', fontsize=12, fontweight='bold')
+ax.set_title('XGBoost Training Progress', fontsize=14, fontweight='bold')
+ax.legend(fontsize=11)
+ax.grid(alpha=0.3)
+
+plt.tight_layout()
+fig
+```
+
+
+
 
 ### 4.8 Feature Importance
 
 ```{python}
-### 4.8 Feature Importance
-
+#| label: fig-feature-importance
+#| fig-cap: "Feature Importance Analysis"
 #| fig-width: 10
 #| fig-height: 6
 
-# XGBoost feature importance - diagnostics first
-print("=== Feature Importance Extraction ===")
+import matplotlib.pyplot as plt
+import pandas as pd
 
-# Get importance scores (try gain first, fall back to weight)
-importance_dict = bst.get_score(importance_type='gain')
-if len(importance_dict) == 0:
-    print("⚠️ No 'gain' scores found, using 'weight' instead")
-    importance_dict = bst.get_score(importance_type='weight')
+# Get feature importance scores
+importance_dict = bst.get_score(importance_type='weight')
 
-print(f"Found {len(importance_dict)} features with scores")
-print(f"Feature names from model: {list(importance_dict.keys())}")
+# Map internal feature names to actual names
+importance_scores = [importance_dict.get(f'f{i}', 0) for i in range(len(text_features))]
 
-# XGBoost uses internal names like 'f0', 'f1', etc.
-# But sometimes uses actual feature names - need to handle both
-if any(key.startswith('f') and key[1:].isdigit() for key in importance_dict.keys()):
-    # Internal naming (f0, f1, ...)
-    print("Using internal feature indexing (f0, f1, ...)")
-    importance_df = pd.DataFrame({
-        'feature': text_features,
-        'importance': [importance_dict.get(f'f{i}', 0) for i in range(len(text_features))]
-    })
-else:
-    # Direct feature names
-    print("Using direct feature names")
-    importance_df = pd.DataFrame({
-        'feature': text_features,
-        'importance': [importance_dict.get(feat, 0) for feat in text_features]
-    })
+# Create DataFrame
+importance_df = pd.DataFrame({
+    'feature': text_features,
+    'importance': importance_scores
+}).sort_values('importance', ascending=False)
 
-importance_df = importance_df.sort_values('importance', ascending=False)
+# Calculate percentage
+total_importance = importance_df['importance'].sum()
 
-# Normalize for better visualization
-if importance_df['importance'].sum() > 0:
-    importance_df['importance_pct'] = (
-        importance_df['importance'] / importance_df['importance'].sum() * 100
-    )
-else:
-    importance_df['importance_pct'] = 0
+if total_importance > 0:
+    importance_df['importance_pct'] = importance_df['importance'] / total_importance * 100
 
-print("\n=== Feature Importance Table ===")
-print(importance_df.round(4))
+    print("Feature Importance:")
+    print(importance_df[['feature', 'importance_pct']].round(1))
 
-# Plot
-if importance_df['importance'].sum() > 0:
+    # Create plot
+    plt.close('all')
     fig, ax = plt.subplots(figsize=(10, 6))
 
-    # Create horizontal bar chart
+    colors = ['coral'] + ['steelblue'] * (len(importance_df) - 1)
+
     bars = ax.barh(
-        importance_df['feature'],
+        range(len(importance_df)),
         importance_df['importance_pct'],
-        color='steelblue',
+        height=0.6,
+        color=colors,
         edgecolor='navy',
-        linewidth=1.5
+        linewidth=1.5,
+        alpha=0.8
     )
 
-    # Styling
+    ax.set_yticks(range(len(importance_df)))
+    ax.set_yticklabels(importance_df['feature'], fontsize=11)
+
+    max_pct = importance_df['importance_pct'].max()
+    for i, (bar, val) in enumerate(zip(bars, importance_df['importance_pct'])):
+        if val > 0.1:
+            label_x = val + max_pct * 0.02
+            ax.text(label_x, bar.get_y() + bar.get_height()/2,
+                   f'{val:.1f}%',
+                   va='center',
+                   ha='left',
+                   fontsize=10,
+                   fontweight='bold')
+
     ax.set_xlabel('Relative Importance (%)', fontsize=12, fontweight='bold')
     ax.set_ylabel('Feature', fontsize=12, fontweight='bold')
     ax.set_title('Feature Importance for Review Sentiment Prediction',
                  fontsize=14, fontweight='bold', pad=20)
-    ax.grid(axis='x', alpha=0.3, linestyle='--', linewidth=0.7)
+    ax.grid(axis='x', alpha=0.3, linestyle='--')
     ax.invert_yaxis()
-
-    # Add percentage labels on bars
-    for bar, val in zip(bars, importance_df['importance_pct']):
-        if val > 0:
-            ax.text(val + 0.5, bar.get_y() + bar.get_height()/2,
-                   f'{val:.1f}%',
-                   va='center', ha='left', fontsize=10, fontweight='bold')
-
-    # Add subtle background color for top feature
-    top_feature_idx = 0
-    bars[top_feature_idx].set_color('coral')
-    bars[top_feature_idx].set_edgecolor('darkred')
+    ax.set_xlim(0, max_pct * 1.15)
 
     plt.tight_layout()
-    plt.show()
+    fig
 
-    # Key insights
-    print(f"\n📊 Key Insights:")
-    print(f"   • Top feature: {importance_df.iloc[0]['feature']} ({importance_df.iloc[0]['importance_pct']:.1f}%)")
-    print(f"   • Features used: {(importance_df['importance'] > 0).sum()}/{len(text_features)}")
-
-    top3 = importance_df.head(3)
-    print(f"   • Top 3 features account for {top3['importance_pct'].sum():.1f}% of total importance")
+    print(f"\nTop feature: {importance_df.iloc[0]['feature']} ({importance_df.iloc[0]['importance_pct']:.1f}%)")
+    print(f"Top 3 features: {importance_df.head(3)['importance_pct'].sum():.1f}%")
 
 else:
-    print("\n⚠️ Warning: All importances are zero!")
-    print("Possible reasons:")
-    print("1. Features have no predictive power")
-    print("2. num_boost_round too low (try 100+)")
-    print("3. Features are perfectly correlated")
-    print("4. Data leakage or constant predictions")
+    print("Note: XGBoost assigned zero importance to all features.")
+    print("Showing feature statistics instead:\n")
 
-    # Diagnostic plot - show feature variance
+    feature_stats = X_train[text_features].agg(['mean', 'std', 'min', 'max'])
+    print(feature_stats.round(2))
+
+    # Diagnostic plot
+    plt.close('all')
     fig, ax = plt.subplots(figsize=(10, 6))
-    feature_std = X_train[text_features].std()
-    ax.barh(text_features, feature_std, color='coral')
-    ax.set_xlabel('Standard Deviation')
-    ax.set_title('Feature Variance (Diagnostic)')
-    ax.invert_yaxis()
-    plt.tight_layout()
-    plt.show()
-```
 
-### 4.9 Ranking Evaluation
+    feature_std = X_train[text_features].std().sort_values(ascending=False)
+
+    bars = ax.barh(
+        range(len(feature_std)),
+        feature_std.values,
+        height=0.6,
+        color='coral',
+        edgecolor='darkred',
+        linewidth=1.5,
+        alpha=0.8
+    )
+
+    ax.set_yticks(range(len(feature_std)))
+    ax.set_yticklabels(feature_std.index, fontsize=11)
+
+    for i, (bar, val) in enumerate(zip(bars, feature_std.values)):
+        ax.text(val * 1.02, bar.get_y() + bar.get_height()/2,
+               f'{val:.2f}',
+               va='center',
+               ha='left',
+               fontsize=10,
+               fontweight='bold')
+
+    ax.set_xlabel('Standard Deviation', fontsize=12, fontweight='bold')
+    ax.set_ylabel('Feature', fontsize=12, fontweight='bold')
+    ax.set_title('Feature Variance (Diagnostic)',
+                 fontsize=14, fontweight='bold', pad=20)
+    ax.grid(axis='x', alpha=0.3, linestyle='--')
+    ax.invert_yaxis()
+
+
+```
 
 ```{python}
-def compute_ranking_metrics(y_true, y_pred_proba, k=10):
-    """Compute Precision@K and NDCG@K"""
-    n = len(y_true)
-
-    # Get top-K predictions
-    top_k_idx = np.argsort(y_pred_proba)[-k:]  # ⚠️ This gets HIGHEST scores
-
-    # Precision@K: % of top-K that are actually positive
-    precision_k = y_true.iloc[top_k_idx].mean()  # ⚠️ All are positive!
+plt.tight_layout()
+fig
 ```
 
-**The issue:** With an imbalanced dataset (84.9% positive reviews), the top-K predictions are almost always positive, giving artificially high precision.
 
-## Fix: Proper Ranking Evaluation
-
-Replace section 4.9 with this corrected version:
 
 ### 4.9 Ranking Evaluation
 
@@ -842,7 +862,9 @@ precision_10, ndcg_10 = compute_global_ranking_metrics(
 print(f"\n--- Global Ranking Metrics ---")
 print(f"Precision@10: {precision_10:.4f}")
 print(f"NDCG@10: {ndcg_10:.4f}")
+```
 
+```{python}
 #  Check if this is just reflecting class imbalance
 if abs(precision_10 - y_test.mean()) < 0.05:
     print(" Warning: Precision@10 ≈ baseline (possible leakage or no ranking signal)")
@@ -892,7 +914,9 @@ print(f"  Max: {per_user_precision.max():.4f}")
 # Distribution of per-user precision
 print(f"\nDistribution of per-user Precision@5:")
 print(per_user_precision.value_counts(bins=5, sort=False).sort_index())
+```
 
+```{python}
 # Method 3: Check if model is actually discriminating
 print("\n--- Model Discrimination Check ---")
 
@@ -920,10 +944,13 @@ print(f"\nScore separation:")
 print(f"  Positive class mean: {pos_scores.mean():.4f}")
 print(f"  Negative class mean: {neg_scores.mean():.4f}")
 print(f"  Separation: {pos_scores.mean() - neg_scores.mean():.4f}")
+```
 
+```{python}
 # Method 4: Visualize ranking quality
 import matplotlib.pyplot as plt
 
+plt.close('all')
 fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
 # Plot 1: Score distribution by class
@@ -949,12 +976,18 @@ axes[1].set_ylabel('Precision', fontsize=11)
 axes[1].set_title(f'Precision-Recall Curve (AP={ap_score:.3f})', fontsize=12, fontweight='bold')
 axes[1].legend()
 axes[1].grid(alpha=0.3)
-
-plt.tight_layout()
-plt.show()
-
 print(f"\nAverage Precision (AP): {ap_score:.4f}")
 
+```
+
+```{python}
+plt.tight_layout()
+fig
+```
+
+
+
+```{python}
 # Final diagnosis
 print("\n" + "="*60)
 print("DIAGNOSIS")
