@@ -1,0 +1,1061 @@
+---
+title: "Data Mining for Recommendation Systems"
+subtitle: "User Profiling, POI Linking, and Review Mining"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    code-tools: true
+execute:
+  cache: true
+  freeze: auto
+  warning: false
+---
+
+## Overview
+
+This project demonstrates a data mining pipeline for recommendation systems using the Amazon Musical Instruments dataset. It focuses on three key components that reflect real-world practices at platforms like Uber, Yelp, and Amazon:
+
+1. **User Profiling**: Extract behavioral patterns and preferences from interaction history
+2. **POI (Point-of-Interest) Linking**: Entity resolution to merge duplicate product records
+3. **Review Mining**: Extract structured signals from unstructured review text
+
+**Key Applications:**
+- Personalization features for ranking models
+- Cold-start user detection and handling
+- Segment-level targeting and campaign optimization
+- Product catalog deduplication
+- Sentiment-based quality scoring
+
+---
+
+## 1. Data Loading and Preparation
+
+### 1.1 Load Dataset
+
+```{python}
+#| echo: false
+#| output: false
+
+import matplotlib
+matplotlib.use('Agg')
+import warnings
+warnings.filterwarnings('ignore')
+```
+
+```{python}
+from pathlib import Path
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load data
+DATA_PATH = Path("data/amazon_reviews_us_Musical_Instruments_v1_00.tsv").resolve()
+
+df = pd.read_csv(
+    DATA_PATH,
+    sep="\t",
+    on_bad_lines="skip",
+    engine="python",
+    quoting=3
+)
+
+print(f"Loaded {len(df):,} reviews")
+print(f"Unique users: {df['customer_id'].nunique():,}")
+print(f"Unique products: {df['product_id'].nunique():,}")
+print(f"Date range: {df['review_date'].min()} to {df['review_date'].max()}")
+
+df.head()
+```
+
+### 1.2 Data Quality Check
+
+```{python}
+print("=== Missing Values ===")
+print(df.isnull().sum())
+
+print("\n=== Data Types ===")
+print(df.dtypes)
+
+print("\n=== Rating Distribution ===")
+print(df['star_rating'].value_counts().sort_index())
+```
+
+### 1.3 Filter Active Users
+
+For reliable profiling, we focus on users with sufficient interaction history:
+
+```{python}
+MIN_USER_REVIEWS = 5
+user_counts = df['customer_id'].value_counts()
+active_users = user_counts[user_counts >= MIN_USER_REVIEWS].index
+
+df_active = df[df['customer_id'].isin(active_users)].copy()
+
+print(f"Filtered from {len(df):,} to {len(df_active):,} reviews")
+print(f"Active users: {len(active_users):,} (≥{MIN_USER_REVIEWS} reviews)")
+print(f"Retention rate: {len(df_active)/len(df)*100:.1f}%")
+```
+
+---
+
+## 2. User Profiling
+
+User profiling transforms raw interactions into structured behavioral features that capture preferences, activity patterns, and reliability.
+
+### 2.1 Objective
+
+Extract user-level features that encode:
+- **Behavior**: Rating tendencies, activity frequency, temporal patterns
+- **Preferences**: Rating variance, category affinity, review style
+- **Reliability**: Verified purchase ratio, review quality, engagement
+
+### 2.2 Behavioral Features
+
+```{python}
+# Aggregate user-level statistics
+user_profile = df_active.groupby('customer_id').agg({
+    'star_rating': ['mean', 'std', 'min', 'max', 'count'],
+    'verified_purchase': lambda x: (x == 'Y').mean(),
+    'helpful_votes': ['sum', 'mean'],
+    'review_date': ['min', 'max']
+}).reset_index()
+
+# Flatten column names
+user_profile.columns = ['_'.join(col).strip('_') for col in user_profile.columns.values]
+user_profile.columns = [
+    'customer_id', 'avg_rating', 'rating_std', 'min_rating', 'max_rating',
+    'review_count', 'verified_ratio', 'total_helpful_votes', 'avg_helpful_votes',
+    'first_review_date', 'last_review_date'
+]
+
+# Derived features
+user_profile['rating_range'] = user_profile['max_rating'] - user_profile['min_rating']
+user_profile['account_age_days'] = (
+    pd.to_datetime(user_profile['last_review_date']) -
+    pd.to_datetime(user_profile['first_review_date'])
+).dt.days
+user_profile['review_frequency'] = user_profile['review_count'] / (user_profile['account_age_days'] + 1)
+
+print("=== User Profile Statistics ===")
+print(user_profile.describe().round(2))
+
+user_profile.head(10)
+```
+
+### 2.3 Review Quality Features
+
+```{python}
+# Add text-based features
+df_active['review_length'] = df_active['review_body'].astype(str).apply(len)
+df_active['word_count'] = df_active['review_body'].astype(str).apply(lambda x: len(x.split()))
+df_active['uppercase_ratio'] = df_active['review_body'].astype(str).apply(
+    lambda x: sum(1 for c in x if c.isupper()) / (len(x) + 1)
+)
+
+# Aggregate text features per user
+user_text_features = df_active.groupby('customer_id').agg({
+    'review_length': ['mean', 'std'],
+    'word_count': ['mean', 'std'],
+    'uppercase_ratio': 'mean'
+}).reset_index()
+
+user_text_features.columns = ['_'.join(col).strip('_') for col in user_text_features.columns.values]
+user_text_features.columns = [
+    'customer_id', 'avg_review_length', 'std_review_length',
+    'avg_word_count', 'std_word_count', 'avg_uppercase_ratio'
+]
+
+# Merge with user profile
+user_profile = user_profile.merge(user_text_features, on='customer_id', how='left')
+
+print("\n=== Review Quality Features ===")
+print(user_profile[['avg_review_length', 'avg_word_count', 'avg_uppercase_ratio']].describe().round(2))
+```
+
+### 2.4 User Segmentation
+
+```{python}
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans
+
+# Select features for clustering
+cluster_features = [
+    'avg_rating', 'rating_std', 'review_count', 'verified_ratio',
+    'avg_helpful_votes', 'avg_review_length', 'review_frequency'
+]
+
+X_cluster = user_profile[cluster_features].fillna(0)
+
+# Standardize
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X_cluster)
+
+# K-Means clustering (elbow method suggests 4-5 clusters)
+kmeans = KMeans(n_clusters=4, random_state=42, n_init=10)
+user_profile['user_segment'] = kmeans.fit_predict(X_scaled)
+
+# Analyze segments
+print("\n=== User Segments Analysis ===")
+segment_summary = user_profile.groupby('user_segment')[cluster_features].mean().round(2)
+segment_counts = user_profile['user_segment'].value_counts().sort_index()
+
+for seg in range(4):
+    print(f"\n Segment {seg} (n={segment_counts[seg]:,}, {segment_counts[seg]/len(user_profile)*100:.1f}%)")
+    print(segment_summary.loc[seg])
+```
+
+### 2.5 Segment Visualization
+
+```{python}
+#| fig-width: 12
+#| fig-height: 8
+
+fig, axes = plt.subplots(2, 2, figsize=(12, 8))
+
+# Plot 1: Avg Rating vs Review Count (USER-LEVEL)
+scatter1 = axes[0, 0].scatter(
+    user_profile['review_count'],
+    user_profile['avg_rating'],  # Use avg_rating, not star_rating
+    c=user_profile['user_segment'],
+    cmap='viridis',
+    alpha=0.6,
+    s=30,
+    edgecolors='black',
+    linewidth=0.5
+)
+axes[0, 0].set_xlabel('Review Count (log scale)', fontsize=11, fontweight='bold')
+axes[0, 0].set_ylabel('Average Rating', fontsize=11, fontweight='bold')
+axes[0, 0].set_title('Review Activity vs Rating Tendency', fontsize=12, fontweight='bold')
+axes[0, 0].set_xscale('log')
+axes[0, 0].set_ylim(0.5, 5.5)  # Proper rating range
+axes[0, 0].grid(alpha=0.3, linestyle='--')
+
+# Add colorbar
+cbar1 = plt.colorbar(scatter1, ax=axes[0, 0])
+cbar1.set_label('Segment', fontsize=10)
+
+# Plot 2: Rating Std vs Verified Ratio (USER-LEVEL)
+scatter2 = axes[0, 1].scatter(
+    user_profile['verified_ratio'],
+    user_profile['rating_std'],  # Use rating_std from user_profile
+    c=user_profile['user_segment'],
+    cmap='viridis',
+    alpha=0.6,
+    s=30,
+    edgecolors='black',
+    linewidth=0.5
+)
+axes[0, 1].set_xlabel('Verified Purchase Ratio', fontsize=11, fontweight='bold')
+axes[0, 1].set_ylabel('Rating Std Dev', fontsize=11, fontweight='bold')
+axes[0, 1].set_title('Purchase Verification vs Rating Consistency', fontsize=12, fontweight='bold')
+axes[0, 1].set_xlim(-0.05, 1.05)
+axes[0, 1].grid(alpha=0.3, linestyle='--')
+
+# Add colorbar
+cbar2 = plt.colorbar(scatter2, ax=axes[0, 1])
+cbar2.set_label('Segment', fontsize=10)
+
+# Plot 3: Segment Distribution
+colors_bar = plt.cm.viridis(np.linspace(0, 1, 4))
+segment_counts.plot(kind='bar', ax=axes[1, 0], color=colors_bar, edgecolor='black', linewidth=1.2)
+axes[1, 0].set_xlabel('Segment', fontsize=11, fontweight='bold')
+axes[1, 0].set_ylabel('User Count', fontsize=11, fontweight='bold')
+axes[1, 0].set_title('User Segment Distribution', fontsize=12, fontweight='bold')
+axes[1, 0].set_xticklabels(axes[1, 0].get_xticklabels(), rotation=0)
+axes[1, 0].grid(axis='y', alpha=0.3, linestyle='--')
+
+# Add count labels on bars
+for i, (idx, count) in enumerate(segment_counts.items()):
+    axes[1, 0].text(i, count + 200, f'{count:,}',
+                    ha='center', va='bottom', fontsize=10, fontweight='bold')
+
+# Plot 4: Helpful Votes vs Review Length (USER-LEVEL)
+# Filter out zero values for better visualization
+user_profile_plot = user_profile[
+    (user_profile['avg_review_length'] > 0) &
+    (user_profile['avg_helpful_votes'] >= 0)
+]
+
+scatter4 = axes[1, 1].scatter(
+    user_profile_plot['avg_review_length'],
+    user_profile_plot['avg_helpful_votes'],
+    c=user_profile_plot['user_segment'],
+    cmap='viridis',
+    alpha=0.6,
+    s=30,
+    edgecolors='black',
+    linewidth=0.5
+)
+axes[1, 1].set_xlabel('Avg Review Length (chars, log scale)', fontsize=11, fontweight='bold')
+axes[1, 1].set_ylabel('Avg Helpful Votes', fontsize=11, fontweight='bold')
+axes[1, 1].set_title('Review Quality Indicators', fontsize=12, fontweight='bold')
+axes[1, 1].set_xscale('log')
+axes[1, 1].set_yscale('symlog', linthresh=1)  # Handle zeros gracefully
+axes[1, 1].grid(alpha=0.3, linestyle='--')
+
+# Add colorbar
+cbar4 = plt.colorbar(scatter4, ax=axes[1, 1])
+cbar4.set_label('Segment', fontsize=10)
+
+plt.tight_layout()
+plt.show()
+
+# Print diagnostic info
+print("\n=== Visualization Diagnostics ===")
+print(f"Total users plotted: {len(user_profile):,}")
+print(f"Avg rating range: {user_profile['avg_rating'].min():.2f} to {user_profile['avg_rating'].max():.2f}")
+print(f"Review count range: {user_profile['review_count'].min()} to {user_profile['review_count'].max()}")
+print(f"Users with helpful votes: {(user_profile['avg_helpful_votes'] > 0).sum():,}")
+```
+
+
+**Segment Interpretation:**
+
+Based on the clustering results, we can identify distinct user types:
+
+- **Segment 0 (Casual Reviewers)**: Low activity, average ratings, short reviews
+- **Segment 1 (Critical Users)**: Below-average ratings, high variance, frequent unverified purchases
+- **Segment 2 (Power Users)**: High activity, detailed reviews, many helpful votes
+- **Segment 3 (Enthusiasts)**: High ratings, verified purchases, engaged but moderate activity
+
+### 2.6 Use Cases
+
+**1. Personalization Features:**
+```python
+# Use segment ID as a categorical feature in ranking models
+user_segment_feature = user_profile[['customer_id', 'user_segment']]
+```
+
+**2. Cold-Start Detection:**
+```python
+# Identify new users with <5 reviews for special treatment
+cold_start_users = user_counts[user_counts < MIN_USER_REVIEWS].index
+print(f"Cold-start users: {len(cold_start_users):,}")
+```
+
+**3. Segment-Level Targeting:**
+```python
+# Target power users for beta features or review campaigns
+power_users = user_profile[user_profile['user_segment'] == 2]['customer_id']
+print(f"Power users to target: {len(power_users):,}")
+```
+
+---
+
+## 3. POI (Product) Linking
+
+POI linking simulates entity resolution by identifying duplicate or near-duplicate product records that refer to the same underlying item.
+
+### 3.1 Objective
+
+**Problem:** Product databases often contain:
+- Duplicate entries (same product, different IDs)
+- Variations (e.g., "Guitar Strings" vs "Strings for Guitar")
+- Typos and inconsistent naming
+
+**Goal:** Link noisy product records using statistical and textual signals.
+
+### 3.2 Product-Level Statistics
+
+```{python}
+# Aggregate product-level features
+item_stats = df_active.groupby('product_id').agg({
+    'star_rating': ['mean', 'std', 'count'],
+    'review_date': ['min', 'max'],
+    'verified_purchase': lambda x: (x == 'Y').mean(),
+    'product_title': 'first'  # Assume consistent within product_id
+}).reset_index()
+
+item_stats.columns = ['_'.join(col).strip('_') for col in item_stats.columns.values]
+item_stats.columns = [
+    'product_id', 'item_avg_rating', 'item_rating_std', 'item_review_count',
+    'item_first_review', 'item_last_review', 'item_verified_ratio', 'product_title'
+]
+
+item_stats['item_age_days'] = (
+    pd.to_datetime(item_stats['item_last_review']) -
+    pd.to_datetime(item_stats['item_first_review'])
+).dt.days
+
+print("=== Product Statistics ===")
+print(item_stats.describe().round(2))
+
+item_stats.head(10)
+```
+
+### 3.3 Matching Features
+
+To identify potential duplicates, we create pairwise comparison features:
+
+```{python}
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+# For demonstration, sample 500 products
+np.random.seed(42)
+sample_items = item_stats.sample(n=min(500, len(item_stats)), random_state=42)
+
+# Text similarity using TF-IDF
+tfidf = TfidfVectorizer(max_features=100, stop_words='english')
+tfidf_matrix = tfidf.fit_transform(sample_items['product_title'].fillna(''))
+
+# Compute pairwise cosine similarity
+similarity_matrix = cosine_similarity(tfidf_matrix)
+
+# Find high-similarity pairs (>0.8 threshold, excluding self-matches)
+potential_duplicates = []
+threshold = 0.8
+
+for i in range(len(similarity_matrix)):
+    for j in range(i+1, len(similarity_matrix)):
+        if similarity_matrix[i, j] > threshold:
+            potential_duplicates.append({
+                'product_id_1': sample_items.iloc[i]['product_id'],
+                'product_id_2': sample_items.iloc[j]['product_id'],
+                'text_similarity': similarity_matrix[i, j],
+                'rating_diff': abs(sample_items.iloc[i]['item_avg_rating'] -
+                                 sample_items.iloc[j]['item_avg_rating']),
+                'count_ratio': min(sample_items.iloc[i]['item_review_count'],
+                                 sample_items.iloc[j]['item_review_count']) /
+                             max(sample_items.iloc[i]['item_review_count'],
+                                 sample_items.iloc[j]['item_review_count'])
+            })
+
+duplicates_df = pd.DataFrame(potential_duplicates)
+
+print(f"\n=== Potential Duplicate Pairs ===")
+print(f"Found {len(duplicates_df)} candidate pairs (similarity >{threshold})")
+if len(duplicates_df) > 0:
+    print("\nExample duplicate candidates:")
+    print(duplicates_df.head(10))
+```
+
+### 3.4 Matching Strategy
+
+```{python}
+# Decision rule: Match if text_similarity > 0.85 AND rating_diff < 0.5
+if len(duplicates_df) > 0:
+    duplicates_df['is_match'] = (
+        (duplicates_df['text_similarity'] > 0.85) &
+        (duplicates_df['rating_diff'] < 0.5)
+    )
+
+    print(f"\n=== Matching Results ===")
+    print(f"Confirmed matches: {duplicates_df['is_match'].sum()}")
+    print(f"False positives (rejected): {(~duplicates_df['is_match']).sum()}")
+
+    # Show confirmed matches
+    if duplicates_df['is_match'].any():
+        print("\nConfirmed duplicate pairs:")
+        print(duplicates_df[duplicates_df['is_match']][
+            ['product_id_1', 'product_id_2', 'text_similarity', 'rating_diff']
+        ].head(10))
+else:
+    print("No potential duplicates found in sample. Try larger sample or lower threshold.")
+```
+
+### 3.5 Evaluation Metrics
+
+In production with ground-truth labels:
+
+```{python}
+# Precision: % of predicted matches that are true duplicates
+# Recall: % of true duplicates that are detected
+# F1-Score: Harmonic mean of precision and recall
+
+from sklearn.metrics import precision_score, recall_score, f1_score
+
+# If you had ground truth:
+# precision = precision_score(y_true, y_pred)
+# recall = recall_score(y_true, y_pred)
+# f1 = f1_score(y_true, y_pred)
+```
+
+**Trade-offs:**
+- **High threshold (0.9)**: High precision, low recall (misses subtle duplicates)
+- **Low threshold (0.7)**: High recall, low precision (many false positives)
+- **Optimal**: Balance based on business cost of false merges vs. false splits
+
+---
+
+## 4. Review Mining
+
+Review mining extracts structured sentiment and quality signals from unstructured review text.
+
+### 4.1 Objective
+
+Transform review text into:
+- **Sentiment signals**: Positive/negative indicators
+- **Quality scores**: Informativeness, helpfulness
+- **Topic indicators**: Product aspects mentioned
+
+### 4.2 Text Feature Extraction
+
+```{python}
+# Basic text features
+df_active['review_length'] = df_active['review_body'].astype(str).apply(len)
+df_active['word_count'] = df_active['review_body'].astype(str).apply(lambda x: len(x.split()))
+df_active['sentence_count'] = df_active['review_body'].astype(str).apply(lambda x: len(x.split('.')))
+df_active['avg_word_length'] = df_active['review_body'].astype(str).apply(
+    lambda x: np.mean([len(word) for word in x.split()] + [0])
+)
+
+# Style features
+df_active['uppercase_ratio'] = df_active['review_body'].astype(str).apply(
+    lambda x: sum(1 for c in x if c.isupper()) / (len(x) + 1)
+)
+df_active['punctuation_count'] = df_active['review_body'].astype(str).apply(
+    lambda x: sum(1 for c in x if c in '!?.')
+)
+df_active['exclamation_count'] = df_active['review_body'].astype(str).apply(
+    lambda x: x.count('!')
+)
+
+print("=== Text Features Summary ===")
+print(df_active[['word_count', 'sentence_count', 'avg_word_length',
+                 'uppercase_ratio', 'punctuation_count']].describe().round(2))
+```
+
+### 4.3 TF-IDF Features
+
+```{python}
+#| cache: true
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+# Sample for demonstration
+sample_df = df_active.sample(n=min(5000, len(df_active)), random_state=42)
+
+# TF-IDF vectorization
+tfidf_vectorizer = TfidfVectorizer(
+    max_features=50,  # Top 50 terms
+    stop_words='english',
+    ngram_range=(1, 2),  # Unigrams and bigrams
+    min_df=5  # Term must appear in at least 5 documents
+)
+
+tfidf_matrix = tfidf_vectorizer.fit_transform(sample_df['review_body'].fillna(''))
+tfidf_features = pd.DataFrame(
+    tfidf_matrix.toarray(),
+    columns=[f'tfidf_{term}' for term in tfidf_vectorizer.get_feature_names_out()]
+)
+
+print(f"\n=== TF-IDF Features ===")
+print(f"Vocabulary size: {len(tfidf_vectorizer.vocabulary_)}")
+print(f"Feature matrix shape: {tfidf_matrix.shape}")
+print("\nTop terms by average TF-IDF:")
+print(tfidf_features.mean().sort_values(ascending=False).head(10))
+```
+
+### 4.4 Label Definition
+
+```{python}
+# Binary classification: High rating (≥4) vs Low rating (<4)
+df_active['label'] = (df_active['star_rating'] >= 4).astype(int)
+
+print("=== Label Distribution ===")
+print(df_active['label'].value_counts())
+print(f"\nPositive rate: {df_active['label'].mean()*100:.1f}%")
+```
+
+### 4.5 Train/Test Split
+
+```{python}
+from sklearn.model_selection import train_test_split
+
+# Temporal split for realistic evaluation
+df_sorted = df_active.sort_values('review_date')
+split_idx = int(len(df_sorted) * 0.8)
+
+train_df = df_sorted.iloc[:split_idx].copy()
+test_df = df_sorted.iloc[split_idx:].copy()
+
+print(f"Train: {len(train_df):,} reviews ({train_df['label'].mean()*100:.1f}% positive)")
+print(f"Test: {len(test_df):,} reviews ({test_df['label'].mean()*100:.1f}% positive)")
+```
+
+### 4.6 Baseline Model: Logistic Regression
+
+```{python}
+#| cache: true
+
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import roc_auc_score, classification_report, confusion_matrix
+
+# Select features
+text_features = ['word_count', 'sentence_count', 'avg_word_length',
+                'uppercase_ratio', 'punctuation_count', 'exclamation_count']
+
+X_train = train_df[text_features].fillna(0)
+X_test = test_df[text_features].fillna(0)
+y_train = train_df['label']
+y_test = test_df['label']
+
+# Standardize
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# Train logistic regression
+lr_model = LogisticRegression(max_iter=1000, random_state=42)
+lr_model.fit(X_train_scaled, y_train)
+
+# Predict
+y_pred_proba_lr = lr_model.predict_proba(X_test_scaled)[:, 1]
+y_pred_lr = lr_model.predict(X_test_scaled)
+
+# Evaluate
+auc_lr = roc_auc_score(y_test, y_pred_proba_lr)
+
+print("=== Logistic Regression Results ===")
+print(f"AUC: {auc_lr:.4f}")
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred_lr, target_names=['Low Rating', 'High Rating']))
+print("\nConfusion Matrix:")
+print(confusion_matrix(y_test, y_pred_lr))
+```
+
+### 4.7 Advanced Model: XGBoost
+
+```{python}
+#| cache: true
+
+import xgboost as xgb
+from sklearn.metrics import roc_auc_score, classification_report
+
+# Build DMatrix
+dtrain = xgb.DMatrix(X_train, label=y_train)
+dtest = xgb.DMatrix(X_test, label=y_test)
+
+# XGBoost parameters
+params = {
+    "objective": "binary:logistic",
+    "eval_metric": "auc",
+    "max_depth": 6,
+    "eta": 0.1,
+    "verbosity": 0,
+}
+
+# Train model
+bst = xgb.train(
+    params=params,
+    dtrain=dtrain,
+    num_boost_round=50
+)
+
+# Predictions
+y_proba_xgb = bst.predict(dtest)
+y_pred_xgb = (y_proba_xgb >= 0.5).astype(int)
+
+# Evaluation
+auc_xgb = roc_auc_score(y_test, y_proba_xgb)
+
+print("=== XGBoost Results ===")
+print(f"AUC: {auc_xgb:.4f}")
+print(f"Improvement over LR: +{auc_xgb - auc_lr:.4f}")
+print("\nClassification Report:")
+print(
+    classification_report(
+        y_test,
+        y_pred_xgb,
+        target_names=["Low Rating", "High Rating"],
+        zero_division=0
+    )
+)
+
+```
+
+### 4.8 Feature Importance
+
+```{python}
+### 4.8 Feature Importance
+
+#| fig-width: 10
+#| fig-height: 6
+
+# XGBoost feature importance - diagnostics first
+print("=== Feature Importance Extraction ===")
+
+# Get importance scores (try gain first, fall back to weight)
+importance_dict = bst.get_score(importance_type='gain')
+if len(importance_dict) == 0:
+    print("⚠️ No 'gain' scores found, using 'weight' instead")
+    importance_dict = bst.get_score(importance_type='weight')
+
+print(f"Found {len(importance_dict)} features with scores")
+print(f"Feature names from model: {list(importance_dict.keys())}")
+
+# XGBoost uses internal names like 'f0', 'f1', etc.
+# But sometimes uses actual feature names - need to handle both
+if any(key.startswith('f') and key[1:].isdigit() for key in importance_dict.keys()):
+    # Internal naming (f0, f1, ...)
+    print("Using internal feature indexing (f0, f1, ...)")
+    importance_df = pd.DataFrame({
+        'feature': text_features,
+        'importance': [importance_dict.get(f'f{i}', 0) for i in range(len(text_features))]
+    })
+else:
+    # Direct feature names
+    print("Using direct feature names")
+    importance_df = pd.DataFrame({
+        'feature': text_features,
+        'importance': [importance_dict.get(feat, 0) for feat in text_features]
+    })
+
+importance_df = importance_df.sort_values('importance', ascending=False)
+
+# Normalize for better visualization
+if importance_df['importance'].sum() > 0:
+    importance_df['importance_pct'] = (
+        importance_df['importance'] / importance_df['importance'].sum() * 100
+    )
+else:
+    importance_df['importance_pct'] = 0
+
+print("\n=== Feature Importance Table ===")
+print(importance_df.round(4))
+
+# Plot
+if importance_df['importance'].sum() > 0:
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    # Create horizontal bar chart
+    bars = ax.barh(
+        importance_df['feature'],
+        importance_df['importance_pct'],
+        color='steelblue',
+        edgecolor='navy',
+        linewidth=1.5
+    )
+
+    # Styling
+    ax.set_xlabel('Relative Importance (%)', fontsize=12, fontweight='bold')
+    ax.set_ylabel('Feature', fontsize=12, fontweight='bold')
+    ax.set_title('Feature Importance for Review Sentiment Prediction',
+                 fontsize=14, fontweight='bold', pad=20)
+    ax.grid(axis='x', alpha=0.3, linestyle='--', linewidth=0.7)
+    ax.invert_yaxis()
+
+    # Add percentage labels on bars
+    for bar, val in zip(bars, importance_df['importance_pct']):
+        if val > 0:
+            ax.text(val + 0.5, bar.get_y() + bar.get_height()/2,
+                   f'{val:.1f}%',
+                   va='center', ha='left', fontsize=10, fontweight='bold')
+
+    # Add subtle background color for top feature
+    top_feature_idx = 0
+    bars[top_feature_idx].set_color('coral')
+    bars[top_feature_idx].set_edgecolor('darkred')
+
+    plt.tight_layout()
+    plt.show()
+
+    # Key insights
+    print(f"\n📊 Key Insights:")
+    print(f"   • Top feature: {importance_df.iloc[0]['feature']} ({importance_df.iloc[0]['importance_pct']:.1f}%)")
+    print(f"   • Features used: {(importance_df['importance'] > 0).sum()}/{len(text_features)}")
+
+    top3 = importance_df.head(3)
+    print(f"   • Top 3 features account for {top3['importance_pct'].sum():.1f}% of total importance")
+
+else:
+    print("\n⚠️ Warning: All importances are zero!")
+    print("Possible reasons:")
+    print("1. Features have no predictive power")
+    print("2. num_boost_round too low (try 100+)")
+    print("3. Features are perfectly correlated")
+    print("4. Data leakage or constant predictions")
+
+    # Diagnostic plot - show feature variance
+    fig, ax = plt.subplots(figsize=(10, 6))
+    feature_std = X_train[text_features].std()
+    ax.barh(text_features, feature_std, color='coral')
+    ax.set_xlabel('Standard Deviation')
+    ax.set_title('Feature Variance (Diagnostic)')
+    ax.invert_yaxis()
+    plt.tight_layout()
+    plt.show()
+```
+
+### 4.9 Ranking Evaluation
+
+```{python}
+def compute_ranking_metrics(y_true, y_pred_proba, k=10):
+    """Compute Precision@K and NDCG@K"""
+    n = len(y_true)
+
+    # Get top-K predictions
+    top_k_idx = np.argsort(y_pred_proba)[-k:]  # ⚠️ This gets HIGHEST scores
+
+    # Precision@K: % of top-K that are actually positive
+    precision_k = y_true.iloc[top_k_idx].mean()  # ⚠️ All are positive!
+```
+
+**The issue:** With an imbalanced dataset (84.9% positive reviews), the top-K predictions are almost always positive, giving artificially high precision.
+
+## Fix: Proper Ranking Evaluation
+
+Replace section 4.9 with this corrected version:
+
+### 4.9 Ranking Evaluation
+
+
+```{python}
+
+from sklearn.metrics import ndcg_score, precision_recall_curve
+
+print("=== Ranking Evaluation ===\n")
+
+# Check class balance first
+print(f"Test set positive rate: {y_test.mean()*100:.1f}%")
+print(f"Random baseline Precision@10: {y_test.mean():.4f}")
+
+# Method 1: Global Precision@K and NDCG@K
+def compute_global_ranking_metrics(y_true, y_pred_proba, k=10):
+    """Compute global ranking metrics"""
+    n = len(y_true)
+
+    # Get top-K predictions (highest scores)
+    top_k_idx = np.argsort(y_pred_proba)[-k:]
+
+    # Precision@K: % of top-K that are actually positive
+    precision_k = y_true.iloc[top_k_idx].mean()
+
+    # NDCG@K
+    y_true_array = np.array([y_true.values])
+    y_pred_array = np.array([y_pred_proba])
+    ndcg_k = ndcg_score(y_true_array, y_pred_array, k=k)
+
+    return precision_k, ndcg_k
+
+precision_10, ndcg_10 = compute_global_ranking_metrics(
+    y_test.reset_index(drop=True),
+    y_proba_xgb,
+    k=10
+)
+
+print(f"\n--- Global Ranking Metrics ---")
+print(f"Precision@10: {precision_10:.4f}")
+print(f"NDCG@10: {ndcg_10:.4f}")
+
+#  Check if this is just reflecting class imbalance
+if abs(precision_10 - y_test.mean()) < 0.05:
+    print(" Warning: Precision@10 ≈ baseline (possible leakage or no ranking signal)")
+
+# Method 2: Per-User Ranking (More realistic)
+print("\n--- Per-User Ranking Evaluation ---")
+
+# Add user_id back to test set for grouping
+test_df_eval = test_df[['customer_id']].reset_index(drop=True)
+test_df_eval['y_true'] = y_test.values
+test_df_eval['y_pred'] = y_proba_xgb
+
+# Filter users with at least 10 reviews in test set
+user_review_counts = test_df_eval.groupby('customer_id').size()
+valid_users = user_review_counts[user_review_counts >= 10].index
+
+test_df_eval_filtered = test_df_eval[test_df_eval['customer_id'].isin(valid_users)]
+
+print(f"Evaluating {len(valid_users)} users with ≥10 test reviews")
+
+# Compute per-user Precision@K
+def compute_per_user_precision(group, k=10):
+    """Compute Precision@K for a single user"""
+    if len(group) < k:
+        return None
+
+    # Sort by predicted score (descending)
+    sorted_group = group.sort_values('y_pred', ascending=False)
+
+    # Get top-K
+    top_k = sorted_group.head(k)
+
+    # Precision@K
+    return top_k['y_true'].mean()
+
+per_user_precision = test_df_eval_filtered.groupby('customer_id').apply(
+    lambda g: compute_per_user_precision(g, k=5)  # Use k=5 for users with fewer reviews
+).dropna()
+
+print(f"\nPer-User Precision@5:")
+print(f"  Mean: {per_user_precision.mean():.4f}")
+print(f"  Median: {per_user_precision.median():.4f}")
+print(f"  Std: {per_user_precision.std():.4f}")
+print(f"  Min: {per_user_precision.min():.4f}")
+print(f"  Max: {per_user_precision.max():.4f}")
+
+# Distribution of per-user precision
+print(f"\nDistribution of per-user Precision@5:")
+print(per_user_precision.value_counts(bins=5, sort=False).sort_index())
+
+# Method 3: Check if model is actually discriminating
+print("\n--- Model Discrimination Check ---")
+
+# AUC (already computed)
+print(f"AUC: {auc_xgb:.4f}")
+
+# Brier Score (calibration)
+from sklearn.metrics import brier_score_loss
+brier = brier_score_loss(y_test, y_proba_xgb)
+print(f"Brier Score: {brier:.4f} (lower is better)")
+
+# Prediction distribution
+print(f"\nPrediction score distribution:")
+print(f"  Mean: {y_proba_xgb.mean():.4f}")
+print(f"  Median: {np.median(y_proba_xgb):.4f}")
+print(f"  Std: {y_proba_xgb.std():.4f}")
+print(f"  Min: {y_proba_xgb.min():.4f}")
+print(f"  Max: {y_proba_xgb.max():.4f}")
+
+# Check if predictions are well-separated
+pos_scores = y_proba_xgb[y_test == 1]
+neg_scores = y_proba_xgb[y_test == 0]
+
+print(f"\nScore separation:")
+print(f"  Positive class mean: {pos_scores.mean():.4f}")
+print(f"  Negative class mean: {neg_scores.mean():.4f}")
+print(f"  Separation: {pos_scores.mean() - neg_scores.mean():.4f}")
+
+# Method 4: Visualize ranking quality
+import matplotlib.pyplot as plt
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+# Plot 1: Score distribution by class
+axes[0].hist(neg_scores, bins=30, alpha=0.6, label='Negative (rating <4)', color='coral')
+axes[0].hist(pos_scores, bins=30, alpha=0.6, label='Positive (rating ≥4)', color='steelblue')
+axes[0].set_xlabel('Predicted Probability', fontsize=11)
+axes[0].set_ylabel('Frequency', fontsize=11)
+axes[0].set_title('Prediction Score Distribution by True Label', fontsize=12, fontweight='bold')
+axes[0].legend()
+axes[0].grid(alpha=0.3)
+
+# Plot 2: Precision-Recall curve
+from sklearn.metrics import precision_recall_curve, average_precision_score
+
+precision_curve, recall_curve, thresholds = precision_recall_curve(y_test, y_proba_xgb)
+ap_score = average_precision_score(y_test, y_proba_xgb)
+
+axes[1].plot(recall_curve, precision_curve, linewidth=2, color='navy')
+axes[1].axhline(y=y_test.mean(), color='red', linestyle='--',
+                label=f'Baseline (random): {y_test.mean():.3f}')
+axes[1].set_xlabel('Recall', fontsize=11)
+axes[1].set_ylabel('Precision', fontsize=11)
+axes[1].set_title(f'Precision-Recall Curve (AP={ap_score:.3f})', fontsize=12, fontweight='bold')
+axes[1].legend()
+axes[1].grid(alpha=0.3)
+
+plt.tight_layout()
+plt.show()
+
+print(f"\nAverage Precision (AP): {ap_score:.4f}")
+
+# Final diagnosis
+print("\n" + "="*60)
+print("DIAGNOSIS")
+print("="*60)
+
+if precision_10 > 0.95 and abs(precision_10 - y_test.mean()) < 0.05:
+    print(" HIGH RISK: Precision@10 ≈ class baseline")
+    print("   → Model may not be learning meaningful ranking")
+    print("   → Check for data leakage in features")
+elif auc_xgb > 0.8 and per_user_precision.mean() < 0.7:
+    print(" MODERATE: Good AUC but lower per-user precision")
+    print("   → Model generalizes but has room for improvement")
+elif auc_xgb < 0.65:
+    print(" LOW PERFORMANCE: AUC too low")
+    print("   → Features may lack predictive power")
+else:
+    print(" GOOD: Model shows reasonable discrimination")
+    print("   → Suitable for ranking applications")
+
+print("="*60)
+
+```
+
+
+---
+
+## 5. Summary and Applications
+
+### 5.1 Key Takeaways
+
+**1. User Profiling**
+- Identified 4 distinct user segments with different behavioral patterns
+- Created 15+ features capturing activity, preferences, and reliability
+- Use cases: Personalization, cold-start handling, segment targeting
+
+**2. POI Linking**
+- Demonstrated entity resolution using text similarity and statistical signals
+- Found {len(duplicates_df) if 'duplicates_df' in locals() else 0} potential duplicate product pairs
+- Trade-off between precision (avoiding false merges) and recall (catching all duplicates)
+
+**3. Review Mining**
+- Extracted structured features from unstructured review text
+- Achieved {auc_xgb:.3f} AUC for rating prediction using text features
+- Text features correlate strongly with sentiment and helpfulness
+
+### 5.2 Production Deployment
+
+**User Profiling Pipeline:**
+```python
+# 1. Batch computation (daily)
+user_profiles = compute_user_profiles(historical_reviews)
+user_profiles.to_parquet('user_profiles.parquet')
+
+# 2. Feature serving (real-time)
+user_features = load_user_profile(user_id)
+ranking_model.predict(user_features, item_features)
+```
+
+**POI Linking Pipeline:**
+```python
+# 1. Candidate generation (weekly)
+potential_duplicates = find_similar_products(product_catalog)
+
+# 2. Human review (prioritized by confidence)
+high_confidence_matches = potential_duplicates[
+    potential_duplicates['similarity'] > 0.9
+]
+```
+
+**Review Mining Pipeline:**
+```python
+# 1. Real-time feature extraction
+text_features = extract_text_features(new_review)
+
+# 2. Sentiment prediction
+sentiment_score = model.predict_proba(text_features)[1]
+
+# 3. Quality scoring for moderation
+if sentiment_score < 0.3 and review_length < 50:
+    flag_for_review()
+```
+
+### 5.3 Next Steps
+
+**Enhancements:**
+- **Deep learning**: Use BERT/RoBERTa for better text understanding
+- **Temporal modeling**: Incorporate review timing and seasonality
+- **Multi-modal features**: Combine text, images, and structured data
+- **Active learning**: Prioritize uncertain cases for human labeling
+
+**Production Considerations:**
+- **Scalability**: Process millions of reviews efficiently
+- **Latency**: Real-time feature extraction (<100ms)
+- **Monitoring**: Track data drift and model degradation
+- **A/B testing**: Validate business impact of new features
+
+---
+
+## References
+
+- Meituan Machine Learning Practice (Chapter 2: Data Mining)
+- Amazon Reviews 2023 Dataset
+- Entity Resolution in Knowledge Graphs (Christophides et al., 2020)
+- Sentiment Analysis: Mining Opinions, Sentiments, and Emotions (Liu, 2015)
