@@ -2,6 +2,10 @@
 title: "Data Mining for Recommendation Systems"
 format:
   html:
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    toc-title: "On this page"
     embed-resources: true
 jupyter: python3
 execute:

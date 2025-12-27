@@ -137,7 +137,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -185,7 +185,73 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#end-to-end-recommendation-system-amazon-dataset" id="toc-end-to-end-recommendation-system-amazon-dataset" class="nav-link active" data-scroll-target="#end-to-end-recommendation-system-amazon-dataset">End-to-End Recommendation System (Amazon Dataset)</a>
+  <ul class="collapse">
+  <li><a href="#problem-definition" id="toc-problem-definition" class="nav-link" data-scroll-target="#problem-definition">1. Problem Definition</a>
+  <ul class="collapse">
+  <li><a href="#task-type" id="toc-task-type" class="nav-link" data-scroll-target="#task-type">Task Type</a></li>
+  </ul></li>
+  <li><a href="#dataset-overview" id="toc-dataset-overview" class="nav-link" data-scroll-target="#dataset-overview">2. Dataset Overview</a>
+  <ul class="collapse">
+  <li><a href="#review-count-and-ratings-distribution" id="toc-review-count-and-ratings-distribution" class="nav-link" data-scroll-target="#review-count-and-ratings-distribution">2.1 Review Count and Ratings Distribution</a></li>
+  <li><a href="#review-length-distribution" id="toc-review-length-distribution" class="nav-link" data-scroll-target="#review-length-distribution">2.2 Review Length Distribution</a></li>
+  <li><a href="#user-and-item-activity" id="toc-user-and-item-activity" class="nav-link" data-scroll-target="#user-and-item-activity">2.3 User and Item Activity</a></li>
+  <li><a href="#temporal-coverage" id="toc-temporal-coverage" class="nav-link" data-scroll-target="#temporal-coverage">2.4 Temporal Coverage</a></li>
+  </ul></li>
+  <li><a href="#feature-engineering" id="toc-feature-engineering" class="nav-link" data-scroll-target="#feature-engineering">3. Feature Engineering</a>
+  <ul class="collapse">
+  <li><a href="#numerical-features" id="toc-numerical-features" class="nav-link" data-scroll-target="#numerical-features">3.1 Numerical Features</a></li>
+  <li><a href="#traintest-split" id="toc-traintest-split" class="nav-link" data-scroll-target="#traintest-split">3.2 Train/Test Split</a></li>
+  <li><a href="#create-aggregated-features" id="toc-create-aggregated-features" class="nav-link" data-scroll-target="#create-aggregated-features">3.3 Create Aggregated Features</a></li>
+  <li><a href="#spatial-features" id="toc-spatial-features" class="nav-link" data-scroll-target="#spatial-features">3.4 Spatial Features</a></li>
+  <li><a href="#feature-selection" id="toc-feature-selection" class="nav-link" data-scroll-target="#feature-selection">3.5 Feature Selection</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">3.6 Summary</a></li>
+  </ul></li>
+  <li><a href="#model-training" id="toc-model-training" class="nav-link" data-scroll-target="#model-training">4. Model Training</a>
+  <ul class="collapse">
+  <li><a href="#logistic-regression" id="toc-logistic-regression" class="nav-link" data-scroll-target="#logistic-regression">4.1 Logistic Regression</a></li>
+  <li><a href="#factorization-machine" id="toc-factorization-machine" class="nav-link" data-scroll-target="#factorization-machine">4.2 Factorization Machine</a></li>
+  <li><a href="#gradient-boosted-trees-xgboost" id="toc-gradient-boosted-trees-xgboost" class="nav-link" data-scroll-target="#gradient-boosted-trees-xgboost">4.3 Gradient Boosted Trees (XGBoost)</a></li>
+  <li><a href="#summary-1" id="toc-summary-1" class="nav-link" data-scroll-target="#summary-1">4.4 Summary</a></li>
+  <li><a href="#key-findings" id="toc-key-findings" class="nav-link" data-scroll-target="#key-findings">Key Findings</a></li>
+  <li><a href="#performance-analysis" id="toc-performance-analysis" class="nav-link" data-scroll-target="#performance-analysis">Performance Analysis</a></li>
+  <li><a href="#recommendations-for-improvement" id="toc-recommendations-for-improvement" class="nav-link" data-scroll-target="#recommendations-for-improvement">Recommendations for Improvement</a></li>
+  </ul></li>
+  <li><a href="#evaluation" id="toc-evaluation" class="nav-link" data-scroll-target="#evaluation">5. Evaluation</a>
+  <ul class="collapse">
+  <li><a href="#binary-classification-metrics" id="toc-binary-classification-metrics" class="nav-link" data-scroll-target="#binary-classification-metrics">5.1 Binary Classification Metrics</a></li>
+  <li><a href="#ranking-metrics" id="toc-ranking-metrics" class="nav-link" data-scroll-target="#ranking-metrics">5.2 Ranking Metrics</a></li>
+  <li><a href="#per-user-ranking-evaluation" id="toc-per-user-ranking-evaluation" class="nav-link" data-scroll-target="#per-user-ranking-evaluation">5.3 Per-User Ranking Evaluation</a></li>
+  <li><a href="#cross-validation" id="toc-cross-validation" class="nav-link" data-scroll-target="#cross-validation">5.4 Cross-Validation</a></li>
+  <li><a href="#feature-importance-analysis" id="toc-feature-importance-analysis" class="nav-link" data-scroll-target="#feature-importance-analysis">5.5 Feature Importance Analysis</a></li>
+  <li><a href="#summary-2" id="toc-summary-2" class="nav-link" data-scroll-target="#summary-2">5.6 Summary</a></li>
+  </ul></li>
+  <li><a href="#model-fusion" id="toc-model-fusion" class="nav-link" data-scroll-target="#model-fusion">6. Model Fusion</a>
+  <ul class="collapse">
+  <li><a href="#simple-averaging-ensemble" id="toc-simple-averaging-ensemble" class="nav-link" data-scroll-target="#simple-averaging-ensemble">6.1 Simple Averaging Ensemble</a></li>
+  <li><a href="#weighted-averaging" id="toc-weighted-averaging" class="nav-link" data-scroll-target="#weighted-averaging">6.2 Weighted Averaging</a></li>
+  <li><a href="#stacked-generalization-stacking" id="toc-stacked-generalization-stacking" class="nav-link" data-scroll-target="#stacked-generalization-stacking">6.3 Stacked Generalization (Stacking)</a></li>
+  <li><a href="#production-ready-stacking-cross-validation" id="toc-production-ready-stacking-cross-validation" class="nav-link" data-scroll-target="#production-ready-stacking-cross-validation">6.4 Production-Ready Stacking (Cross-Validation)</a></li>
+  <li><a href="#ensemble-comparison" id="toc-ensemble-comparison" class="nav-link" data-scroll-target="#ensemble-comparison">6.5 Ensemble Comparison</a></li>
+  <li><a href="#visualization" id="toc-visualization" class="nav-link" data-scroll-target="#visualization">6.6 Visualization</a></li>
+  <li><a href="#key-findings-1" id="toc-key-findings-1" class="nav-link" data-scroll-target="#key-findings-1">6.7 Key Findings</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">7. Conclusion</a>
+  <ul class="collapse">
+  <li><a href="#modeling-decisions" id="toc-modeling-decisions" class="nav-link" data-scroll-target="#modeling-decisions">7.1 Modeling Decisions</a></li>
+  <li><a href="#production-considerations" id="toc-production-considerations" class="nav-link" data-scroll-target="#production-considerations">7.2 Production Considerations</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">7.3 Next Steps</a></li>
+  <li><a href="#closing-remarks" id="toc-closing-remarks" class="nav-link" data-scroll-target="#closing-remarks">7.4 Closing Remarks</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -225,7 +291,7 @@ window.Quarto = {
 <section id="dataset-overview" class="level2">
 <h2 class="anchored" data-anchor-id="dataset-overview">2. Dataset Overview</h2>
 <p><strong>Source:</strong> <a href="https://amazon-reviews-2023.github.io/">Amazon Reviews 2023 (Musical Instruments)</a> <strong>Curation:</strong> Julian McAuley / Generous Lab <strong>Citation:</strong> See <code>data/readme.md</code> for source attribution.</p>
-<div id="776f1641" class="cell" data-execution_count="1">
+<div id="ea08b0ad" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
@@ -258,13 +324,13 @@ Loaded 904765 reviews</code></pre>
 <section id="review-count-and-ratings-distribution" class="level3">
 <h3 class="anchored" data-anchor-id="review-count-and-ratings-distribution">2.1 Review Count and Ratings Distribution</h3>
 <p>We begin by examining the distribution of star ratings and the frequency of user interactions.</p>
-<div id="ade4b70c" class="cell" data-execution_count="2">
+<div id="d1b6178e" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rating distribution</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>rating_counts <span class="op">=</span> df[<span class="st">"star_rating"</span>].value_counts().sort_index()</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Review length</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"review_length"</span>] <span class="op">=</span> df[<span class="st">"review_body"</span>].astype(<span class="bu">str</span>).<span class="bu">apply</span>(<span class="bu">len</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="47e7d63c" class="cell" data-execution_count="3">
+<div id="542dcb87" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>rating_counts.plot(kind<span class="op">=</span><span class="st">"bar"</span>, title<span class="op">=</span><span class="st">"Distribution of Star Ratings"</span>,</span>
@@ -284,7 +350,7 @@ Loaded 904765 reviews</code></pre>
 <section id="review-length-distribution" class="level3">
 <h3 class="anchored" data-anchor-id="review-length-distribution">2.2 Review Length Distribution</h3>
 <p>We explore the distribution of review verbosity to understand content richness. Most reviews are relatively short, suggesting limited user expression, which has implications for downstream text processing.</p>
-<div id="c75b695d" class="cell" data-execution_count="4">
+<div id="869023db" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"review_length"</span>].hist(bins<span class="op">=</span><span class="dv">50</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Distribution of Review Lengths"</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Character Count"</span>)</span>
@@ -305,7 +371,7 @@ Loaded 904765 reviews</code></pre>
 <section id="user-and-item-activity" class="level3">
 <h3 class="anchored" data-anchor-id="user-and-item-activity">2.3 User and Item Activity</h3>
 <p>We inspect user and item review frequency to detect sparsity patterns.</p>
-<div id="fb2214e6" class="cell" data-execution_count="5">
+<div id="e4a2b87c" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>user_counts <span class="op">=</span> df[<span class="st">"customer_id"</span>].value_counts()</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>item_counts <span class="op">=</span> df[<span class="st">"product_id"</span>].value_counts()</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -325,7 +391,7 @@ Items with ≥ 10 reviews: 15403</code></pre>
 </section>
 <section id="temporal-coverage" class="level3">
 <h3 class="anchored" data-anchor-id="temporal-coverage">2.4 Temporal Coverage</h3>
-<div id="c947ea40" class="cell" data-execution_count="6">
+<div id="5699ed95" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"review_date"</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">"review_date"</span>])</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"review_date"</span>].agg([<span class="st">"min"</span>, <span class="st">"max"</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -344,7 +410,7 @@ Name: review_date, dtype: datetime64[ns]</code></pre>
 <section id="numerical-features" class="level3">
 <h3 class="anchored" data-anchor-id="numerical-features">3.1 Numerical Features</h3>
 <p>We begin by transforming and aggregating numeric fields such as <code>star_rating</code> and <code>review_length</code>, which provide continuous value inputs to models.</p>
-<div id="7c2945f6" class="cell" data-execution_count="7">
+<div id="e97862ac" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Basic features (no leakage)</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"review_length"</span>] <span class="op">=</span> df[<span class="st">"review_body"</span>].astype(<span class="bu">str</span>).<span class="bu">apply</span>(<span class="bu">len</span>)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"word_count"</span>] <span class="op">=</span> df[<span class="st">"review_body"</span>].astype(<span class="bu">str</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">len</span>(x.split()))</span>
@@ -373,7 +439,7 @@ Name: review_date, dtype: datetime64[ns]</code></pre>
 </section>
 <section id="traintest-split" class="level3">
 <h3 class="anchored" data-anchor-id="traintest-split">3.2 Train/Test Split</h3>
-<div id="4b51c1c1" class="cell" data-execution_count="8">
+<div id="5f3e01ea" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>base_features <span class="op">=</span> [<span class="st">"review_length"</span>, <span class="st">"word_count"</span>, <span class="st">"verified_flag"</span>, <span class="st">"vine_flag"</span>,</span>
@@ -397,7 +463,7 @@ Name: review_date, dtype: datetime64[ns]</code></pre>
 </section>
 <section id="create-aggregated-features" class="level3">
 <h3 class="anchored" data-anchor-id="create-aggregated-features">3.3 Create Aggregated Features</h3>
-<div id="0b7acc6a" class="cell" data-execution_count="9">
+<div id="949744b1" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate from training data only</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>user_stats_train <span class="op">=</span> train_df.groupby(<span class="st">"customer_id"</span>)[<span class="st">"star_rating"</span>].agg([<span class="st">"mean"</span>, <span class="st">"count"</span>]).rename(</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>{<span class="st">"mean"</span>: <span class="st">"user_avg_rating"</span>, <span class="st">"count"</span>: <span class="st">"user_review_count"</span>}</span>
@@ -444,7 +510,7 @@ Name: review_date, dtype: datetime64[ns]</code></pre>
 <section id="filtering-methods" class="level4">
 <h4 class="anchored" data-anchor-id="filtering-methods">3.5.1 Filtering Methods</h4>
 <p>Model-agnostic methods such as variance threshold and mutual information:</p>
-<div id="b3341fdd" class="cell" data-execution_count="10">
+<div id="d840b35f" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> VarianceThreshold, SelectKBest, mutual_info_classif</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>numeric_features <span class="op">=</span> train_df.select_dtypes(include<span class="op">=</span>[<span class="st">'int64'</span>, <span class="st">'float64'</span>]).columns.tolist()</span>
@@ -462,14 +528,14 @@ Name: review_date, dtype: datetime64[ns]</code></pre>
 <span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Mutual information selected: </span><span class="sc">{</span><span class="bu">list</span>(mi_features)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Mutual information selected: ['word_count', 'verified_flag', 'char_count', 'punctuation_count', 'user_avg_rating', 'item_avg_rating', 'normalized_length', 'user_item_interaction', 'user_activity', 'item_popularity']</code></pre>
+<pre><code>Mutual information selected: ['word_count', 'verified_flag', 'punctuation_count', 'user_avg_rating', 'item_avg_rating', 'item_review_count', 'normalized_length', 'user_item_interaction', 'user_activity', 'item_popularity']</code></pre>
 </div>
 </div>
 </section>
 <section id="wrapper-methods" class="level4">
 <h4 class="anchored" data-anchor-id="wrapper-methods">3.5.2 Wrapper Methods</h4>
 <p>We use recursive feature elimination (RFE) with logistic regression:</p>
-<div id="53ad8c48" class="cell" data-execution_count="11">
+<div id="06bc1bb2" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> RFE</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
@@ -491,7 +557,7 @@ Name: review_date, dtype: datetime64[ns]</code></pre>
 <section id="embedded-methods" class="level4">
 <h4 class="anchored" data-anchor-id="embedded-methods">3.5.3 Embedded Methods</h4>
 <p>Embedded selection is performed during model training via importance scores:</p>
-<div id="af161bde" class="cell" data-execution_count="12">
+<div id="e69a6ab9" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> xgboost <span class="im">import</span> XGBClassifier</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>xgb_selector <span class="op">=</span> XGBClassifier(n_estimators<span class="op">=</span><span class="dv">50</span>, random_state<span class="op">=</span><span class="dv">42</span>, verbosity<span class="op">=</span><span class="dv">0</span>)</span>
@@ -524,7 +590,7 @@ Name: review_date, dtype: datetime64[ns]</code></pre>
 </section>
 <section id="method-comparison-and-selection" class="level4">
 <h4 class="anchored" data-anchor-id="method-comparison-and-selection">3.5.4 Method Comparison and Selection</h4>
-<div id="54260966" class="cell" data-execution_count="13">
+<div id="e84cfdbc" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare overlap between methods</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -556,9 +622,9 @@ Features selected by multiple methods:
   word_count: 3 method(s)
   user_avg_rating: 3 method(s)
   item_avg_rating: 3 method(s)
+  item_review_count: 3 method(s)
   user_item_interaction: 3 method(s)
   item_popularity: 3 method(s)
-  char_count: 2 method(s)
   normalized_length: 2 method(s)
   user_activity: 2 method(s)
   review_length: 2 method(s)
@@ -637,7 +703,7 @@ Features selected by multiple methods:
 P(y=1|x) = \frac{1}{1 + \exp(-\theta^T x)}
 \]</span></p>
 <p>This model is interpretable and efficient on well-engineered features.</p>
-<div id="1f940e9c" class="cell" data-execution_count="14">
+<div id="59725b3e" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_auc_score</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> [<span class="st">"user_avg_rating"</span>, <span class="st">"item_avg_rating"</span>, <span class="st">"review_length"</span>, <span class="st">"user_review_count"</span>, <span class="st">"item_review_count"</span>]</span>
@@ -664,7 +730,7 @@ P(y=1|x) = \frac{1}{1 + \exp(-\theta^T x)}
 \]</span></p>
 <p><em>Note: Factorization Machines (LightFM, fastFM) have compatibility issues with Python 3.13. Instead, we demonstrate interaction features manually, which XGBoost can learn automatically through its tree-based splits.</em></p>
 <p><strong>Simulating FM-style interactions:</strong></p>
-<div id="46cd41a5" class="cell" data-execution_count="15">
+<div id="eab5b029" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>features_with_interactions <span class="op">=</span> [</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"user_avg_rating"</span>, <span class="st">"item_avg_rating"</span>, <span class="st">"review_length"</span>,</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"verified_flag"</span>, <span class="st">"user_review_count"</span>, <span class="st">"item_review_count"</span>,</span>
@@ -691,7 +757,7 @@ P(y=1|x) = \frac{1}{1 + \exp(-\theta^T x)}
 <h3 class="anchored" data-anchor-id="gradient-boosted-trees-xgboost">4.3 Gradient Boosted Trees (XGBoost)</h3>
 <p>XGBoost is an ensemble of decision trees optimized via boosting. It supports both classification and ranking loss functions, and handles missing values and feature interactions efficiently.</p>
 <p>We use GBT as our production baseline.</p>
-<div id="7d54ff89" class="cell" data-execution_count="16">
+<div id="4ccd151f" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xgboost <span class="im">as</span> xgb</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>dtrain <span class="op">=</span> xgb.DMatrix(X_train, label<span class="op">=</span>y_train)</span>
@@ -753,7 +819,7 @@ P(y=1|x) = \frac{1}{1 + \exp(-\theta^T x)}
 <section id="binary-classification-metrics" class="level3">
 <h3 class="anchored" data-anchor-id="binary-classification-metrics">5.1 Binary Classification Metrics</h3>
 <p>We evaluate predictions from each model on the hold-out test set.</p>
-<div id="d4b1980c" class="cell" data-execution_count="17">
+<div id="189fbcba" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score, precision_score, recall_score, f1_score</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> evaluate_classification(y_true, y_proba, threshold<span class="op">=</span><span class="fl">0.5</span>):</span>
@@ -787,7 +853,7 @@ XGBoost              0.5459    0.8098     0.8238  0.9769  0.8938</code></pre>
 <section id="ranking-metrics" class="level3">
 <h3 class="anchored" data-anchor-id="ranking-metrics">5.2 Ranking Metrics</h3>
 <p>For recommendation systems, we need to evaluate how well models rank relevant items at the top. We compute <strong>Precision@K</strong>, <strong>Recall@K</strong>, and <strong>NDCG@K</strong> for K = [5, 10, 20].</p>
-<div id="484f9a4e" class="cell" data-execution_count="18">
+<div id="86705386" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> precision_at_k(y_true, y_scores, k):</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> np.argsort(y_scores)[::<span class="op">-</span><span class="dv">1</span>][:k]</span>
@@ -841,7 +907,7 @@ XGBoost              0.5459    0.8098     0.8238  0.9769  0.8938</code></pre>
 <section id="per-user-ranking-evaluation" class="level3">
 <h3 class="anchored" data-anchor-id="per-user-ranking-evaluation">5.3 Per-User Ranking Evaluation</h3>
 <p>For personalized recommendation, we evaluate ranking quality per user (when multiple items are available per user).</p>
-<div id="47e977d5" class="cell" data-execution_count="19">
+<div id="5b7cc7b8" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -894,7 +960,7 @@ XGBoost              0.5459    0.8098     0.8238  0.9769  0.8938</code></pre>
 <section id="cross-validation" class="level3">
 <h3 class="anchored" data-anchor-id="cross-validation">5.4 Cross-Validation</h3>
 <p>To ensure robustness, we perform 5-fold cross-validation on the best model (XGBoost).</p>
-<div id="d3cbd14e" class="cell" data-execution_count="20">
+<div id="a70745d7" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>X_all <span class="op">=</span> train_df[features_with_interactions].fillna(<span class="dv">0</span>)</span>
@@ -918,7 +984,7 @@ Mean AUC: 0.9873 (+/- 0.0025)</code></pre>
 <section id="feature-importance-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="feature-importance-analysis">5.5 Feature Importance Analysis</h3>
 <p>Understanding which features drive predictions is crucial for production deployment.</p>
-<div id="8c81ef5e" class="cell" data-execution_count="21">
+<div id="4a52c164" class="cell" data-execution_count="21">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>importance_dict <span class="op">=</span> bst.get_score(importance_type<span class="op">=</span><span class="st">'gain'</span>)</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>importance_df <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'feature'</span>: <span class="bu">list</span>(importance_dict.keys()),</span>
@@ -956,7 +1022,7 @@ Mean AUC: 0.9873 (+/- 0.0025)</code></pre>
 </section>
 <section id="summary-2" class="level3">
 <h3 class="anchored" data-anchor-id="summary-2">5.6 Summary</h3>
-<div id="43440a0f" class="cell" data-execution_count="22">
+<div id="19b029be" class="cell" data-execution_count="22">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span> <span class="op">+</span> <span class="st">"="</span><span class="op">*</span><span class="dv">60</span>)</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"EVALUATION SUMMARY"</span>)</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span><span class="op">*</span><span class="dv">60</span>)</span>
@@ -1022,7 +1088,7 @@ XGBoost              0.5459    0.8098     0.8238  0.9769  0.8938
 <p><span class="math display">\[
 \hat{y}_{\text{avg}} = \frac{1}{N} \sum_{i=1}^{N} \hat{y}_i
 \]</span></p>
-<div id="262d1b71" class="cell" data-execution_count="23">
+<div id="005307a7" class="cell" data-execution_count="23">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>y_pred_avg <span class="op">=</span> (y_pred_proba <span class="op">+</span> y_pred_fm <span class="op">+</span> y_pred_xgb) <span class="op">/</span> <span class="dv">3</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>auc_ensemble_avg <span class="op">=</span> roc_auc_score(y_test, y_pred_avg)</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1038,7 +1104,7 @@ XGBoost              0.5459    0.8098     0.8238  0.9769  0.8938
 <section id="weighted-averaging" class="level3">
 <h3 class="anchored" data-anchor-id="weighted-averaging">6.2 Weighted Averaging</h3>
 <p>We can improve simple averaging by weighting models based on their validation performance:</p>
-<div id="38f6bbea" class="cell" data-execution_count="24">
+<div id="5855a036" class="cell" data-execution_count="24">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> np.array([auc, auc_fm, auc_xgb])</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> weights <span class="op">/</span> weights.<span class="bu">sum</span>()</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1058,7 +1124,7 @@ XGBoost              0.5459    0.8098     0.8238  0.9769  0.8938
 <h3 class="anchored" data-anchor-id="stacked-generalization-stacking">6.3 Stacked Generalization (Stacking)</h3>
 <p>Stacking uses a meta-learner (typically logistic regression) trained on base model predictions. This learns optimal combination weights automatically.</p>
 <p><strong>Important:</strong> For production-grade stacking, we should use out-of-fold predictions to avoid leakage. Here we demonstrate the concept using test set predictions.</p>
-<div id="7f25cce2" class="cell" data-execution_count="25">
+<div id="5c03f4a8" class="cell" data-execution_count="25">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create stacking features (base model predictions as input)</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>X_stack_train <span class="op">=</span> np.column_stack([y_pred_proba, y_pred_fm, y_pred_xgb])</span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1107,7 +1173,7 @@ Meta-learner coefficients:
 <section id="production-ready-stacking-cross-validation" class="level3">
 <h3 class="anchored" data-anchor-id="production-ready-stacking-cross-validation">6.4 Production-Ready Stacking (Cross-Validation)</h3>
 <p>For production, we use K-fold cross-validation to generate out-of-fold predictions:</p>
-<div id="de0adf81" class="cell" data-cache="true" data-execution_count="26">
+<div id="947a0ec1" class="cell" data-cache="true" data-execution_count="26">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> KFold</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_oof_predictions(models, X, y, n_splits<span class="op">=</span><span class="dv">3</span>):</span>
@@ -1166,7 +1232,7 @@ Production Stacked Ensemble AUC: 0.3817</code></pre>
 </section>
 <section id="ensemble-comparison" class="level3">
 <h3 class="anchored" data-anchor-id="ensemble-comparison">6.5 Ensemble Comparison</h3>
-<div id="bc07817a" class="cell" data-execution_count="27">
+<div id="d36a6b54" class="cell" data-execution_count="27">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create comprehensive comparison table</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>ensemble_results <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Model'</span>: [</span>
@@ -1224,7 +1290,7 @@ Relative improvement:    +0.00%</code></pre>
 </section>
 <section id="visualization" class="level3">
 <h3 class="anchored" data-anchor-id="visualization">6.6 Visualization</h3>
-<div id="f8a45242" class="cell" data-fig-height="5" data-fig-width="10" data-execution_count="28">
+<div id="00815353" class="cell" data-fig-height="5" data-fig-width="10" data-execution_count="28">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> ax.barh(ensemble_results[<span class="st">'Model'</span>], ensemble_results[<span class="st">'AUC'</span>])</span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'AUC Score'</span>)</span>

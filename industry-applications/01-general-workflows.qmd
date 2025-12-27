@@ -1,6 +1,11 @@
 ---
 title: "General ML Workflows"
-format: html
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    toc-title: "On this page"
 ---
 
 # End-to-End Recommendation System (Amazon Dataset)
