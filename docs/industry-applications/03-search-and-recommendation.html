@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2025-12-27">
 
-<title>search-and-recommendation – Benjamin (songhao) Ma’s Website</title>
+<title>Search and Recommendation in O2O Applications – Benjamin (songhao) Ma’s Website</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -73,7 +109,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -121,15 +157,552 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#search-recommendation-systems-a-practical-overview" id="toc-search-recommendation-systems-a-practical-overview" class="nav-link active" data-scroll-target="#search-recommendation-systems-a-practical-overview"><span class="header-section-number">1</span> Search &amp; Recommendation Systems: A Practical Overview</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">2</span> Introduction</a></li>
+  <li><a href="#system-architecture-overview" id="toc-system-architecture-overview" class="nav-link" data-scroll-target="#system-architecture-overview"><span class="header-section-number">3</span> System Architecture Overview</a>
+  <ul class="collapse">
+  <li><a href="#three-main-subsystems" id="toc-three-main-subsystems" class="nav-link" data-scroll-target="#three-main-subsystems"><span class="header-section-number">3.1</span> Three Main Subsystems</a></li>
+  </ul></li>
+  <li><a href="#query-understanding" id="toc-query-understanding" class="nav-link" data-scroll-target="#query-understanding"><span class="header-section-number">4</span> Query Understanding</a>
+  <ul class="collapse">
+  <li><a href="#pipeline-components" id="toc-pipeline-components" class="nav-link" data-scroll-target="#pipeline-components"><span class="header-section-number">4.1</span> Pipeline Components</a></li>
+  <li><a href="#key-design-decisions" id="toc-key-design-decisions" class="nav-link" data-scroll-target="#key-design-decisions"><span class="header-section-number">4.2</span> Key Design Decisions</a></li>
+  <li><a href="#user-guidance-features" id="toc-user-guidance-features" class="nav-link" data-scroll-target="#user-guidance-features"><span class="header-section-number">4.3</span> User Guidance Features</a></li>
+  </ul></li>
+  <li><a href="#candidate-recall" id="toc-candidate-recall" class="nav-link" data-scroll-target="#candidate-recall"><span class="header-section-number">5</span> Candidate Recall</a>
+  <ul class="collapse">
+  <li><a href="#multi-strategy-recall" id="toc-multi-strategy-recall" class="nav-link" data-scroll-target="#multi-strategy-recall"><span class="header-section-number">5.1</span> Multi-Strategy Recall</a></li>
+  <li><a href="#geographic-indexing" id="toc-geographic-indexing" class="nav-link" data-scroll-target="#geographic-indexing"><span class="header-section-number">5.2</span> Geographic Indexing</a></li>
+  </ul></li>
+  <li><a href="#learning-to-rank-ltr" id="toc-learning-to-rank-ltr" class="nav-link" data-scroll-target="#learning-to-rank-ltr"><span class="header-section-number">6</span> Learning-to-Rank (LTR)</a>
+  <ul class="collapse">
+  <li><a href="#feature-engineering" id="toc-feature-engineering" class="nav-link" data-scroll-target="#feature-engineering"><span class="header-section-number">6.1</span> Feature Engineering</a></li>
+  <li><a href="#model-training" id="toc-model-training" class="nav-link" data-scroll-target="#model-training"><span class="header-section-number">6.2</span> Model Training</a></li>
+  <li><a href="#feature-importance-in-o2o" id="toc-feature-importance-in-o2o" class="nav-link" data-scroll-target="#feature-importance-in-o2o"><span class="header-section-number">6.3</span> Feature Importance in O2O</a></li>
+  </ul></li>
+  <li><a href="#evaluation-metrics" id="toc-evaluation-metrics" class="nav-link" data-scroll-target="#evaluation-metrics"><span class="header-section-number">7</span> Evaluation Metrics</a>
+  <ul class="collapse">
+  <li><a href="#offline-evaluation" id="toc-offline-evaluation" class="nav-link" data-scroll-target="#offline-evaluation"><span class="header-section-number">7.1</span> Offline Evaluation</a></li>
+  <li><a href="#online-evaluation" id="toc-online-evaluation" class="nav-link" data-scroll-target="#online-evaluation"><span class="header-section-number">7.2</span> Online Evaluation</a></li>
+  <li><a href="#ab-testing" id="toc-ab-testing" class="nav-link" data-scroll-target="#ab-testing"><span class="header-section-number">7.3</span> A/B Testing</a></li>
+  </ul></li>
+  <li><a href="#recommendation-scenarios" id="toc-recommendation-scenarios" class="nav-link" data-scroll-target="#recommendation-scenarios"><span class="header-section-number">8</span> Recommendation Scenarios</a>
+  <ul class="collapse">
+  <li><a href="#common-use-cases" id="toc-common-use-cases" class="nav-link" data-scroll-target="#common-use-cases"><span class="header-section-number">8.1</span> Common Use Cases</a></li>
+  <li><a href="#implementation-example" id="toc-implementation-example" class="nav-link" data-scroll-target="#implementation-example"><span class="header-section-number">8.2</span> Implementation Example</a></li>
+  <li><a href="#real-time-behavior-tracking" id="toc-real-time-behavior-tracking" class="nav-link" data-scroll-target="#real-time-behavior-tracking"><span class="header-section-number">8.3</span> Real-Time Behavior Tracking</a></li>
+  </ul></li>
+  <li><a href="#best-practices" id="toc-best-practices" class="nav-link" data-scroll-target="#best-practices"><span class="header-section-number">9</span> Best Practices</a>
+  <ul class="collapse">
+  <li><a href="#query-understanding-1" id="toc-query-understanding-1" class="nav-link" data-scroll-target="#query-understanding-1"><span class="header-section-number">9.1</span> Query Understanding</a></li>
+  <li><a href="#candidate-recall-1" id="toc-candidate-recall-1" class="nav-link" data-scroll-target="#candidate-recall-1"><span class="header-section-number">9.2</span> Candidate Recall</a></li>
+  <li><a href="#ranking" id="toc-ranking" class="nav-link" data-scroll-target="#ranking"><span class="header-section-number">9.3</span> Ranking</a></li>
+  <li><a href="#production-deployment" id="toc-production-deployment" class="nav-link" data-scroll-target="#production-deployment"><span class="header-section-number">9.4</span> Production Deployment</a></li>
+  </ul></li>
+  <li><a href="#production-checklist" id="toc-production-checklist" class="nav-link" data-scroll-target="#production-checklist"><span class="header-section-number">10</span> Production Checklist</a>
+  <ul class="collapse">
+  <li><a href="#core-components" id="toc-core-components" class="nav-link" data-scroll-target="#core-components"><span class="header-section-number">10.1</span> Core Components</a></li>
+  <li><a href="#evaluation-testing" id="toc-evaluation-testing" class="nav-link" data-scroll-target="#evaluation-testing"><span class="header-section-number">10.2</span> Evaluation &amp; Testing</a></li>
+  <li><a href="#operations" id="toc-operations" class="nav-link" data-scroll-target="#operations"><span class="header-section-number">10.3</span> Operations</a></li>
+  </ul></li>
+  <li><a href="#appendix-architecture-diagrams" id="toc-appendix-architecture-diagrams" class="nav-link" data-scroll-target="#appendix-architecture-diagrams"><span class="header-section-number">11</span> Appendix: Architecture Diagrams</a>
+  <ul class="collapse">
+  <li><a href="#end-to-end-system-flow" id="toc-end-to-end-system-flow" class="nav-link" data-scroll-target="#end-to-end-system-flow"><span class="header-section-number">11.1</span> End-to-End System Flow</a></li>
+  <li><a href="#data-processing-pipeline" id="toc-data-processing-pipeline" class="nav-link" data-scroll-target="#data-processing-pipeline"><span class="header-section-number">11.2</span> Data Processing Pipeline</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Search and Recommendation in O2O Applications</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Industry Applications</div>
+    <div class="quarto-category">Search</div>
+    <div class="quarto-category">Recommendation Systems</div>
+    <div class="quarto-category">O2O</div>
+  </div>
+  </div>
 
 
 
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">December 27, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
 
 
+</header>
 
+
+<section id="search-recommendation-systems-a-practical-overview" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="search-recommendation-systems-a-practical-overview"><span class="header-section-number">1</span> Search &amp; Recommendation Systems: A Practical Overview</h2>
+</section>
+<section id="introduction" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="introduction"><span class="header-section-number">2</span> Introduction</h2>
+<p>This guide covers the essential components of search and recommendation systems for Online-to-Offline (O2O) platforms. Instead of full implementations, we focus on <strong>architecture, key decisions, and practical patterns</strong>.</p>
+</section>
+<section id="system-architecture-overview" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="system-architecture-overview"><span class="header-section-number">3</span> System Architecture Overview</h2>
+<pre><code>User Query → Query Understanding → Candidate Recall → Ranking → Display
+     ↓              ↓                    ↓              ↓
+  "sushi"    Intent: food         200 items        Top 10
+             Location: nearby   (multi-strategy)   (LTR)</code></pre>
+<section id="three-main-subsystems" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="three-main-subsystems"><span class="header-section-number">3.1</span> Three Main Subsystems</h3>
+<ol type="1">
+<li><strong>Query Understanding</strong> - Transform raw input into structured search</li>
+<li><strong>Candidate Recall</strong> - Find relevant items (200-500 candidates)</li>
+<li><strong>Ranking</strong> - Order by relevance + business objectives</li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="query-understanding" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="query-understanding"><span class="header-section-number">4</span> Query Understanding</h2>
+<p><strong>Goal:</strong> <code>"cheap sushi near me"</code> → <code>{cuisine: sushi, price: low, location: user_gps}</code></p>
+<section id="pipeline-components" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="pipeline-components"><span class="header-section-number">4.1</span> Pipeline Components</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Conceptual pipeline</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> QueryPipeline:</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> process(<span class="va">self</span>, raw_query: <span class="bu">str</span>, user_context: <span class="bu">dict</span>) <span class="op">-&gt;</span> StructuredQuery:</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        tokens <span class="op">=</span> <span class="va">self</span>.tokenize(raw_query)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        entities <span class="op">=</span> <span class="va">self</span>.extract_entities(tokens)      <span class="co"># NER model</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        intent <span class="op">=</span> <span class="va">self</span>.classify_intent(tokens)         <span class="co"># BERT classifier</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        location <span class="op">=</span> <span class="va">self</span>.resolve_location(entities, user_context)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> StructuredQuery(</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>            intent<span class="op">=</span>intent,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>            entities<span class="op">=</span>entities,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>            location<span class="op">=</span>location</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="key-design-decisions" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="key-design-decisions"><span class="header-section-number">4.2</span> Key Design Decisions</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Component</th>
+<th>Choice</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Tokenization</td>
+<td>SpaCy</td>
+<td>Fast, multilingual</td>
+</tr>
+<tr class="even">
+<td>NER</td>
+<td>BERT fine-tuned</td>
+<td>95%+ accuracy on custom entities</td>
+</tr>
+<tr class="odd">
+<td>Intent</td>
+<td>Rule-based + ML fallback</td>
+<td>Low latency, interpretable</td>
+</tr>
+<tr class="even">
+<td>Location Resolution</td>
+<td>GPS + GeoHash</td>
+<td>Real-time, &lt; 10ms</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="user-guidance-features" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="user-guidance-features"><span class="header-section-number">4.3</span> User Guidance Features</h3>
+<section id="autocomplete" class="level4" data-number="4.3.1">
+<h4 data-number="4.3.1" class="anchored" data-anchor-id="autocomplete"><span class="header-section-number">4.3.1</span> Autocomplete</h4>
+<p>Use prefix trees + popularity ranking</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Redis-backed for &lt; 5ms response</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>autocomplete <span class="op">=</span> redis.zrangebylex(<span class="st">'queries'</span>, <span class="ss">f'[</span><span class="sc">{</span>prefix<span class="sc">}</span><span class="ss">'</span>, <span class="ss">f'[</span><span class="sc">{</span>prefix<span class="sc">}</span><span class="ch">\xff</span><span class="ss">'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="related-searches" class="level4" data-number="4.3.2">
+<h4 data-number="4.3.2" class="anchored" data-anchor-id="related-searches"><span class="header-section-number">4.3.2</span> Related Searches</h4>
+<p>Collaborative filtering on query co-occurrences</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="candidate-recall" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="candidate-recall"><span class="header-section-number">5</span> Candidate Recall</h2>
+<p><strong>Goal:</strong> Generate 200-500 diverse candidates efficiently</p>
+<section id="multi-strategy-recall" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="multi-strategy-recall"><span class="header-section-number">5.1</span> Multi-Strategy Recall</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>strategies <span class="op">=</span> {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'collaborative_filtering'</span>: <span class="fl">0.30</span>,  <span class="co"># Users like you</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'geographic'</span>: <span class="fl">0.25</span>,               <span class="co"># Nearby merchants</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'content_based'</span>: <span class="fl">0.20</span>,            <span class="co"># Similar to history</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'trending'</span>: <span class="fl">0.15</span>,                 <span class="co"># Popular now</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'contextual'</span>: <span class="fl">0.10</span>                <span class="co"># Time/weather-based</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>candidates <span class="op">=</span> []</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> strategy, weight <span class="kw">in</span> strategies.items():</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">int</span>(total_budget <span class="op">*</span> weight)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    candidates.extend(recall_strategy[strategy](n))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="geographic-indexing" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="geographic-indexing"><span class="header-section-number">5.2</span> Geographic Indexing</h3>
+<p>For location-based recall, use <strong>KD-Tree</strong> or <strong>GeoHash</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># KD-Tree for exact radius search</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KDTree</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>tree <span class="op">=</span> KDTree(merchant_locations)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>indices <span class="op">=</span> tree.query_radius(user_location, r<span class="op">=</span>radius_km)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># GeoHash for approximate, distributed search</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>geohash <span class="op">=</span> encode_geohash(lat, lon, precision<span class="op">=</span><span class="dv">6</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>candidates <span class="op">=</span> geohash_index[geohash]  <span class="co"># O(1) lookup</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Performance Comparison:</strong></p>
+<ul>
+<li><strong>KD-Tree</strong>: O(log n), exact results</li>
+<li><strong>GeoHash</strong>: O(1), approximate, horizontally scalable</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="learning-to-rank-ltr" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="learning-to-rank-ltr"><span class="header-section-number">6</span> Learning-to-Rank (LTR)</h2>
+<p><strong>Goal:</strong> Order candidates by predicted user engagement</p>
+<section id="feature-engineering" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="feature-engineering"><span class="header-section-number">6.1</span> Feature Engineering</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># User features</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'user_ctr'</span>: <span class="fl">0.23</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'category_preference'</span>: <span class="fl">0.85</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Item features</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'merchant_rating'</span>: <span class="fl">4.5</span> <span class="op">/</span> <span class="fl">5.0</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'popularity_log'</span>: log(review_count),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Geographic features</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'distance_km'</span>: <span class="fl">1.2</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'distance_score'</span>: exp(<span class="op">-</span>distance<span class="op">/</span><span class="dv">2</span>),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Context features</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'is_peak_hour'</span>: <span class="fl">1.0</span>,</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'is_weekend'</span>: <span class="fl">0.0</span>,</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'is_open'</span>: <span class="fl">1.0</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="model-training" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="model-training"><span class="header-section-number">6.2</span> Model Training</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xgboost <span class="im">as</span> xgb</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># XGBoost LambdaMART for ranking</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'objective'</span>: <span class="st">'rank:ndcg'</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'eval_metric'</span>: <span class="st">'ndcg@10'</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'learning_rate'</span>: <span class="fl">0.1</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_depth'</span>: <span class="dv">8</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> xgb.train(</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    params,</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    dtrain,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    num_boost_round<span class="op">=</span><span class="dv">100</span>,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    evals<span class="op">=</span>[(dtrain, <span class="st">'train'</span>), (dval, <span class="st">'val'</span>)],</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    early_stopping_rounds<span class="op">=</span><span class="dv">10</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Real-time scoring &lt; 50ms per query</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>scores <span class="op">=</span> model.predict(dtest)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="feature-importance-in-o2o" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="feature-importance-in-o2o"><span class="header-section-number">6.3</span> Feature Importance in O2O</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Weight</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Geographic (distance)</td>
+<td>25-30%</td>
+</tr>
+<tr class="even">
+<td>User behavior (CTR)</td>
+<td>20-25%</td>
+</tr>
+<tr class="odd">
+<td>Item quality (rating)</td>
+<td>20-25%</td>
+</tr>
+<tr class="even">
+<td>Context (time)</td>
+<td>15-20%</td>
+</tr>
+<tr class="odd">
+<td>Business rules</td>
+<td>10-15%</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="evaluation-metrics" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="evaluation-metrics"><span class="header-section-number">7</span> Evaluation Metrics</h2>
+<section id="offline-evaluation" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="offline-evaluation"><span class="header-section-number">7.1</span> Offline Evaluation</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Metric</th>
+<th>Purpose</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Precision@10</td>
+<td>Relevance</td>
+<td>&gt; 0.30</td>
+</tr>
+<tr class="even">
+<td>NDCG@10</td>
+<td>Ranking quality</td>
+<td>&gt; 0.45</td>
+</tr>
+<tr class="odd">
+<td>Diversity</td>
+<td>Avoid filter bubble</td>
+<td>&gt; 0.60</td>
+</tr>
+<tr class="even">
+<td>Coverage</td>
+<td>Catalog utilization</td>
+<td>&gt; 0.40</td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> ndcg_score</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate NDCG</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>ndcg <span class="op">=</span> ndcg_score([true_relevance], [predicted_scores], k<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="online-evaluation" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="online-evaluation"><span class="header-section-number">7.2</span> Online Evaluation</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Production monitoring</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>metrics <span class="op">=</span> {</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ctr'</span>: clicks <span class="op">/</span> impressions,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'cvr'</span>: purchases <span class="op">/</span> clicks,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'gmv'</span>: <span class="bu">sum</span>(purchase_amounts),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'user_engagement'</span>: avg_session_length</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="ab-testing" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="ab-testing"><span class="header-section-number">7.3</span> A/B Testing</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ab_test <span class="op">=</span> ABTestFramework(confidence<span class="op">=</span><span class="fl">0.95</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Run test</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> ab_test.run_proportion_test(</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    control_clicks<span class="op">=</span><span class="dv">1000</span>, control_total<span class="op">=</span><span class="dv">10000</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    treatment_clicks<span class="op">=</span><span class="dv">1080</span>, treatment_total<span class="op">=</span><span class="dv">10000</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># result.lift = +8%, p_value = 0.001 ✓ Significant</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="recommendation-scenarios" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="recommendation-scenarios"><span class="header-section-number">8</span> Recommendation Scenarios</h2>
+<section id="common-use-cases" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="common-use-cases"><span class="header-section-number">8.1</span> Common Use Cases</h3>
+<ol type="1">
+<li><strong>Homepage Recommendations</strong> - Multi-strategy recall + personalized ranking</li>
+<li><strong>Nearby Search</strong> - Geographic recall within radius</li>
+<li><strong>Related Items</strong> - Collaborative filtering on item views</li>
+<li><strong>Promotional Campaigns</strong> - Time-sensitive, location-aware</li>
+<li><strong>Re-engagement</strong> - Push notifications based on history</li>
+</ol>
+</section>
+<section id="implementation-example" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="implementation-example"><span class="header-section-number">8.2</span> Implementation Example</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Homepage recommendations</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> homepage_recs(user_id, location, limit<span class="op">=</span><span class="dv">10</span>):</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Multi-strategy recall</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    candidates <span class="op">=</span> []</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    candidates <span class="op">+=</span> cf_recall(user_id, n<span class="op">=</span><span class="dv">50</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    candidates <span class="op">+=</span> geo_recall(location, n<span class="op">=</span><span class="dv">50</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    candidates <span class="op">+=</span> trending_recall(n<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Rank with LTR</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    features <span class="op">=</span> extract_features(user_id, candidates, location)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    scores <span class="op">=</span> ltr_model.predict(features)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return top-k</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sort_by_score(candidates, scores)[:limit]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="real-time-behavior-tracking" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="real-time-behavior-tracking"><span class="header-section-number">8.3</span> Real-Time Behavior Tracking</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Stream processing pipeline</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> kafka <span class="im">import</span> KafkaConsumer</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>consumer <span class="op">=</span> KafkaConsumer(<span class="st">'user_events'</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> event <span class="kw">in</span> consumer:</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> event.<span class="bu">type</span> <span class="op">==</span> <span class="st">'click'</span>:</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update features in Redis</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        redis.hincrby(<span class="ss">f'user:</span><span class="sc">{</span>event<span class="sc">.</span>user_id<span class="sc">}</span><span class="ss">'</span>, <span class="st">'clicks'</span>, <span class="dv">1</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>        redis.zadd(<span class="ss">f'recent:</span><span class="sc">{</span>event<span class="sc">.</span>user_id<span class="sc">}</span><span class="ss">'</span>, {event.item_id: timestamp})</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Trigger real-time recall update</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> should_update(event):</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>        update_user_profile(event.user_id)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="best-practices" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="best-practices"><span class="header-section-number">9</span> Best Practices</h2>
+<section id="query-understanding-1" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="query-understanding-1"><span class="header-section-number">9.1</span> Query Understanding</h3>
+<ul>
+<li>Use NER models (BERT) for entity extraction</li>
+<li>Combine rule-based + ML for intent classification</li>
+<li>Cache frequent queries in Redis</li>
+</ul>
+</section>
+<section id="candidate-recall-1" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="candidate-recall-1"><span class="header-section-number">9.2</span> Candidate Recall</h3>
+<ul>
+<li>Use 3-5 different strategies</li>
+<li>Allocate budget based on strategy performance</li>
+<li>Index geographically (KD-Tree or GeoHash)</li>
+</ul>
+</section>
+<section id="ranking" class="level3" data-number="9.3">
+<h3 data-number="9.3" class="anchored" data-anchor-id="ranking"><span class="header-section-number">9.3</span> Ranking</h3>
+<ul>
+<li>Extract 20-40 features across categories</li>
+<li>Use XGBoost/LightGBM for LTR</li>
+<li>Retrain daily with fresh data</li>
+</ul>
+</section>
+<section id="production-deployment" class="level3" data-number="9.4">
+<h3 data-number="9.4" class="anchored" data-anchor-id="production-deployment"><span class="header-section-number">9.4</span> Production Deployment</h3>
+<ul>
+<li>Keep latency &lt; 100ms end-to-end</li>
+<li>A/B test all major changes</li>
+<li>Monitor CTR, CVR, GMV daily</li>
+<li>Set up alerting for metric drops</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="production-checklist" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="production-checklist"><span class="header-section-number">10</span> Production Checklist</h2>
+<section id="core-components" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="core-components"><span class="header-section-number">10.1</span> Core Components</h3>
+<ul class="task-list">
+<li><label><input type="checkbox">Query understanding with NER + intent classification</label></li>
+<li><label><input type="checkbox">Multi-strategy recall (&gt;= 3 strategies)</label></li>
+<li><label><input type="checkbox">LTR model with regular retraining</label></li>
+<li><label><input type="checkbox">Geographic indexing (KD-Tree or GeoHash)</label></li>
+<li><label><input type="checkbox">Real-time feature computation (&lt; 10ms)</label></li>
+</ul>
+</section>
+<section id="evaluation-testing" class="level3" data-number="10.2">
+<h3 data-number="10.2" class="anchored" data-anchor-id="evaluation-testing"><span class="header-section-number">10.2</span> Evaluation &amp; Testing</h3>
+<ul class="task-list">
+<li><label><input type="checkbox">Offline evaluation suite</label></li>
+<li><label><input type="checkbox">Online metrics dashboard</label></li>
+<li><label><input type="checkbox">A/B testing framework</label></li>
+</ul>
+</section>
+<section id="operations" class="level3" data-number="10.3">
+<h3 data-number="10.3" class="anchored" data-anchor-id="operations"><span class="header-section-number">10.3</span> Operations</h3>
+<ul class="task-list">
+<li><label><input type="checkbox">Model versioning &amp; rollback</label></li>
+<li><label><input type="checkbox">Monitoring &amp; alerting</label></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="appendix-architecture-diagrams" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="appendix-architecture-diagrams"><span class="header-section-number">11</span> Appendix: Architecture Diagrams</h2>
+<section id="end-to-end-system-flow" class="level3" data-number="11.1">
+<h3 data-number="11.1" class="anchored" data-anchor-id="end-to-end-system-flow"><span class="header-section-number">11.1</span> End-to-End System Flow</h3>
+<pre><code>┌─────────────┐
+│   User App  │
+└──────┬──────┘
+       │ Query: "sushi near me"
+       ▼
+┌─────────────────────────┐
+│  Query Understanding    │
+│  - Tokenization         │
+│  - NER (BERT)           │
+│  - Intent Classification│
+│  - Location Resolution  │
+└──────────┬──────────────┘
+           │ Structured Query
+           ▼
+┌─────────────────────────┐
+│   Candidate Recall      │
+│  - Collaborative (60)   │
+│  - Geographic (50)      │
+│  - Content-based (40)   │
+│  - Trending (30)        │
+│  - Contextual (20)      │
+└──────────┬──────────────┘
+           │ 200 candidates
+           ▼
+┌─────────────────────────┐
+│  Feature Extraction     │
+│  - User features        │
+│  - Item features        │
+│  - Geographic features  │
+│  - Context features     │
+└──────────┬──────────────┘
+           │ Feature matrix
+           ▼
+┌─────────────────────────┐
+│   LTR Ranking           │
+│  - XGBoost scoring      │
+│  - Business rules       │
+│  - Diversity re-ranking │
+└──────────┬──────────────┘
+           │ Top 10 items
+           ▼
+┌─────────────────────────┐
+│   Result Display        │
+│  - Personalized order   │
+│  - With promotions      │
+└─────────────────────────┘</code></pre>
+</section>
+<section id="data-processing-pipeline" class="level3" data-number="11.2">
+<h3 data-number="11.2" class="anchored" data-anchor-id="data-processing-pipeline"><span class="header-section-number">11.2</span> Data Processing Pipeline</h3>
+<pre><code>User Events → Kafka → Spark/Flink → Feature Store (Redis)
+                                            ↓
+                                     Online Serving
+                                            ↓
+                                    Recommendation API</code></pre>
+
+
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

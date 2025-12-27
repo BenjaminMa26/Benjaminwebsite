@@ -1,0 +1,404 @@
+---
+title: "Search and Recommendation in O2O Applications"
+date: "2025-12-27"
+format:
+  html:
+    code-fold: false
+    toc: true
+    toc-depth: 3
+    number-sections: true
+categories: [Industry Applications, Search, Recommendation Systems, O2O]
+---
+
+## Search & Recommendation Systems: A Practical Overview
+
+
+## Introduction
+
+This guide covers the essential components of search and recommendation systems for Online-to-Offline (O2O) platforms. Instead of full implementations, we focus on **architecture, key decisions, and practical patterns**.
+
+
+
+## System Architecture Overview
+
+```
+User Query → Query Understanding → Candidate Recall → Ranking → Display
+     ↓              ↓                    ↓              ↓
+  "sushi"    Intent: food         200 items        Top 10
+             Location: nearby   (multi-strategy)   (LTR)
+```
+
+### Three Main Subsystems
+
+1. **Query Understanding** - Transform raw input into structured search
+2. **Candidate Recall** - Find relevant items (200-500 candidates)
+3. **Ranking** - Order by relevance + business objectives
+
+---
+
+## Query Understanding
+
+**Goal:** `"cheap sushi near me"` → `{cuisine: sushi, price: low, location: user_gps}`
+
+### Pipeline Components
+
+```python
+# Conceptual pipeline
+class QueryPipeline:
+    def process(self, raw_query: str, user_context: dict) -> StructuredQuery:
+        tokens = self.tokenize(raw_query)
+        entities = self.extract_entities(tokens)      # NER model
+        intent = self.classify_intent(tokens)         # BERT classifier
+        location = self.resolve_location(entities, user_context)
+
+        return StructuredQuery(
+            intent=intent,
+            entities=entities,
+            location=location
+        )
+```
+
+### Key Design Decisions
+
+| Component | Choice | Rationale |
+|-----------|--------|-----------|
+| Tokenization | SpaCy | Fast, multilingual |
+| NER | BERT fine-tuned | 95%+ accuracy on custom entities |
+| Intent | Rule-based + ML fallback | Low latency, interpretable |
+| Location Resolution | GPS + GeoHash | Real-time, < 10ms |
+
+### User Guidance Features
+
+#### Autocomplete
+
+Use prefix trees + popularity ranking
+
+```python
+# Redis-backed for < 5ms response
+autocomplete = redis.zrangebylex('queries', f'[{prefix}', f'[{prefix}\xff')
+```
+
+#### Related Searches
+
+Collaborative filtering on query co-occurrences
+
+---
+
+## Candidate Recall
+
+**Goal:** Generate 200-500 diverse candidates efficiently
+
+### Multi-Strategy Recall
+
+```python
+strategies = {
+    'collaborative_filtering': 0.30,  # Users like you
+    'geographic': 0.25,               # Nearby merchants
+    'content_based': 0.20,            # Similar to history
+    'trending': 0.15,                 # Popular now
+    'contextual': 0.10                # Time/weather-based
+}
+
+candidates = []
+for strategy, weight in strategies.items():
+    n = int(total_budget * weight)
+    candidates.extend(recall_strategy[strategy](n))
+```
+
+### Geographic Indexing
+
+For location-based recall, use **KD-Tree** or **GeoHash**:
+
+```python
+# KD-Tree for exact radius search
+from sklearn.neighbors import KDTree
+
+tree = KDTree(merchant_locations)
+indices = tree.query_radius(user_location, r=radius_km)
+
+# GeoHash for approximate, distributed search
+geohash = encode_geohash(lat, lon, precision=6)
+candidates = geohash_index[geohash]  # O(1) lookup
+```
+
+**Performance Comparison:**
+
+- **KD-Tree**: O(log n), exact results
+- **GeoHash**: O(1), approximate, horizontally scalable
+
+---
+
+## Learning-to-Rank (LTR)
+
+**Goal:** Order candidates by predicted user engagement
+
+### Feature Engineering
+
+```python
+features = {
+    # User features
+    'user_ctr': 0.23,
+    'category_preference': 0.85,
+
+    # Item features
+    'merchant_rating': 4.5 / 5.0,
+    'popularity_log': log(review_count),
+
+    # Geographic features
+    'distance_km': 1.2,
+    'distance_score': exp(-distance/2),
+
+    # Context features
+    'is_peak_hour': 1.0,
+    'is_weekend': 0.0,
+    'is_open': 1.0
+}
+```
+
+### Model Training
+
+```python
+import xgboost as xgb
+
+# XGBoost LambdaMART for ranking
+params = {
+    'objective': 'rank:ndcg',
+    'eval_metric': 'ndcg@10',
+    'learning_rate': 0.1,
+    'max_depth': 8
+}
+
+model = xgb.train(
+    params,
+    dtrain,
+    num_boost_round=100,
+    evals=[(dtrain, 'train'), (dval, 'val')],
+    early_stopping_rounds=10
+)
+
+# Real-time scoring < 50ms per query
+scores = model.predict(dtest)
+```
+
+### Feature Importance in O2O
+
+| Category | Weight |
+|----------|--------|
+| Geographic (distance) | 25-30% |
+| User behavior (CTR) | 20-25% |
+| Item quality (rating) | 20-25% |
+| Context (time) | 15-20% |
+| Business rules | 10-15% |
+
+---
+
+## Evaluation Metrics
+
+### Offline Evaluation
+
+| Metric | Purpose | Target |
+|--------|---------|--------|
+| Precision@10 | Relevance | > 0.30 |
+| NDCG@10 | Ranking quality | > 0.45 |
+| Diversity | Avoid filter bubble | > 0.60 |
+| Coverage | Catalog utilization | > 0.40 |
+
+```python
+from sklearn.metrics import ndcg_score
+
+# Calculate NDCG
+ndcg = ndcg_score([true_relevance], [predicted_scores], k=10)
+```
+
+### Online Evaluation
+
+```python
+# Production monitoring
+metrics = {
+    'ctr': clicks / impressions,
+    'cvr': purchases / clicks,
+    'gmv': sum(purchase_amounts),
+    'user_engagement': avg_session_length
+}
+```
+
+### A/B Testing
+
+```python
+ab_test = ABTestFramework(confidence=0.95)
+
+# Run test
+result = ab_test.run_proportion_test(
+    control_clicks=1000, control_total=10000,
+    treatment_clicks=1080, treatment_total=10000
+)
+
+# result.lift = +8%, p_value = 0.001 ✓ Significant
+```
+
+---
+
+## Recommendation Scenarios
+
+### Common Use Cases
+
+1. **Homepage Recommendations** - Multi-strategy recall + personalized ranking
+2. **Nearby Search** - Geographic recall within radius
+3. **Related Items** - Collaborative filtering on item views
+4. **Promotional Campaigns** - Time-sensitive, location-aware
+5. **Re-engagement** - Push notifications based on history
+
+### Implementation Example
+
+```python
+# Example: Homepage recommendations
+def homepage_recs(user_id, location, limit=10):
+    # Multi-strategy recall
+    candidates = []
+    candidates += cf_recall(user_id, n=50)
+    candidates += geo_recall(location, n=50)
+    candidates += trending_recall(n=30)
+
+    # Rank with LTR
+    features = extract_features(user_id, candidates, location)
+    scores = ltr_model.predict(features)
+
+    # Return top-k
+    return sort_by_score(candidates, scores)[:limit]
+```
+
+### Real-Time Behavior Tracking
+
+```python
+# Stream processing pipeline
+from kafka import KafkaConsumer
+
+consumer = KafkaConsumer('user_events')
+
+for event in consumer:
+    if event.type == 'click':
+        # Update features in Redis
+        redis.hincrby(f'user:{event.user_id}', 'clicks', 1)
+        redis.zadd(f'recent:{event.user_id}', {event.item_id: timestamp})
+
+    # Trigger real-time recall update
+    if should_update(event):
+        update_user_profile(event.user_id)
+```
+
+---
+
+## Best Practices
+
+### Query Understanding
+
+- Use NER models (BERT) for entity extraction
+- Combine rule-based + ML for intent classification
+- Cache frequent queries in Redis
+
+### Candidate Recall
+
+- Use 3-5 different strategies
+- Allocate budget based on strategy performance
+- Index geographically (KD-Tree or GeoHash)
+
+### Ranking
+
+- Extract 20-40 features across categories
+- Use XGBoost/LightGBM for LTR
+- Retrain daily with fresh data
+
+### Production Deployment
+
+- Keep latency < 100ms end-to-end
+- A/B test all major changes
+- Monitor CTR, CVR, GMV daily
+- Set up alerting for metric drops
+
+---
+
+## Production Checklist
+
+### Core Components
+
+- [ ] Query understanding with NER + intent classification
+- [ ] Multi-strategy recall (>= 3 strategies)
+- [ ] LTR model with regular retraining
+- [ ] Geographic indexing (KD-Tree or GeoHash)
+- [ ] Real-time feature computation (< 10ms)
+
+### Evaluation & Testing
+
+- [ ] Offline evaluation suite
+- [ ] Online metrics dashboard
+- [ ] A/B testing framework
+
+### Operations
+
+- [ ] Model versioning & rollback
+- [ ] Monitoring & alerting
+
+---
+
+## Appendix: Architecture Diagrams
+
+### End-to-End System Flow
+
+```
+┌─────────────┐
+│   User App  │
+└──────┬──────┘
+       │ Query: "sushi near me"
+       ▼
+┌─────────────────────────┐
+│  Query Understanding    │
+│  - Tokenization         │
+│  - NER (BERT)           │
+│  - Intent Classification│
+│  - Location Resolution  │
+└──────────┬──────────────┘
+           │ Structured Query
+           ▼
+┌─────────────────────────┐
+│   Candidate Recall      │
+│  - Collaborative (60)   │
+│  - Geographic (50)      │
+│  - Content-based (40)   │
+│  - Trending (30)        │
+│  - Contextual (20)      │
+└──────────┬──────────────┘
+           │ 200 candidates
+           ▼
+┌─────────────────────────┐
+│  Feature Extraction     │
+│  - User features        │
+│  - Item features        │
+│  - Geographic features  │
+│  - Context features     │
+└──────────┬──────────────┘
+           │ Feature matrix
+           ▼
+┌─────────────────────────┐
+│   LTR Ranking           │
+│  - XGBoost scoring      │
+│  - Business rules       │
+│  - Diversity re-ranking │
+└──────────┬──────────────┘
+           │ Top 10 items
+           ▼
+┌─────────────────────────┐
+│   Result Display        │
+│  - Personalized order   │
+│  - With promotions      │
+└─────────────────────────┘
+```
+
+### Data Processing Pipeline
+
+```
+User Events → Kafka → Spark/Flink → Feature Store (Redis)
+                                            ↓
+                                     Online Serving
+                                            ↓
+                                    Recommendation API
+```
