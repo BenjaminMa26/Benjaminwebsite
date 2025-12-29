@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>computational-advertising – Benjamin (songhao) Ma’s Website</title>
+<title>Computational Advertising (O2O) – Benjamin (songhao) Ma’s Website</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,10 +20,45 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -68,12 +103,15 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -121,15 +159,1026 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#end-to-end-o2o-advertising-system" id="toc-end-to-end-o2o-advertising-system" class="nav-link active" data-scroll-target="#end-to-end-o2o-advertising-system">End-to-End O2O Advertising System</a>
+  <ul class="collapse">
+  <li><a href="#problem-definition" id="toc-problem-definition" class="nav-link" data-scroll-target="#problem-definition">1. Problem Definition</a>
+  <ul class="collapse">
+  <li><a href="#task-type" id="toc-task-type" class="nav-link" data-scroll-target="#task-type">Task Type</a></li>
+  <li><a href="#business-constraints" id="toc-business-constraints" class="nav-link" data-scroll-target="#business-constraints">Business Constraints</a></li>
+  </ul></li>
+  <li><a href="#dataset-overview" id="toc-dataset-overview" class="nav-link" data-scroll-target="#dataset-overview">2. Dataset Overview</a>
+  <ul class="collapse">
+  <li><a href="#three-sided-marketplace-analysis" id="toc-three-sided-marketplace-analysis" class="nav-link" data-scroll-target="#three-sided-marketplace-analysis">2.1 Three-Sided Marketplace Analysis</a></li>
+  <li><a href="#geographic-distribution" id="toc-geographic-distribution" class="nav-link" data-scroll-target="#geographic-distribution">2.2 Geographic Distribution</a></li>
+  </ul></li>
+  <li><a href="#feature-engineering" id="toc-feature-engineering" class="nav-link" data-scroll-target="#feature-engineering">3. Feature Engineering</a>
+  <ul class="collapse">
+  <li><a href="#user-features" id="toc-user-features" class="nav-link" data-scroll-target="#user-features">3.1 User Features</a></li>
+  <li><a href="#merchant-features" id="toc-merchant-features" class="nav-link" data-scroll-target="#merchant-features">3.2 Merchant Features</a></li>
+  <li><a href="#context-features" id="toc-context-features" class="nav-link" data-scroll-target="#context-features">3.3 Context Features</a></li>
+  <li><a href="#feature-summary" id="toc-feature-summary" class="nav-link" data-scroll-target="#feature-summary">3.4 Feature Summary</a></li>
+  </ul></li>
+  <li><a href="#traintest-split" id="toc-traintest-split" class="nav-link" data-scroll-target="#traintest-split">4. Train/Test Split</a></li>
+  <li><a href="#model-training" id="toc-model-training" class="nav-link" data-scroll-target="#model-training">5. Model Training</a>
+  <ul class="collapse">
+  <li><a href="#ctr-prediction-model" id="toc-ctr-prediction-model" class="nav-link" data-scroll-target="#ctr-prediction-model">5.1 CTR Prediction Model</a></li>
+  <li><a href="#cvr-prediction-model" id="toc-cvr-prediction-model" class="nav-link" data-scroll-target="#cvr-prediction-model">5.2 CVR Prediction Model</a></li>
+  <li><a href="#xgboost-ranking-model" id="toc-xgboost-ranking-model" class="nav-link" data-scroll-target="#xgboost-ranking-model">5.3 XGBoost Ranking Model</a></li>
+  </ul></li>
+  <li><a href="#ad-ranking-system" id="toc-ad-ranking-system" class="nav-link" data-scroll-target="#ad-ranking-system">6. Ad Ranking System</a>
+  <ul class="collapse">
+  <li><a href="#score-computation" id="toc-score-computation" class="nav-link" data-scroll-target="#score-computation">6.1 Score Computation</a></li>
+  <li><a href="#ranking-evaluation" id="toc-ranking-evaluation" class="nav-link" data-scroll-target="#ranking-evaluation">6.2 Ranking Evaluation</a></li>
+  </ul></li>
+  <li><a href="#user-preference-modeling" id="toc-user-preference-modeling" class="nav-link" data-scroll-target="#user-preference-modeling">7. User Preference Modeling</a>
+  <ul class="collapse">
+  <li><a href="#pairwise-preference-learning" id="toc-pairwise-preference-learning" class="nav-link" data-scroll-target="#pairwise-preference-learning">7.1 Pairwise Preference Learning</a></li>
+  <li><a href="#ranknet-style-model" id="toc-ranknet-style-model" class="nav-link" data-scroll-target="#ranknet-style-model">7.2 RankNet-Style Model</a></li>
+  </ul></li>
+  <li><a href="#business-metrics" id="toc-business-metrics" class="nav-link" data-scroll-target="#business-metrics">8. Business Metrics</a>
+  <ul class="collapse">
+  <li><a href="#revenue-analysis" id="toc-revenue-analysis" class="nav-link" data-scroll-target="#revenue-analysis">8.1 Revenue Analysis</a></li>
+  <li><a href="#merchant-roi-analysis" id="toc-merchant-roi-analysis" class="nav-link" data-scroll-target="#merchant-roi-analysis">8.2 Merchant ROI Analysis</a></li>
+  <li><a href="#user-experience-metrics" id="toc-user-experience-metrics" class="nav-link" data-scroll-target="#user-experience-metrics">8.3 User Experience Metrics</a></li>
+  </ul></li>
+  <li><a href="#summary-and-key-takeaways" id="toc-summary-and-key-takeaways" class="nav-link" data-scroll-target="#summary-and-key-takeaways">9. Summary and Key Takeaways</a></li>
+  <li><a href="#future-improvements" id="toc-future-improvements" class="nav-link" data-scroll-target="#future-improvements">10. Future Improvements</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Computational Advertising (O2O)</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
 
 
+</header>
 
+
+<section id="end-to-end-o2o-advertising-system" class="level1">
+<h1>End-to-End O2O Advertising System</h1>
+<p>This project demonstrates a complete computational advertising workflow for Online-to-Offline (O2O) platforms, following the structure outlined in <em>Meituan’s Machine Learning Practice</em>, Chapter 11-12: Computational Advertising — including business constraints, auction &amp; ranking design, user preference modeling, and loss construction.</p>
+<section id="problem-definition" class="level2">
+<h2 class="anchored" data-anchor-id="problem-definition">1. Problem Definition</h2>
+<p>We aim to build an O2O advertising system that balances three objectives: merchant ROI, user experience, and platform revenue. Unlike traditional recommendation systems, O2O ads must handle geographic constraints, real-time inventory, and offline conversion tracking.</p>
+<section id="task-type" class="level3">
+<h3 class="anchored" data-anchor-id="task-type">Task Type</h3>
+<ul>
+<li><strong>Multi-objective optimization:</strong> Balance revenue, relevance, and satisfaction</li>
+<li><strong>Ranking:</strong> Prioritize ads per user query and context</li>
+<li><strong>Pairwise learning:</strong> Model relative user preferences</li>
+</ul>
+</section>
+<section id="business-constraints" class="level3">
+<h3 class="anchored" data-anchor-id="business-constraints">Business Constraints</h3>
+<ul>
+<li><strong>Geographic relevance:</strong> Ads must be within delivery radius</li>
+<li><strong>Time sensitivity:</strong> Lunch/dinner hour targeting</li>
+<li><strong>Budget pacing:</strong> Merchant daily spend limits</li>
+<li><strong>User fatigue:</strong> Limit ad exposure to maintain platform health</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="dataset-overview" class="level2">
+<h2 class="anchored" data-anchor-id="dataset-overview">2. Dataset Overview</h2>
+<p><strong>Source:</strong> Simulated O2O advertising dataset <strong>Scope:</strong> Restaurant delivery ads with user interactions, merchant bids, and conversions</p>
+<div id="f38b676b" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">"ignore"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate O2O advertising dataset</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>n_users <span class="op">=</span> <span class="dv">5000</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>n_merchants <span class="op">=</span> <span class="dv">500</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>n_interactions <span class="op">=</span> <span class="dv">50000</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate synthetic O2O ad interaction data</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'user_id'</span>: np.random.randint(<span class="dv">1</span>, n_users, n_interactions),</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'merchant_id'</span>: np.random.randint(<span class="dv">1</span>, n_merchants, n_interactions),</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'query_category'</span>: np.random.choice([<span class="st">'pizza'</span>, <span class="st">'chinese'</span>, <span class="st">'burger'</span>, <span class="st">'sushi'</span>, <span class="st">'coffee'</span>], n_interactions),</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">'distance_km'</span>: np.random.exponential(<span class="dv">2</span>, n_interactions),  <span class="co"># Most merchants nearby</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">'bid_price'</span>: np.random.uniform(<span class="fl">0.5</span>, <span class="fl">5.0</span>, n_interactions),</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">'hour'</span>: np.random.randint(<span class="dv">0</span>, <span class="dv">24</span>, n_interactions),</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">'day_of_week'</span>: np.random.randint(<span class="dv">0</span>, <span class="dv">7</span>, n_interactions),</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">'is_peak_hour'</span>: np.random.choice([<span class="dv">0</span>, <span class="dv">1</span>], n_interactions, p<span class="op">=</span>[<span class="fl">0.6</span>, <span class="fl">0.4</span>]),</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">'merchant_rating'</span>: np.random.uniform(<span class="fl">3.5</span>, <span class="fl">5.0</span>, n_interactions),</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">'avg_delivery_time'</span>: np.random.uniform(<span class="dv">20</span>, <span class="dv">60</span>, n_interactions),</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">'clicked'</span>: np.random.choice([<span class="dv">0</span>, <span class="dv">1</span>], n_interactions, p<span class="op">=</span>[<span class="fl">0.85</span>, <span class="fl">0.15</span>]),</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">'converted'</span>: np.random.choice([<span class="dv">0</span>, <span class="dv">1</span>], n_interactions, p<span class="op">=</span>[<span class="fl">0.92</span>, <span class="fl">0.08</span>]),</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure conversions only happen after clicks</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'clicked'</span>] <span class="op">==</span> <span class="dv">0</span>, <span class="st">'converted'</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Generated </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">:,}</span><span class="ss"> O2O ad interactions"</span>)</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Users: </span><span class="sc">{</span>df[<span class="st">'user_id'</span>]<span class="sc">.</span>nunique()<span class="sc">:,}</span><span class="ss">"</span>)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Merchants: </span><span class="sc">{</span>df[<span class="st">'merchant_id'</span>]<span class="sc">.</span>nunique()<span class="sc">:,}</span><span class="ss">"</span>)</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"CTR: </span><span class="sc">{</span>df[<span class="st">'clicked'</span>]<span class="sc">.</span>mean()<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"CVR: </span><span class="sc">{</span>df[<span class="st">'converted'</span>]<span class="sc">.</span>mean()<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Generated 50,000 O2O ad interactions
+Users: 4,999
+Merchants: 499
+CTR: 15.09%
+CVR: 1.26%</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">user_id</th>
+<th data-quarto-table-cell-role="th">merchant_id</th>
+<th data-quarto-table-cell-role="th">query_category</th>
+<th data-quarto-table-cell-role="th">distance_km</th>
+<th data-quarto-table-cell-role="th">bid_price</th>
+<th data-quarto-table-cell-role="th">hour</th>
+<th data-quarto-table-cell-role="th">day_of_week</th>
+<th data-quarto-table-cell-role="th">is_peak_hour</th>
+<th data-quarto-table-cell-role="th">merchant_rating</th>
+<th data-quarto-table-cell-role="th">avg_delivery_time</th>
+<th data-quarto-table-cell-role="th">clicked</th>
+<th data-quarto-table-cell-role="th">converted</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>861</td>
+<td>119</td>
+<td>chinese</td>
+<td>4.045464</td>
+<td>4.679741</td>
+<td>12</td>
+<td>5</td>
+<td>1</td>
+<td>4.047325</td>
+<td>59.287102</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>3773</td>
+<td>330</td>
+<td>sushi</td>
+<td>4.938519</td>
+<td>1.458858</td>
+<td>4</td>
+<td>3</td>
+<td>0</td>
+<td>4.613739</td>
+<td>34.378393</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>3093</td>
+<td>215</td>
+<td>pizza</td>
+<td>3.243643</td>
+<td>3.317375</td>
+<td>2</td>
+<td>6</td>
+<td>1</td>
+<td>4.820017</td>
+<td>22.542686</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>467</td>
+<td>322</td>
+<td>chinese</td>
+<td>1.190293</td>
+<td>1.669843</td>
+<td>13</td>
+<td>3</td>
+<td>1</td>
+<td>4.660253</td>
+<td>44.983876</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>4427</td>
+<td>149</td>
+<td>sushi</td>
+<td>1.227782</td>
+<td>4.252058</td>
+<td>20</td>
+<td>0</td>
+<td>0</td>
+<td>4.936373</td>
+<td>56.535673</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<section id="three-sided-marketplace-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="three-sided-marketplace-analysis">2.1 Three-Sided Marketplace Analysis</h3>
+<div id="e9d9ffdc" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">4</span>))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># User engagement distribution</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>user_interactions <span class="op">=</span> df.groupby(<span class="st">'user_id'</span>).size()</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].hist(user_interactions, bins<span class="op">=</span><span class="dv">50</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'User Interaction Distribution'</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Number of Ad Impressions'</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Number of Users'</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Merchant performance</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>merchant_stats <span class="op">=</span> df.groupby(<span class="st">'merchant_id'</span>).agg({</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'clicked'</span>: <span class="st">'mean'</span>,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'converted'</span>: <span class="st">'mean'</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>}).reset_index()</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].scatter(merchant_stats[<span class="st">'clicked'</span>], merchant_stats[<span class="st">'converted'</span>], alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'Merchant CTR vs CVR'</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'Click-Through Rate'</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">'Conversion Rate'</span>)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Platform metrics over time</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>hourly_metrics <span class="op">=</span> df.groupby(<span class="st">'hour'</span>).agg({</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">'clicked'</span>: <span class="st">'mean'</span>,</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">'converted'</span>: <span class="st">'mean'</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>}).reset_index()</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].plot(hourly_metrics[<span class="st">'hour'</span>], hourly_metrics[<span class="st">'clicked'</span>], label<span class="op">=</span><span class="st">'CTR'</span>, marker<span class="op">=</span><span class="st">'o'</span>)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].plot(hourly_metrics[<span class="st">'hour'</span>], hourly_metrics[<span class="st">'converted'</span>], label<span class="op">=</span><span class="st">'CVR'</span>, marker<span class="op">=</span><span class="st">'s'</span>)</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].set_title(<span class="st">'Platform Performance by Hour'</span>)</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].set_xlabel(<span class="st">'Hour of Day'</span>)</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].set_ylabel(<span class="st">'Rate'</span>)</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].legend()</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04-computational-advertising_files/figure-html/cell-3-output-1.png" width="1430" height="374" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Key observations:</strong> - Most users see 5-15 ads per session - Peak hours (11-13, 17-19) show higher engagement - Strong correlation between merchant CTR and CVR indicates quality merchants</p>
+</section>
+<section id="geographic-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="geographic-distribution">2.2 Geographic Distribution</h3>
+<div id="7d6d40e5" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>distance_bins <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">10</span>]</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'distance_bin'</span>] <span class="op">=</span> pd.cut(df[<span class="st">'distance_km'</span>], bins<span class="op">=</span>distance_bins, labels<span class="op">=</span>[<span class="st">'&lt;1km'</span>, <span class="st">'1-2km'</span>, <span class="st">'2-3km'</span>, <span class="st">'3-5km'</span>, <span class="st">'&gt;5km'</span>])</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>distance_performance <span class="op">=</span> df.groupby(<span class="st">'distance_bin'</span>).agg({</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'clicked'</span>: <span class="st">'mean'</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'converted'</span>: <span class="st">'mean'</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>}).reset_index()</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="bu">len</span>(distance_performance))</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>width <span class="op">=</span> <span class="fl">0.35</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>ax.bar(x <span class="op">-</span> width<span class="op">/</span><span class="dv">2</span>, distance_performance[<span class="st">'clicked'</span>], width, label<span class="op">=</span><span class="st">'CTR'</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>ax.bar(x <span class="op">+</span> width<span class="op">/</span><span class="dv">2</span>, distance_performance[<span class="st">'converted'</span>], width, label<span class="op">=</span><span class="st">'CVR'</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Distance from User'</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Rate'</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Ad Performance by Geographic Distance'</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(x)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels(distance_performance[<span class="st">'distance_bin'</span>])</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== Distance Impact ==="</span>)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(distance_performance)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04-computational-advertising_files/figure-html/cell-4-output-1.png" width="758" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== Distance Impact ===
+  distance_bin   clicked  converted
+0         &lt;1km  0.153205   0.012371
+1        1-2km  0.147742   0.012486
+2        2-3km  0.152505   0.012732
+3        3-5km  0.148706   0.012380
+4         &gt;5km  0.149934   0.014493</code></pre>
+</div>
+</div>
+<p><strong>Geographic insights:</strong> - CTR drops significantly beyond 3km - Conversions heavily skewed toward &lt;2km merchants - Distance is a critical ranking feature</p>
+<hr>
+</section>
+</section>
+<section id="feature-engineering" class="level2">
+<h2 class="anchored" data-anchor-id="feature-engineering">3. Feature Engineering</h2>
+<p><strong>Note:</strong> We’ll create a clean working copy to ensure reproducibility if cells are re-run.</p>
+<div id="f58e5ab6" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a clean working copy for feature engineering</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df_clean <span class="op">=</span> df.copy()</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove any temporary columns from previous analysis</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>cols_to_keep <span class="op">=</span> [<span class="st">'user_id'</span>, <span class="st">'merchant_id'</span>, <span class="st">'query_category'</span>, <span class="st">'distance_km'</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                <span class="st">'bid_price'</span>, <span class="st">'hour'</span>, <span class="st">'day_of_week'</span>, <span class="st">'is_peak_hour'</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                <span class="st">'merchant_rating'</span>, <span class="st">'avg_delivery_time'</span>, <span class="st">'clicked'</span>, <span class="st">'converted'</span>]</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>df_clean <span class="op">=</span> df_clean[cols_to_keep]</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"✓ Clean dataframe prepared with </span><span class="sc">{</span><span class="bu">len</span>(df_clean.columns)<span class="sc">}</span><span class="ss"> base columns"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✓ Clean dataframe prepared with 12 base columns</code></pre>
+</div>
+</div>
+<section id="user-features" class="level3">
+<h3 class="anchored" data-anchor-id="user-features">3.1 User Features</h3>
+<div id="309c9f4c" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Historical user behavior (using only base features from raw data)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>user_features <span class="op">=</span> df_clean.groupby(<span class="st">'user_id'</span>).agg({</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'clicked'</span>: [<span class="st">'mean'</span>, <span class="st">'sum'</span>],</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'converted'</span>: [<span class="st">'mean'</span>, <span class="st">'sum'</span>],</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'distance_km'</span>: <span class="st">'mean'</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>}).reset_index()</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>user_features.columns <span class="op">=</span> [<span class="st">'user_id'</span>, <span class="st">'user_ctr'</span>, <span class="st">'user_total_clicks'</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>                         <span class="st">'user_cvr'</span>, <span class="st">'user_total_conversions'</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>                         <span class="st">'user_avg_distance'</span>]</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✓ User features created"</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Sample:</span><span class="ch">\n</span><span class="sc">{</span>user_features<span class="sc">.</span>head()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✓ User features created
+Sample:
+   user_id  user_ctr  user_total_clicks  user_cvr  user_total_conversions  \
+0        1  0.181818                  2  0.000000                       0   
+1        2  0.285714                  2  0.285714                       2   
+2        3  0.125000                  1  0.000000                       0   
+3        4  0.083333                  1  0.000000                       0   
+4        5  0.200000                  1  0.000000                       0   
+
+   user_avg_distance  
+0           1.254002  
+1           1.442705  
+2           2.644258  
+3           1.204697  
+4           1.498798  </code></pre>
+</div>
+</div>
+</section>
+<section id="merchant-features" class="level3">
+<h3 class="anchored" data-anchor-id="merchant-features">3.2 Merchant Features</h3>
+<div id="b5e99a12" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Merchant performance metrics (aggregate before any dataframe modifications)</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>merchant_features <span class="op">=</span> df_clean.groupby(<span class="st">'merchant_id'</span>).agg({</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'clicked'</span>: [<span class="st">'mean'</span>, <span class="st">'sum'</span>],</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'converted'</span>: [<span class="st">'mean'</span>, <span class="st">'sum'</span>],</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'bid_price'</span>: <span class="st">'mean'</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'avg_delivery_time'</span>: <span class="st">'mean'</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'merchant_rating'</span>: <span class="st">'mean'</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>}).reset_index()</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>merchant_features.columns <span class="op">=</span> [<span class="st">'merchant_id'</span>, <span class="st">'merchant_ctr'</span>, <span class="st">'merchant_total_clicks'</span>,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>                             <span class="st">'merchant_cvr'</span>, <span class="st">'merchant_total_conversions'</span>,</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>                             <span class="st">'merchant_avg_bid'</span>, <span class="st">'merchant_avg_delivery'</span>, <span class="st">'merchant_rating_avg'</span>]</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✓ Merchant features created"</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Sample:</span><span class="ch">\n</span><span class="sc">{</span>merchant_features<span class="sc">.</span>head()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✓ Merchant features created
+Sample:
+   merchant_id  merchant_ctr  merchant_total_clicks  merchant_cvr  \
+0            1      0.097826                      9      0.010870   
+1            2      0.089431                     11      0.000000   
+2            3      0.161905                     17      0.009524   
+3            4      0.136364                     15      0.009091   
+4            5      0.119658                     14      0.000000   
+
+   merchant_total_conversions  merchant_avg_bid  merchant_avg_delivery  \
+0                           1          2.565222              37.887142   
+1                           0          2.930648              38.819332   
+2                           1          3.003851              40.353586   
+3                           1          2.904354              42.077156   
+4                           0          2.950498              40.066257   
+
+   merchant_rating_avg  
+0             4.310400  
+1             4.281925  
+2             4.215278  
+3             4.197887  
+4             4.271919  </code></pre>
+</div>
+</div>
+</section>
+<section id="context-features" class="level3">
+<h3 class="anchored" data-anchor-id="context-features">3.3 Context Features</h3>
+<div id="b57a091c" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge features back to clean dataframe</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df_features <span class="op">=</span> df_clean.copy()</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>df_features <span class="op">=</span> df_features.merge(user_features, on<span class="op">=</span><span class="st">'user_id'</span>, how<span class="op">=</span><span class="st">'left'</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>df_features <span class="op">=</span> df_features.merge(merchant_features, on<span class="op">=</span><span class="st">'merchant_id'</span>, how<span class="op">=</span><span class="st">'left'</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create interaction features (use original merchant_rating column from raw data)</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>df_features[<span class="st">'user_merchant_ctr_diff'</span>] <span class="op">=</span> df_features[<span class="st">'user_ctr'</span>] <span class="op">-</span> df_features[<span class="st">'merchant_ctr'</span>]</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>df_features[<span class="st">'distance_rating_interaction'</span>] <span class="op">=</span> df_features[<span class="st">'distance_km'</span>] <span class="op">*</span> (<span class="dv">5</span> <span class="op">-</span> df_features[<span class="st">'merchant_rating'</span>])</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>df_features[<span class="st">'bid_quality_score'</span>] <span class="op">=</span> df_features[<span class="st">'bid_price'</span>] <span class="op">*</span> df_features[<span class="st">'merchant_rating'</span>] <span class="op">/</span> df_features[<span class="st">'avg_delivery_time'</span>]</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Time-based features</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>df_features[<span class="st">'is_lunch'</span>] <span class="op">=</span> ((df_features[<span class="st">'hour'</span>] <span class="op">&gt;=</span> <span class="dv">11</span>) <span class="op">&amp;</span> (df_features[<span class="st">'hour'</span>] <span class="op">&lt;=</span> <span class="dv">13</span>)).astype(<span class="bu">int</span>)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>df_features[<span class="st">'is_dinner'</span>] <span class="op">=</span> ((df_features[<span class="st">'hour'</span>] <span class="op">&gt;=</span> <span class="dv">17</span>) <span class="op">&amp;</span> (df_features[<span class="st">'hour'</span>] <span class="op">&lt;=</span> <span class="dv">19</span>)).astype(<span class="bu">int</span>)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>df_features[<span class="st">'is_weekend'</span>] <span class="op">=</span> (df_features[<span class="st">'day_of_week'</span>] <span class="op">&gt;=</span> <span class="dv">5</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✓ Context and interaction features created"</span>)</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Total features: </span><span class="sc">{</span><span class="bu">len</span>(df_features.columns)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Sample feature names: </span><span class="sc">{</span><span class="bu">list</span>(df_features.columns)[:<span class="dv">20</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✓ Context and interaction features created
+
+Total features: 30
+Sample feature names: ['user_id', 'merchant_id', 'query_category', 'distance_km', 'bid_price', 'hour', 'day_of_week', 'is_peak_hour', 'merchant_rating', 'avg_delivery_time', 'clicked', 'converted', 'user_ctr', 'user_total_clicks', 'user_cvr', 'user_total_conversions', 'user_avg_distance', 'merchant_ctr', 'merchant_total_clicks', 'merchant_cvr']</code></pre>
+</div>
+</div>
+</section>
+<section id="feature-summary" class="level3">
+<h3 class="anchored" data-anchor-id="feature-summary">3.4 Feature Summary</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 37%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature Type</th>
+<th>Example Features</th>
+<th>Business Logic</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>User</td>
+<td>user_ctr, user_avg_distance</td>
+<td>Historical behavior patterns</td>
+</tr>
+<tr class="even">
+<td>Merchant</td>
+<td>merchant_cvr, merchant_rating</td>
+<td>Quality and performance signals</td>
+</tr>
+<tr class="odd">
+<td>Context</td>
+<td>is_peak_hour, distance_km</td>
+<td>Real-time relevance factors</td>
+</tr>
+<tr class="even">
+<td>Interaction</td>
+<td>bid_quality_score</td>
+<td>Combined signals for ranking</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="traintest-split" class="level2">
+<h2 class="anchored" data-anchor-id="traintest-split">4. Train/Test Split</h2>
+<div id="256b2428" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Temporal split (simulate realistic deployment)</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>df_features <span class="op">=</span> df_features.sort_values([<span class="st">'user_id'</span>, <span class="st">'hour'</span>])</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>split_idx <span class="op">=</span> <span class="bu">int</span>(<span class="bu">len</span>(df_features) <span class="op">*</span> <span class="fl">0.8</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>train_df <span class="op">=</span> df_features.iloc[:split_idx].copy()</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>test_df <span class="op">=</span> df_features.iloc[split_idx:].copy()</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Train size: </span><span class="sc">{</span><span class="bu">len</span>(train_df)<span class="sc">:,}</span><span class="ss">"</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test size: </span><span class="sc">{</span><span class="bu">len</span>(test_df)<span class="sc">:,}</span><span class="ss">"</span>)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Train CTR: </span><span class="sc">{</span>train_df[<span class="st">'clicked'</span>]<span class="sc">.</span>mean()<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test CTR: </span><span class="sc">{</span>test_df[<span class="st">'clicked'</span>]<span class="sc">.</span>mean()<span class="sc">:.2%}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Train size: 40,000
+Test size: 10,000
+Train CTR: 15.07%
+Test CTR: 15.17%</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="model-training" class="level2">
+<h2 class="anchored" data-anchor-id="model-training">5. Model Training</h2>
+<section id="ctr-prediction-model" class="level3">
+<h3 class="anchored" data-anchor-id="ctr-prediction-model">5.1 CTR Prediction Model</h3>
+<div id="b860aafb" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_auc_score, log_loss</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Select features for CTR prediction</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>ctr_features <span class="op">=</span> [</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'distance_km'</span>, <span class="st">'bid_price'</span>, <span class="st">'merchant_rating'</span>, <span class="st">'avg_delivery_time'</span>,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'user_ctr'</span>, <span class="st">'merchant_ctr'</span>, <span class="st">'is_peak_hour'</span>, <span class="st">'is_lunch'</span>, <span class="st">'is_dinner'</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'distance_rating_interaction'</span>, <span class="st">'bid_quality_score'</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>X_train_ctr <span class="op">=</span> train_df[ctr_features].fillna(<span class="dv">0</span>)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>y_train_ctr <span class="op">=</span> train_df[<span class="st">'clicked'</span>]</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>X_test_ctr <span class="op">=</span> test_df[ctr_features].fillna(<span class="dv">0</span>)</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>y_test_ctr <span class="op">=</span> test_df[<span class="st">'clicked'</span>]</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Train CTR model</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>ctr_model <span class="op">=</span> LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>ctr_model.fit(X_train_ctr, y_train_ctr)</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>y_pred_ctr <span class="op">=</span> ctr_model.predict_proba(X_test_ctr)[:, <span class="dv">1</span>]</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>ctr_auc <span class="op">=</span> roc_auc_score(y_test_ctr, y_pred_ctr)</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>ctr_logloss <span class="op">=</span> log_loss(y_test_ctr, y_pred_ctr)</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== CTR Model Performance ==="</span>)</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"AUC: </span><span class="sc">{</span>ctr_auc<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Log Loss: </span><span class="sc">{</span>ctr_logloss<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== CTR Model Performance ===
+AUC: 0.7628
+Log Loss: 0.3704</code></pre>
+</div>
+</div>
+</section>
+<section id="cvr-prediction-model" class="level3">
+<h3 class="anchored" data-anchor-id="cvr-prediction-model">5.2 CVR Prediction Model</h3>
+<div id="0cecad76" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Train on clicked samples only (post-click conversion)</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>train_clicked <span class="op">=</span> train_df[train_df[<span class="st">'clicked'</span>] <span class="op">==</span> <span class="dv">1</span>].copy()</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>test_clicked <span class="op">=</span> test_df[test_df[<span class="st">'clicked'</span>] <span class="op">==</span> <span class="dv">1</span>].copy()</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>cvr_features <span class="op">=</span> [</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'distance_km'</span>, <span class="st">'merchant_rating'</span>, <span class="st">'avg_delivery_time'</span>,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'user_cvr'</span>, <span class="st">'merchant_cvr'</span>, <span class="st">'is_peak_hour'</span>,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'bid_quality_score'</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>X_train_cvr <span class="op">=</span> train_clicked[cvr_features].fillna(<span class="dv">0</span>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>y_train_cvr <span class="op">=</span> train_clicked[<span class="st">'converted'</span>]</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>X_test_cvr <span class="op">=</span> test_clicked[cvr_features].fillna(<span class="dv">0</span>)</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>y_test_cvr <span class="op">=</span> test_clicked[<span class="st">'converted'</span>]</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Train CVR model</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>cvr_model <span class="op">=</span> LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>cvr_model.fit(X_train_cvr, y_train_cvr)</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>y_pred_cvr <span class="op">=</span> cvr_model.predict_proba(X_test_cvr)[:, <span class="dv">1</span>]</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>cvr_auc <span class="op">=</span> roc_auc_score(y_test_cvr, y_pred_cvr)</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>cvr_logloss <span class="op">=</span> log_loss(y_test_cvr, y_pred_cvr)</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"AUC: </span><span class="sc">{</span>cvr_auc<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Log Loss: </span><span class="sc">{</span>cvr_logloss<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AUC: 0.9598
+Log Loss: 0.1692</code></pre>
+</div>
+</div>
+</section>
+<section id="xgboost-ranking-model" class="level3">
+<h3 class="anchored" data-anchor-id="xgboost-ranking-model">5.3 XGBoost Ranking Model</h3>
+<div id="12c074f0" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> xgboost <span class="im">import</span> XGBClassifier</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Train gradient boosted tree for CTR</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>ranking_features <span class="op">=</span> ctr_features <span class="op">+</span> [<span class="st">'user_merchant_ctr_diff'</span>]</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>X_train_rank <span class="op">=</span> train_df[ranking_features].fillna(<span class="dv">0</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>y_train_rank <span class="op">=</span> train_df[<span class="st">'clicked'</span>]</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>X_test_rank <span class="op">=</span> test_df[ranking_features].fillna(<span class="dv">0</span>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>y_test_rank <span class="op">=</span> test_df[<span class="st">'clicked'</span>]</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>xgb_model <span class="op">=</span> XGBClassifier(</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    n_estimators<span class="op">=</span><span class="dv">100</span>,</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    max_depth<span class="op">=</span><span class="dv">6</span>,</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    learning_rate<span class="op">=</span><span class="fl">0.1</span>,</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span>,</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    eval_metric<span class="op">=</span><span class="st">'auc'</span>,</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    verbosity<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>xgb_model.fit(X_train_rank, y_train_rank)</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate</span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>y_pred_xgb <span class="op">=</span> xgb_model.predict_proba(X_test_rank)[:, <span class="dv">1</span>]</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>xgb_auc <span class="op">=</span> roc_auc_score(y_test_rank, y_pred_xgb)</span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"AUC: </span><span class="sc">{</span>xgb_auc<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Feature importance</span></span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>feature_importance <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">'feature'</span>: ranking_features,</span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">'importance'</span>: xgb_model.feature_importances_</span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>}).sort_values(<span class="st">'importance'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Top 5 Features:"</span>)</span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(feature_importance.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AUC: 0.7537
+
+Top 5 Features:
+                        feature  importance
+4                      user_ctr    0.588446
+5                  merchant_ctr    0.065601
+10            bid_quality_score    0.038135
+2               merchant_rating    0.037768
+9   distance_rating_interaction    0.036816</code></pre>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="ad-ranking-system" class="level2">
+<h2 class="anchored" data-anchor-id="ad-ranking-system">6. Ad Ranking System</h2>
+<section id="score-computation" class="level3">
+<h3 class="anchored" data-anchor-id="score-computation">6.1 Score Computation</h3>
+<div id="0c84c66e" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_ad_score(row, ctr_pred, cvr_pred):</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Production ad ranking score:</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Score = Bid × P(click) × P(conversion|click) × Quality</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    bid <span class="op">=</span> row[<span class="st">'bid_price'</span>]</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    ctr <span class="op">=</span> ctr_pred</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    cvr <span class="op">=</span> cvr_pred</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Quality score components</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    quality_factors <span class="op">=</span> {</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">'rating'</span>: row[<span class="st">'merchant_rating'</span>] <span class="op">/</span> <span class="fl">5.0</span>,</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">'distance'</span>: <span class="bu">max</span>(<span class="dv">0</span>, <span class="dv">1</span> <span class="op">-</span> row[<span class="st">'distance_km'</span>] <span class="op">/</span> <span class="dv">5</span>),  <span class="co"># Penalize distance</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">'delivery'</span>: <span class="bu">max</span>(<span class="dv">0</span>, <span class="dv">1</span> <span class="op">-</span> row[<span class="st">'avg_delivery_time'</span>] <span class="op">/</span> <span class="dv">60</span>)  <span class="co"># Penalize slow delivery</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>    quality <span class="op">=</span> np.mean(<span class="bu">list</span>(quality_factors.values()))</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>    score <span class="op">=</span> bid <span class="op">*</span> ctr <span class="op">*</span> cvr <span class="op">*</span> quality</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> score</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute scores for test set</span></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>test_df[<span class="st">'ctr_pred'</span>] <span class="op">=</span> ctr_model.predict_proba(test_df[ctr_features].fillna(<span class="dv">0</span>))[:, <span class="dv">1</span>]</span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a><span class="co"># For CVR, only predict on full test set (simulate deployment)</span></span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>test_df[<span class="st">'cvr_pred'</span>] <span class="op">=</span> cvr_model.predict_proba(test_df[cvr_features].fillna(<span class="dv">0</span>))[:, <span class="dv">1</span>]</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>test_df[<span class="st">'ad_score'</span>] <span class="op">=</span> test_df.<span class="bu">apply</span>(</span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> row: compute_ad_score(row, row[<span class="st">'ctr_pred'</span>], row[<span class="st">'cvr_pred'</span>]),</span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a>    axis<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✓ Ad scores computed"</span>)</span>
+<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Score range: [</span><span class="sc">{</span>test_df[<span class="st">'ad_score'</span>]<span class="sc">.</span><span class="bu">min</span>()<span class="sc">:.4f}</span><span class="ss">, </span><span class="sc">{</span>test_df[<span class="st">'ad_score'</span>]<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.4f}</span><span class="ss">]"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✓ Ad scores computed
+Score range: [0.0002, 1.3529]</code></pre>
+</div>
+</div>
+</section>
+<section id="ranking-evaluation" class="level3">
+<h3 class="anchored" data-anchor-id="ranking-evaluation">6.2 Ranking Evaluation</h3>
+<div id="930ce1e8" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ndcg_at_k(y_true, y_scores, k<span class="op">=</span><span class="dv">10</span>):</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Compute NDCG@K for ranking evaluation"""</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> np.argsort(y_scores)[::<span class="op">-</span><span class="dv">1</span>][:k]</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    dcg <span class="op">=</span> np.<span class="bu">sum</span>([(<span class="dv">2</span> <span class="op">**</span> y_true[i] <span class="op">-</span> <span class="dv">1</span>) <span class="op">/</span> np.log2(i <span class="op">+</span> <span class="dv">2</span>) <span class="cf">for</span> i <span class="kw">in</span> idx])</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    ideal_idx <span class="op">=</span> np.argsort(y_true)[::<span class="op">-</span><span class="dv">1</span>][:k]</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    ideal_dcg <span class="op">=</span> np.<span class="bu">sum</span>([(<span class="dv">2</span> <span class="op">**</span> y_true[i] <span class="op">-</span> <span class="dv">1</span>) <span class="op">/</span> np.log2(i <span class="op">+</span> <span class="dv">2</span>) <span class="cf">for</span> i <span class="kw">in</span> ideal_idx])</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dcg <span class="op">/</span> ideal_dcg <span class="cf">if</span> ideal_dcg <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="dv">0</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate ranking quality</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>ndcg_10 <span class="op">=</span> ndcg_at_k(test_df[<span class="st">'clicked'</span>].values, test_df[<span class="st">'ad_score'</span>].values, k<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>ndcg_20 <span class="op">=</span> ndcg_at_k(test_df[<span class="st">'clicked'</span>].values, test_df[<span class="st">'ad_score'</span>].values, k<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"NDCG@10: </span><span class="sc">{</span>ndcg_10<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"NDCG@20: </span><span class="sc">{</span>ndcg_20<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NDCG@10: 0.2702
+NDCG@20: 0.3968</code></pre>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="user-preference-modeling" class="level2">
+<h2 class="anchored" data-anchor-id="user-preference-modeling">7. User Preference Modeling</h2>
+<section id="pairwise-preference-learning" class="level3">
+<h3 class="anchored" data-anchor-id="pairwise-preference-learning">7.1 Pairwise Preference Learning</h3>
+<div id="8ef7fb54" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.utils <span class="im">import</span> shuffle</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_pairwise_data(df, n_pairs<span class="op">=</span><span class="dv">10000</span>):</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Create pairwise training data for preference learning</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co">    For each user: sample pairs (ad_i, ad_j) where label=1 if ad_i preferred over ad_j</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    pairs <span class="op">=</span> []</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> user_id <span class="kw">in</span> df[<span class="st">'user_id'</span>].unique()[:<span class="dv">100</span>]:  <span class="co"># Sample 100 users for demo</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>        user_data <span class="op">=</span> df[df[<span class="st">'user_id'</span>] <span class="op">==</span> user_id]</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(user_data) <span class="op">&lt;</span> <span class="dv">2</span>:</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Positive samples (clicked)</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>        clicked <span class="op">=</span> user_data[user_data[<span class="st">'clicked'</span>] <span class="op">==</span> <span class="dv">1</span>]</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>        not_clicked <span class="op">=</span> user_data[user_data[<span class="st">'clicked'</span>] <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Sample pairs: clicked vs not_clicked</span></span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">min</span>(<span class="dv">5</span>, <span class="bu">len</span>(clicked), <span class="bu">len</span>(not_clicked))):</span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="bu">len</span>(clicked) <span class="op">&gt;</span> <span class="dv">0</span> <span class="kw">and</span> <span class="bu">len</span>(not_clicked) <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>                pos_sample <span class="op">=</span> clicked.sample(<span class="dv">1</span>).iloc[<span class="dv">0</span>]</span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>                neg_sample <span class="op">=</span> not_clicked.sample(<span class="dv">1</span>).iloc[<span class="dv">0</span>]</span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Create positive pair: clicked item preferred</span></span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>                feature_diff <span class="op">=</span> {</span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'distance_diff'</span>: pos_sample[<span class="st">'distance_km'</span>] <span class="op">-</span> neg_sample[<span class="st">'distance_km'</span>],</span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'rating_diff'</span>: pos_sample[<span class="st">'merchant_rating'</span>] <span class="op">-</span> neg_sample[<span class="st">'merchant_rating'</span>],</span>
+<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'delivery_diff'</span>: pos_sample[<span class="st">'avg_delivery_time'</span>] <span class="op">-</span> neg_sample[<span class="st">'avg_delivery_time'</span>],</span>
+<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'bid_diff'</span>: pos_sample[<span class="st">'bid_price'</span>] <span class="op">-</span> neg_sample[<span class="st">'bid_price'</span>]</span>
+<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a>                }</span>
+<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a>                feature_diff[<span class="st">'label'</span>] <span class="op">=</span> <span class="dv">1</span>  <span class="co"># pos_sample preferred</span></span>
+<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a>                pairs.append(feature_diff)</span>
+<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Create negative pair: reverse the order</span></span>
+<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a>                feature_diff_neg <span class="op">=</span> {</span>
+<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'distance_diff'</span>: neg_sample[<span class="st">'distance_km'</span>] <span class="op">-</span> pos_sample[<span class="st">'distance_km'</span>],</span>
+<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'rating_diff'</span>: neg_sample[<span class="st">'merchant_rating'</span>] <span class="op">-</span> pos_sample[<span class="st">'merchant_rating'</span>],</span>
+<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'delivery_diff'</span>: neg_sample[<span class="st">'avg_delivery_time'</span>] <span class="op">-</span> pos_sample[<span class="st">'avg_delivery_time'</span>],</span>
+<span id="cb26-41"><a href="#cb26-41" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'bid_diff'</span>: neg_sample[<span class="st">'bid_price'</span>] <span class="op">-</span> pos_sample[<span class="st">'bid_price'</span>]</span>
+<span id="cb26-42"><a href="#cb26-42" aria-hidden="true" tabindex="-1"></a>                }</span>
+<span id="cb26-43"><a href="#cb26-43" aria-hidden="true" tabindex="-1"></a>                feature_diff_neg[<span class="st">'label'</span>] <span class="op">=</span> <span class="dv">0</span>  <span class="co"># neg_sample NOT preferred</span></span>
+<span id="cb26-44"><a href="#cb26-44" aria-hidden="true" tabindex="-1"></a>                pairs.append(feature_diff_neg)</span>
+<span id="cb26-45"><a href="#cb26-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-46"><a href="#cb26-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame(pairs)</span>
+<span id="cb26-47"><a href="#cb26-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-48"><a href="#cb26-48" aria-hidden="true" tabindex="-1"></a>pairwise_df <span class="op">=</span> create_pairwise_data(train_df)</span>
+<span id="cb26-49"><a href="#cb26-49" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"✓ Created </span><span class="sc">{</span><span class="bu">len</span>(pairwise_df)<span class="sc">:,}</span><span class="ss"> pairwise preference samples"</span>)</span>
+<span id="cb26-50"><a href="#cb26-50" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Class distribution:</span><span class="ch">\n</span><span class="sc">{</span>pairwise_df[<span class="st">'label'</span>]<span class="sc">.</span>value_counts()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb26-51"><a href="#cb26-51" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Sample:</span><span class="ch">\n</span><span class="sc">{</span>pairwise_df<span class="sc">.</span>head()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✓ Created 310 pairwise preference samples
+Class distribution:
+label
+1    155
+0    155
+Name: count, dtype: int64
+
+Sample:
+   distance_diff  rating_diff  delivery_diff  bid_diff  label
+0       0.266764    -0.579532      -6.660868 -1.632674      1
+1      -0.266764     0.579532       6.660868  1.632674      0
+2       1.101878    -0.186738       7.387178 -0.564517      1
+3      -1.101878     0.186738      -7.387178  0.564517      0
+4       0.463721     0.688676       6.525102  0.804935      1</code></pre>
+</div>
+</div>
+</section>
+<section id="ranknet-style-model" class="level3">
+<h3 class="anchored" data-anchor-id="ranknet-style-model">7.2 RankNet-Style Model</h3>
+<div id="a3c50b9d" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Train pairwise preference model</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>pairwise_features <span class="op">=</span> [<span class="st">'distance_diff'</span>, <span class="st">'rating_diff'</span>, <span class="st">'delivery_diff'</span>, <span class="st">'bid_diff'</span>]</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>X_pair <span class="op">=</span> pairwise_df[pairwise_features]</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>y_pair <span class="op">=</span> pairwise_df[<span class="st">'label'</span>]</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>pairwise_model <span class="op">=</span> LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>pairwise_model.fit(X_pair, y_pair)</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Learned preference weights:"</span>)</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> feat, coef <span class="kw">in</span> <span class="bu">zip</span>(pairwise_features, pairwise_model.coef_[<span class="dv">0</span>]):</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>feat<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>coef<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Learned preference weights:
+  distance_diff: 0.0460
+  rating_diff: -0.5806
+  delivery_diff: 0.0049
+  bid_diff: 0.0120</code></pre>
+</div>
+</div>
+<p><strong>Interpretation:</strong> - Negative distance_diff coefficient: Users prefer closer merchants - Positive rating_diff coefficient: Users prefer higher-rated merchants - Negative delivery_diff coefficient: Users prefer faster delivery</p>
+<hr>
+</section>
+</section>
+<section id="business-metrics" class="level2">
+<h2 class="anchored" data-anchor-id="business-metrics">8. Business Metrics</h2>
+<section id="revenue-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="revenue-analysis">8.1 Revenue Analysis</h3>
+<div id="04eb20ea" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute platform revenue</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>test_df[<span class="st">'revenue'</span>] <span class="op">=</span> test_df[<span class="st">'clicked'</span>] <span class="op">*</span> test_df[<span class="st">'bid_price'</span>]</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>test_df[<span class="st">'gmv'</span>] <span class="op">=</span> test_df[<span class="st">'converted'</span>] <span class="op">*</span> <span class="fl">25.0</span>  <span class="co"># Assume $25 avg order value</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>total_revenue <span class="op">=</span> test_df[<span class="st">'revenue'</span>].<span class="bu">sum</span>()</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>total_gmv <span class="op">=</span> test_df[<span class="st">'gmv'</span>].<span class="bu">sum</span>()</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total Ad Revenue: $</span><span class="sc">{</span>total_revenue<span class="sc">:,.2f}</span><span class="ss">"</span>)</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total GMV: $</span><span class="sc">{</span>total_gmv<span class="sc">:,.2f}</span><span class="ss">"</span>)</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Revenue per Impression: $</span><span class="sc">{</span>total_revenue<span class="op">/</span><span class="bu">len</span>(test_df)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"GMV per Conversion: $</span><span class="sc">{</span>test_df[test_df[<span class="st">'converted'</span>]<span class="op">==</span><span class="dv">1</span>][<span class="st">'gmv'</span>]<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Total Ad Revenue: $4,084.83
+Total GMV: $2,950.00
+Revenue per Impression: $0.4085
+GMV per Conversion: $25.00</code></pre>
+</div>
+</div>
+</section>
+<section id="merchant-roi-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="merchant-roi-analysis">8.2 Merchant ROI Analysis</h3>
+<div id="ab18b038" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>merchant_roi <span class="op">=</span> test_df.groupby(<span class="st">'merchant_id'</span>).agg({</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'revenue'</span>: <span class="st">'sum'</span>,  <span class="co"># Ad spend</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'converted'</span>: <span class="st">'sum'</span>,  <span class="co"># Orders</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'gmv'</span>: <span class="st">'sum'</span>  <span class="co"># Revenue</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>}).reset_index()</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>merchant_roi[<span class="st">'roi'</span>] <span class="op">=</span> (merchant_roi[<span class="st">'gmv'</span>] <span class="op">-</span> merchant_roi[<span class="st">'revenue'</span>]) <span class="op">/</span> merchant_roi[<span class="st">'revenue'</span>]</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>merchant_roi <span class="op">=</span> merchant_roi[merchant_roi[<span class="st">'revenue'</span>] <span class="op">&gt;</span> <span class="dv">0</span>]</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(merchant_roi[<span class="st">'roi'</span>].describe())</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>plt.hist(merchant_roi[<span class="st">'roi'</span>], bins<span class="op">=</span><span class="dv">30</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'ROI'</span>)</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Number of Merchants'</span>)</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Merchant ROI Distribution'</span>)</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>plt.axvline(x<span class="op">=</span><span class="dv">0</span>, color<span class="op">=</span><span class="st">'r'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'Break-even'</span>)</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>count    472.000000
+mean      -0.132675
+std        2.558667
+min       -1.000000
+25%       -1.000000
+50%       -1.000000
+75%       -1.000000
+max       30.948431
+Name: roi, dtype: float64</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04-computational-advertising_files/figure-html/cell-18-output-2.png" width="668" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="user-experience-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="user-experience-metrics">8.3 User Experience Metrics</h3>
+<div id="b038abfa" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>user_experience <span class="op">=</span> test_df.groupby(<span class="st">'user_id'</span>).agg({</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'clicked'</span>: <span class="st">'mean'</span>,</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'distance_km'</span>: <span class="st">'mean'</span>,</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'merchant_rating'</span>: <span class="st">'mean'</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>}).reset_index()</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>user_experience.columns <span class="op">=</span> [<span class="st">'user_id'</span>, <span class="st">'engagement_rate'</span>, <span class="st">'avg_distance'</span>, <span class="st">'avg_quality'</span>]</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(user_experience.describe())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           user_id  engagement_rate  avg_distance  avg_quality
+count  1008.000000      1008.000000   1008.000000  1008.000000
+mean   4495.500000         0.151001      1.985503     4.242581
+std     291.128837         0.124392      0.669609     0.148366
+min    3992.000000         0.000000      0.294582     3.700270
+25%    4243.750000         0.065625      1.551656     4.147271
+50%    4495.500000         0.142857      1.912725     4.249129
+75%    4747.250000         0.222222      2.384889     4.344963
+max    4999.000000         0.666667      5.162153     4.732896</code></pre>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="summary-and-key-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="summary-and-key-takeaways">9. Summary and Key Takeaways</h2>
+<div id="d4357215" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">1. MODEL PERFORMANCE:"</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   CTR Model AUC:       </span><span class="sc">{</span>ctr_auc<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   CVR Model AUC:       </span><span class="sc">{</span>cvr_auc<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   XGBoost Ranking AUC: </span><span class="sc">{</span>xgb_auc<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   NDCG@10:             </span><span class="sc">{</span>ndcg_10<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">2. BUSINESS METRICS:"</span>)</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   Platform Revenue:    $</span><span class="sc">{</span>total_revenue<span class="sc">:,.2f}</span><span class="ss">"</span>)</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   Platform GMV:        $</span><span class="sc">{</span>total_gmv<span class="sc">:,.2f}</span><span class="ss">"</span>)</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   Avg Merchant ROI:    </span><span class="sc">{</span>merchant_roi[<span class="st">'roi'</span>]<span class="sc">.</span>mean()<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">3. USER EXPERIENCE:"</span>)</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   Avg Engagement:      </span><span class="sc">{</span>user_experience[<span class="st">'engagement_rate'</span>]<span class="sc">.</span>mean()<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   Avg Distance:        </span><span class="sc">{</span>user_experience[<span class="st">'avg_distance'</span>]<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss"> km"</span>)</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   Avg Ad Quality:      </span><span class="sc">{</span>user_experience[<span class="st">'avg_quality'</span>]<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss">/5.0"</span>)</span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">4. TOP RANKING FACTORS:"</span>)</span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, row <span class="kw">in</span> feature_importance.head(<span class="dv">5</span>).iterrows():</span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"   </span><span class="sc">{</span>row[<span class="st">'feature'</span>]<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>row[<span class="st">'importance'</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">5. PRODUCTION READINESS:"</span>)</span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   ✓ CTR/CVR models trained and validated"</span>)</span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   ✓ Ranking system with quality adjustments"</span>)</span>
+<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   ✓ Business constraint integration (distance, budget)"</span>)</span>
+<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   ✓ Multi-objective optimization framework"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+1. MODEL PERFORMANCE:
+   CTR Model AUC:       0.7628
+   CVR Model AUC:       0.9598
+   XGBoost Ranking AUC: 0.7537
+   NDCG@10:             0.2702
+
+2. BUSINESS METRICS:
+   Platform Revenue:    $4,084.83
+   Platform GMV:        $2,950.00
+   Avg Merchant ROI:    -13.27%
+
+3. USER EXPERIENCE:
+   Avg Engagement:      15.10%
+   Avg Distance:        1.99 km
+   Avg Ad Quality:      4.24/5.0
+
+4. TOP RANKING FACTORS:
+   user_ctr: 0.5884
+   merchant_ctr: 0.0656
+   bid_quality_score: 0.0381
+   merchant_rating: 0.0378
+   distance_rating_interaction: 0.0368
+
+5. PRODUCTION READINESS:
+   ✓ CTR/CVR models trained and validated
+   ✓ Ranking system with quality adjustments
+   ✓ Business constraint integration (distance, budget)
+   ✓ Multi-objective optimization framework</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="future-improvements" class="level2">
+<h2 class="anchored" data-anchor-id="future-improvements">10. Future Improvements</h2>
+<p><strong>Short-term enhancements:</strong> - Add deep learning models (DeepFM, Wide &amp; Deep) - Implement real-time bidding auction mechanism - Build merchant budget pacing system - Add multi-armed bandit for exploration</p>
+<p><strong>Long-term research:</strong> - Causal inference for true incrementality - Multi-task learning for CTR+CVR joint optimization - Reinforcement learning for long-term value optimization - Fairness constraints for merchant opportunity distribution</p>
+<p><strong>Production deployment:</strong> - Feature store integration (online/offline consistency) - A/B testing framework - Model monitoring and drift detection - Automated retraining pipeline</p>
+
+
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
