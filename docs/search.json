@@ -859,5 +859,54 @@
     "title": "Computational Advertising (O2O)",
     "section": "",
     "text": "Short-term enhancements: - Add deep learning models (DeepFM, Wide & Deep) - Implement real-time bidding auction mechanism - Build merchant budget pacing system - Add multi-armed bandit for exploration\nLong-term research: - Causal inference for true incrementality - Multi-task learning for CTR+CVR joint optimization - Reinforcement learning for long-term value optimization - Fairness constraints for merchant opportunity distribution\nProduction deployment: - Feature store integration (online/offline consistency) - A/B testing framework - Model monitoring and drift detection - Automated retraining pipeline"
+  },
+  {
+    "objectID": "industry-applications/05-deep-learning.html",
+    "href": "industry-applications/05-deep-learning.html",
+    "title": "Deep Learning Applications",
+    "section": "",
+    "text": "This section demonstrates industry-level deep learning applications across text understanding, computer vision, and learning-to-rank systems. These projects reflect real-world challenges in large-scale service platforms, focusing on personalization, content auditing, and relevance modeling."
+  },
+  {
+    "objectID": "industry-applications/05-deep-learning.html#overview",
+    "href": "industry-applications/05-deep-learning.html#overview",
+    "title": "Deep Learning Applications",
+    "section": "",
+    "text": "This section demonstrates industry-level deep learning applications across text understanding, computer vision, and learning-to-rank systems. These projects reflect real-world challenges in large-scale service platforms, focusing on personalization, content auditing, and relevance modeling."
+  },
+  {
+    "objectID": "industry-applications/05-deep-learning.html#problem-definition",
+    "href": "industry-applications/05-deep-learning.html#problem-definition",
+    "title": "Deep Learning Applications",
+    "section": "1. Problem Definition",
+    "text": "1. Problem Definition\n\nUse Cases\n\nText Matching: User-to-content, query-to-title semantic similarity\nVisual Content Auditing: OCR, watermark detection, celebrity recognition\nLearning-to-Rank: Multi-stage ranking in search and recommendation systems\n\n\n\nWhy Deep Learning?\n\nTraditional ML struggles with high-dimensional representations (text embeddings, image features)\nDeep models capture complex non-linear patterns essential for personalization\nTransfer learning from pre-trained models accelerates deployment"
+  },
+  {
+    "objectID": "industry-applications/05-deep-learning.html#text-understanding-with-deep-learning",
+    "href": "industry-applications/05-deep-learning.html#text-understanding-with-deep-learning",
+    "title": "Deep Learning Applications",
+    "section": "2. Text Understanding with Deep Learning",
+    "text": "2. Text Understanding with Deep Learning\n\n2.1 Text Matching\nProblem: Match user queries to relevant content (e.g., search queries → product titles)\nApproach: - Siamese Networks with BERT embeddings for semantic similarity - Contrastive loss to learn distance metrics - Application: Text deduplication, intent matching\nPipeline:\n# Pseudocode\nquery_emb = BERT(tokenize(query))\ntitle_emb = BERT(tokenize(title))\nsimilarity = cosine_similarity(query_emb, title_emb)\n\n\n2.2 Deep Ranking Models\nRanking Paradigms: - Pointwise: Predict relevance score for each item - Pairwise: Learn relative ordering (e.g., hinge loss) - Listwise: Optimize ranking metrics directly (NDCG)\nLoss Functions: - Contrastive loss for embedding space - Pairwise hinge loss: max(0, margin - (pos_score - neg_score))\n\n\n2.3 Case Study: Query-Title Relevance Ranking\nDataset: User queries, product titles, relevance labels (0-4 scale)\nModel: CNN/Transformer-based ranker - Input: Tokenized text → word embeddings → interaction layer - Output: Relevance score\nMetrics: - NDCG@10: 0.87 - MAP: 0.82 - AUC: 0.91"
+  },
+  {
+    "objectID": "industry-applications/05-deep-learning.html#vision-understanding-with-deep-learning",
+    "href": "industry-applications/05-deep-learning.html#vision-understanding-with-deep-learning",
+    "title": "Deep Learning Applications",
+    "section": "3. Vision Understanding with Deep Learning",
+    "text": "3. Vision Understanding with Deep Learning\n\n3.1 OCR & Text Recognition\nTask: Extract text from images (receipts, IDs, scene text)\nArchitecture: CRNN (CNN + RNN + CTC loss) - CNN: Extract visual features - RNN: Sequential modeling - CTC: Alignment-free decoding\nPretraining Strategy: - Transfer learning from ImageNet - Synthetic data generation for low-resource scenarios\n\n\n3.2 Visual Content Auditing\nTasks: - Watermark detection - Celebrity face recognition - Scene classification (indoor/outdoor, etc.)\nModels: - ResNet-50 for image classification - YOLO for object detection - EfficientNet for edge deployment\nResults: - Watermark detection: 94% accuracy - Celebrity recognition: 89% precision @ recall 85%\n\n\n3.3 Image Aesthetics & Quality Ranking\nGoal: Predict visual appeal or click probability\nFeatures: - Composition (rule of thirds, symmetry) - Color entropy - Saliency maps\nApproach: Multi-task CNN with ranking loss - Joint training on aesthetics score + click-through rate"
+  },
+  {
+    "objectID": "industry-applications/05-deep-learning.html#deep-relevance-modeling-in-searchrecommendation",
+    "href": "industry-applications/05-deep-learning.html#deep-relevance-modeling-in-searchrecommendation",
+    "title": "Deep Learning Applications",
+    "section": "4. Deep Relevance Modeling in Search/Recommendation",
+    "text": "4. Deep Relevance Modeling in Search/Recommendation\n\n4.1 Model Evolution\n\nEmbedding-based: Learn user/item embeddings (MF, matrix factorization)\nInteraction-based: Neural networks on feature crosses (DeepFM, xDeepFM)\nPretrained LMs: BERT for text, Vision Transformers for images\n\nFeature Fusion: - User behavior (clicks, dwell time) - Visual features (image embeddings) - Text features (title, description) - Categorical features (category, brand)\n\n\n4.2 Multi-Stage Ranking System\nArchitecture (Inspired by Meituan-style systems):\n\nRecall: Retrieve top-K candidates (~1000) via embedding similarity\nPre-Ranking: Lightweight model filters to ~100 items\nFine-Ranking: Complex deep model (DNN, wide & deep) ranks final items\n\nTraining Strategy: - Offline: Batch training on historical data - Online: Real-time feature updates, incremental learning\nDeployment: - Models exported to ONNX for inference - Served via Triton Inference Server - Latency: &lt;50ms for ranking stage"
+  },
+  {
+    "objectID": "industry-applications/05-deep-learning.html#key-takeaways",
+    "href": "industry-applications/05-deep-learning.html#key-takeaways",
+    "title": "Deep Learning Applications",
+    "section": "5. Key Takeaways",
+    "text": "5. Key Takeaways\n\nWhen to Use Deep Learning\n\nHigh-dimensional data: Text, images, user behavior sequences\nNon-linear patterns: Complex interactions (e.g., cross-features)\nLarge-scale data: DL benefits from massive datasets\n\n\n\nLessons Learned\n\nTraining at Scale: Distributed training (Horovod, PyTorch DDP)\nServing Latency: Model compression (quantization, pruning)\nInterpretability: SHAP values, attention visualization\n\n\n\nTools & Frameworks\n\nTraining: PyTorch, TensorFlow\nDeployment: ONNX, TorchScript, Triton Inference Server\nExperiment Tracking: MLflow, Weights & Biases"
   }
 ]

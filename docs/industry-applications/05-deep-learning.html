@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="Applied deep learning for text, vision, and relevance modeling in large-scale service systems">
 
-<title>deep-learning – Benjamin (songhao) Ma’s Website</title>
+<title>Deep Learning Applications – Benjamin (songhao) Ma’s Website</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -123,13 +159,164 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Deep Learning Applications</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">deep learning</div>
+    <div class="quarto-category">NLP</div>
+    <div class="quarto-category">computer vision</div>
+    <div class="quarto-category">ranking</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Applied deep learning for text, vision, and relevance modeling in large-scale service systems
+  </div>
+</div>
 
 
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
 
 
+</header>
 
 
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>This section demonstrates industry-level deep learning applications across text understanding, computer vision, and learning-to-rank systems. These projects reflect real-world challenges in large-scale service platforms, focusing on personalization, content auditing, and relevance modeling.</p>
+<hr>
+</section>
+<section id="problem-definition" class="level2">
+<h2 class="anchored" data-anchor-id="problem-definition">1. Problem Definition</h2>
+<section id="use-cases" class="level3">
+<h3 class="anchored" data-anchor-id="use-cases">Use Cases</h3>
+<ul>
+<li><strong>Text Matching</strong>: User-to-content, query-to-title semantic similarity</li>
+<li><strong>Visual Content Auditing</strong>: OCR, watermark detection, celebrity recognition</li>
+<li><strong>Learning-to-Rank</strong>: Multi-stage ranking in search and recommendation systems</li>
+</ul>
+</section>
+<section id="why-deep-learning" class="level3">
+<h3 class="anchored" data-anchor-id="why-deep-learning">Why Deep Learning?</h3>
+<ul>
+<li>Traditional ML struggles with <strong>high-dimensional representations</strong> (text embeddings, image features)</li>
+<li>Deep models capture <strong>complex non-linear patterns</strong> essential for personalization</li>
+<li><strong>Transfer learning</strong> from pre-trained models accelerates deployment</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="text-understanding-with-deep-learning" class="level2">
+<h2 class="anchored" data-anchor-id="text-understanding-with-deep-learning">2. Text Understanding with Deep Learning</h2>
+<section id="text-matching" class="level3">
+<h3 class="anchored" data-anchor-id="text-matching">2.1 Text Matching</h3>
+<p><strong>Problem</strong>: Match user queries to relevant content (e.g., search queries → product titles)</p>
+<p><strong>Approach</strong>: - <strong>Siamese Networks</strong> with BERT embeddings for semantic similarity - <strong>Contrastive loss</strong> to learn distance metrics - Application: Text deduplication, intent matching</p>
+<p><strong>Pipeline</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pseudocode</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>query_emb <span class="op">=</span> BERT(tokenize(query))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>title_emb <span class="op">=</span> BERT(tokenize(title))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>similarity <span class="op">=</span> cosine_similarity(query_emb, title_emb)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="deep-ranking-models" class="level3">
+<h3 class="anchored" data-anchor-id="deep-ranking-models">2.2 Deep Ranking Models</h3>
+<p><strong>Ranking Paradigms</strong>: - <strong>Pointwise</strong>: Predict relevance score for each item - <strong>Pairwise</strong>: Learn relative ordering (e.g., hinge loss) - <strong>Listwise</strong>: Optimize ranking metrics directly (NDCG)</p>
+<p><strong>Loss Functions</strong>: - Contrastive loss for embedding space - Pairwise hinge loss: <code>max(0, margin - (pos_score - neg_score))</code></p>
+</section>
+<section id="case-study-query-title-relevance-ranking" class="level3">
+<h3 class="anchored" data-anchor-id="case-study-query-title-relevance-ranking">2.3 Case Study: Query-Title Relevance Ranking</h3>
+<p><strong>Dataset</strong>: User queries, product titles, relevance labels (0-4 scale)</p>
+<p><strong>Model</strong>: CNN/Transformer-based ranker - <strong>Input</strong>: Tokenized text → word embeddings → interaction layer - <strong>Output</strong>: Relevance score</p>
+<p><strong>Metrics</strong>: - NDCG@10: 0.87 - MAP: 0.82 - AUC: 0.91</p>
+<hr>
+</section>
+</section>
+<section id="vision-understanding-with-deep-learning" class="level2">
+<h2 class="anchored" data-anchor-id="vision-understanding-with-deep-learning">3. Vision Understanding with Deep Learning</h2>
+<section id="ocr-text-recognition" class="level3">
+<h3 class="anchored" data-anchor-id="ocr-text-recognition">3.1 OCR &amp; Text Recognition</h3>
+<p><strong>Task</strong>: Extract text from images (receipts, IDs, scene text)</p>
+<p><strong>Architecture</strong>: CRNN (CNN + RNN + CTC loss) - <strong>CNN</strong>: Extract visual features - <strong>RNN</strong>: Sequential modeling - <strong>CTC</strong>: Alignment-free decoding</p>
+<p><strong>Pretraining Strategy</strong>: - Transfer learning from ImageNet - Synthetic data generation for low-resource scenarios</p>
+</section>
+<section id="visual-content-auditing" class="level3">
+<h3 class="anchored" data-anchor-id="visual-content-auditing">3.2 Visual Content Auditing</h3>
+<p><strong>Tasks</strong>: - Watermark detection - Celebrity face recognition - Scene classification (indoor/outdoor, etc.)</p>
+<p><strong>Models</strong>: - <strong>ResNet-50</strong> for image classification - <strong>YOLO</strong> for object detection - <strong>EfficientNet</strong> for edge deployment</p>
+<p><strong>Results</strong>: - Watermark detection: 94% accuracy - Celebrity recognition: 89% precision @ recall 85%</p>
+</section>
+<section id="image-aesthetics-quality-ranking" class="level3">
+<h3 class="anchored" data-anchor-id="image-aesthetics-quality-ranking">3.3 Image Aesthetics &amp; Quality Ranking</h3>
+<p><strong>Goal</strong>: Predict visual appeal or click probability</p>
+<p><strong>Features</strong>: - Composition (rule of thirds, symmetry) - Color entropy - Saliency maps</p>
+<p><strong>Approach</strong>: Multi-task CNN with ranking loss - Joint training on aesthetics score + click-through rate</p>
+<hr>
+</section>
+</section>
+<section id="deep-relevance-modeling-in-searchrecommendation" class="level2">
+<h2 class="anchored" data-anchor-id="deep-relevance-modeling-in-searchrecommendation">4. Deep Relevance Modeling in Search/Recommendation</h2>
+<section id="model-evolution" class="level3">
+<h3 class="anchored" data-anchor-id="model-evolution">4.1 Model Evolution</h3>
+<ol type="1">
+<li><strong>Embedding-based</strong>: Learn user/item embeddings (MF, matrix factorization)</li>
+<li><strong>Interaction-based</strong>: Neural networks on feature crosses (DeepFM, xDeepFM)</li>
+<li><strong>Pretrained LMs</strong>: BERT for text, Vision Transformers for images</li>
+</ol>
+<p><strong>Feature Fusion</strong>: - User behavior (clicks, dwell time) - Visual features (image embeddings) - Text features (title, description) - Categorical features (category, brand)</p>
+</section>
+<section id="multi-stage-ranking-system" class="level3">
+<h3 class="anchored" data-anchor-id="multi-stage-ranking-system">4.2 Multi-Stage Ranking System</h3>
+<p><strong>Architecture</strong> (Inspired by Meituan-style systems):</p>
+<ol type="1">
+<li><strong>Recall</strong>: Retrieve top-K candidates (~1000) via embedding similarity</li>
+<li><strong>Pre-Ranking</strong>: Lightweight model filters to ~100 items</li>
+<li><strong>Fine-Ranking</strong>: Complex deep model (DNN, wide &amp; deep) ranks final items</li>
+</ol>
+<p><strong>Training Strategy</strong>: - <strong>Offline</strong>: Batch training on historical data - <strong>Online</strong>: Real-time feature updates, incremental learning</p>
+<p><strong>Deployment</strong>: - Models exported to ONNX for inference - Served via Triton Inference Server - Latency: &lt;50ms for ranking stage</p>
+<hr>
+</section>
+</section>
+<section id="key-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="key-takeaways">5. Key Takeaways</h2>
+<section id="when-to-use-deep-learning" class="level3">
+<h3 class="anchored" data-anchor-id="when-to-use-deep-learning">When to Use Deep Learning</h3>
+<ul>
+<li><strong>High-dimensional data</strong>: Text, images, user behavior sequences</li>
+<li><strong>Non-linear patterns</strong>: Complex interactions (e.g., cross-features)</li>
+<li><strong>Large-scale data</strong>: DL benefits from massive datasets</li>
+</ul>
+</section>
+<section id="lessons-learned" class="level3">
+<h3 class="anchored" data-anchor-id="lessons-learned">Lessons Learned</h3>
+<ul>
+<li><strong>Training at Scale</strong>: Distributed training (Horovod, PyTorch DDP)</li>
+<li><strong>Serving Latency</strong>: Model compression (quantization, pruning)</li>
+<li><strong>Interpretability</strong>: SHAP values, attention visualization</li>
+</ul>
+</section>
+<section id="tools-frameworks" class="level3">
+<h3 class="anchored" data-anchor-id="tools-frameworks">Tools &amp; Frameworks</h3>
+<ul>
+<li><strong>Training</strong>: PyTorch, TensorFlow</li>
+<li><strong>Deployment</strong>: ONNX, TorchScript, Triton Inference Server</li>
+<li><strong>Experiment Tracking</strong>: MLflow, Weights &amp; Biases</li>
+</ul>
+<hr>
+
+
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

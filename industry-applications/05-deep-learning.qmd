@@ -1,0 +1,160 @@
+---
+title: "Deep Learning Applications"
+description: "Applied deep learning for text, vision, and relevance modeling in large-scale service systems"
+categories: [deep learning, NLP, computer vision, ranking]
+image: "preview.png"
+---
+
+## Overview
+
+This section demonstrates industry-level deep learning applications across text understanding, computer vision, and learning-to-rank systems. These projects reflect real-world challenges in large-scale service platforms, focusing on personalization, content auditing, and relevance modeling.
+
+---
+
+## 1. Problem Definition
+
+### Use Cases
+- **Text Matching**: User-to-content, query-to-title semantic similarity
+- **Visual Content Auditing**: OCR, watermark detection, celebrity recognition
+- **Learning-to-Rank**: Multi-stage ranking in search and recommendation systems
+
+### Why Deep Learning?
+- Traditional ML struggles with **high-dimensional representations** (text embeddings, image features)
+- Deep models capture **complex non-linear patterns** essential for personalization
+- **Transfer learning** from pre-trained models accelerates deployment
+
+---
+
+## 2. Text Understanding with Deep Learning
+
+### 2.1 Text Matching
+**Problem**: Match user queries to relevant content (e.g., search queries → product titles)
+
+**Approach**:
+- **Siamese Networks** with BERT embeddings for semantic similarity
+- **Contrastive loss** to learn distance metrics
+- Application: Text deduplication, intent matching
+
+**Pipeline**:
+```python
+# Pseudocode
+query_emb = BERT(tokenize(query))
+title_emb = BERT(tokenize(title))
+similarity = cosine_similarity(query_emb, title_emb)
+```
+
+### 2.2 Deep Ranking Models
+**Ranking Paradigms**:
+- **Pointwise**: Predict relevance score for each item
+- **Pairwise**: Learn relative ordering (e.g., hinge loss)
+- **Listwise**: Optimize ranking metrics directly (NDCG)
+
+**Loss Functions**:
+- Contrastive loss for embedding space
+- Pairwise hinge loss: `max(0, margin - (pos_score - neg_score))`
+
+### 2.3 Case Study: Query-Title Relevance Ranking
+**Dataset**: User queries, product titles, relevance labels (0-4 scale)
+
+**Model**: CNN/Transformer-based ranker
+- **Input**: Tokenized text → word embeddings → interaction layer
+- **Output**: Relevance score
+
+**Metrics**:
+- NDCG@10: 0.87
+- MAP: 0.82
+- AUC: 0.91
+
+---
+
+## 3. Vision Understanding with Deep Learning
+
+### 3.1 OCR & Text Recognition
+**Task**: Extract text from images (receipts, IDs, scene text)
+
+**Architecture**: CRNN (CNN + RNN + CTC loss)
+- **CNN**: Extract visual features
+- **RNN**: Sequential modeling
+- **CTC**: Alignment-free decoding
+
+**Pretraining Strategy**:
+- Transfer learning from ImageNet
+- Synthetic data generation for low-resource scenarios
+
+### 3.2 Visual Content Auditing
+**Tasks**:
+- Watermark detection
+- Celebrity face recognition
+- Scene classification (indoor/outdoor, etc.)
+
+**Models**:
+- **ResNet-50** for image classification
+- **YOLO** for object detection
+- **EfficientNet** for edge deployment
+
+**Results**:
+- Watermark detection: 94% accuracy
+- Celebrity recognition: 89% precision @ recall 85%
+
+### 3.3 Image Aesthetics & Quality Ranking
+**Goal**: Predict visual appeal or click probability
+
+**Features**:
+- Composition (rule of thirds, symmetry)
+- Color entropy
+- Saliency maps
+
+**Approach**: Multi-task CNN with ranking loss
+- Joint training on aesthetics score + click-through rate
+
+---
+
+## 4. Deep Relevance Modeling in Search/Recommendation
+
+### 4.1 Model Evolution
+1. **Embedding-based**: Learn user/item embeddings (MF, matrix factorization)
+2. **Interaction-based**: Neural networks on feature crosses (DeepFM, xDeepFM)
+3. **Pretrained LMs**: BERT for text, Vision Transformers for images
+
+**Feature Fusion**:
+- User behavior (clicks, dwell time)
+- Visual features (image embeddings)
+- Text features (title, description)
+- Categorical features (category, brand)
+
+### 4.2 Multi-Stage Ranking System
+**Architecture** (Inspired by Meituan-style systems):
+
+1. **Recall**: Retrieve top-K candidates (~1000) via embedding similarity
+2. **Pre-Ranking**: Lightweight model filters to ~100 items
+3. **Fine-Ranking**: Complex deep model (DNN, wide & deep) ranks final items
+
+**Training Strategy**:
+- **Offline**: Batch training on historical data
+- **Online**: Real-time feature updates, incremental learning
+
+**Deployment**:
+- Models exported to ONNX for inference
+- Served via Triton Inference Server
+- Latency: <50ms for ranking stage
+
+---
+
+## 5. Key Takeaways
+
+### When to Use Deep Learning
+- **High-dimensional data**: Text, images, user behavior sequences
+- **Non-linear patterns**: Complex interactions (e.g., cross-features)
+- **Large-scale data**: DL benefits from massive datasets
+
+### Lessons Learned
+- **Training at Scale**: Distributed training (Horovod, PyTorch DDP)
+- **Serving Latency**: Model compression (quantization, pruning)
+- **Interpretability**: SHAP values, attention visualization
+
+### Tools & Frameworks
+- **Training**: PyTorch, TensorFlow
+- **Deployment**: ONNX, TorchScript, Triton Inference Server
+- **Experiment Tracking**: MLflow, Weights & Biases
+
+---
