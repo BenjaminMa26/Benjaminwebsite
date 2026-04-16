@@ -25,7 +25,7 @@ We aim to build a personalized recommendation system that predicts whether a use
 ## 2. Dataset Overview
 
 **Source:** [Amazon Reviews 2023 (Musical Instruments)](https://amazon-reviews-2023.github.io/)
-**Curation:** Julian McAuley / Generous Lab
+**Curation:** Julian McAuley's Lab
 **Citation:** See `data/readme.md` for source attribution.
 
 ```{python}

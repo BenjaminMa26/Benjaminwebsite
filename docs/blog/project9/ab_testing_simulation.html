@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.13">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Benjamin Ma">
+<meta name="dcterms.date" content="2026-04-15">
+
+<title>A/B Testing a Call to Action – Benjamin (songhao) Ma’s Website</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ac077c1e730dfeb5e42400639d17284e.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-0810190143f2686ec537f697d7629a10.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Benjamin (songhao) Ma’s Website</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../resume.html"> 
+<span class="menu-text">Resume</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../Blog.html"> 
+<span class="menu-text">Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../certificates.html"> 
+<span class="menu-text">Certificates</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../industry-applications/"> 
+<span class="menu-text">Industry Applications</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#the-ab-test-as-a-statistical-problem" id="toc-the-ab-test-as-a-statistical-problem" class="nav-link" data-scroll-target="#the-ab-test-as-a-statistical-problem">The A/B Test as a Statistical Problem</a></li>
+  <li><a href="#simulating-data" id="toc-simulating-data" class="nav-link" data-scroll-target="#simulating-data">Simulating Data</a></li>
+  <li><a href="#the-law-of-large-numbers" id="toc-the-law-of-large-numbers" class="nav-link" data-scroll-target="#the-law-of-large-numbers">The Law of Large Numbers</a></li>
+  <li><a href="#bootstrap-standard-errors" id="toc-bootstrap-standard-errors" class="nav-link" data-scroll-target="#bootstrap-standard-errors">Bootstrap Standard Errors</a></li>
+  <li><a href="#the-central-limit-theorem" id="toc-the-central-limit-theorem" class="nav-link" data-scroll-target="#the-central-limit-theorem">The Central Limit Theorem</a></li>
+  <li><a href="#hypothesis-testing" id="toc-hypothesis-testing" class="nav-link" data-scroll-target="#hypothesis-testing">Hypothesis Testing</a>
+  <ul class="collapse">
+  <li><a href="#the-test-statistic" id="toc-the-test-statistic" class="nav-link" data-scroll-target="#the-test-statistic">The Test Statistic</a></li>
+  <li><a href="#a-note-on-terminology" id="toc-a-note-on-terminology" class="nav-link" data-scroll-target="#a-note-on-terminology">A Note on Terminology</a></li>
+  <li><a href="#running-the-test" id="toc-running-the-test" class="nav-link" data-scroll-target="#running-the-test">Running the Test</a></li>
+  </ul></li>
+  <li><a href="#the-t-test-as-a-regression" id="toc-the-t-test-as-a-regression" class="nav-link" data-scroll-target="#the-t-test-as-a-regression">The T-Test as a Regression</a>
+  <ul class="collapse">
+  <li><a href="#the-setup" id="toc-the-setup" class="nav-link" data-scroll-target="#the-setup">The Setup</a></li>
+  <li><a href="#interpreting-the-coefficients" id="toc-interpreting-the-coefficients" class="nav-link" data-scroll-target="#interpreting-the-coefficients">Interpreting the Coefficients</a></li>
+  </ul></li>
+  <li><a href="#the-problem-with-peeking" id="toc-the-problem-with-peeking" class="nav-link" data-scroll-target="#the-problem-with-peeking">The Problem with Peeking</a>
+  <ul class="collapse">
+  <li><a href="#why-peeking-breaks-things" id="toc-why-peeking-breaks-things" class="nav-link" data-scroll-target="#why-peeking-breaks-things">Why Peeking Breaks Things</a></li>
+  <li><a href="#simulating-the-damage" id="toc-simulating-the-damage" class="nav-link" data-scroll-target="#simulating-the-damage">Simulating the Damage</a></li>
+  <li><a href="#what-this-means-in-practice" id="toc-what-this-means-in-practice" class="nav-link" data-scroll-target="#what-this-means-in-practice">What This Means in Practice</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">A/B Testing a Call to Action</h1>
+<p class="subtitle lead">Simulating Key Ideas from Classical Frequentist Statistics</p>
+  <div class="quarto-categories">
+    <div class="quarto-category">A/B Testing</div>
+    <div class="quarto-category">Statistics</div>
+    <div class="quarto-category">Marketing Analytics</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Benjamin Ma </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 15, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Imagine you run a website, and your landing page features a prominent call-to-action (CTA) inviting visitors to sign up for your newsletter. It’s a simple decision point, but it matters: newsletter subscribers are your future customers, your community, your reach.</p>
+<p>You’ve narrowed it down to two options: - <strong>CTA A</strong>: “Sign up for our newsletter here!” - <strong>CTA B</strong>: “Stay up to date by signing up!”</p>
+<p>Both seem reasonable, but which one will actually get more people to click? You could guess, or you could <em>test</em>. Enter the A/B test.</p>
+<p>An <strong>A/B test</strong> is a randomized experiment where visitors are randomly assigned to see one of two versions of your page. Half your visitors see CTA A, half see CTA B, and you measure which group signs up at a higher rate. It’s the gold standard for making data-driven decisions in product design, marketing, and beyond.</p>
+<p>But beneath the surface of this simple experiment lies a rich statistical framework. In this post, we’ll simulate an A/B test from scratch, using it as a vehicle to explore foundational concepts in frequentist statistics: the Law of Large Numbers, the Central Limit Theorem, bootstrap methods, hypothesis testing, and the regression equivalence. We’ll also confront a common pitfall—the problem of “peeking” at your results too early.</p>
+<p>By the end, you’ll understand not just <em>how</em> to run an A/B test, but <em>why</em> the statistics work the way they do.</p>
+</section>
+<section id="the-ab-test-as-a-statistical-problem" class="level2">
+<h2 class="anchored" data-anchor-id="the-ab-test-as-a-statistical-problem">The A/B Test as a Statistical Problem</h2>
+<p>Every visitor to our landing page makes a binary choice: sign up (1) or don’t (0). We can model each visitor’s outcome as a draw from a <strong>Bernoulli distribution</strong> with parameter π, the probability of signing up.</p>
+<p>Here’s the key insight: the CTA a visitor sees may influence their behavior. So we allow the probability to differ across groups: - Visitors who see <strong>CTA A</strong> have sign-up probability <span class="math inline">\(\pi_A\)</span> - Visitors who see <strong>CTA B</strong> have sign-up probability <span class="math inline">\(\pi_B\)</span></p>
+<p>The quantity we care about is the <strong>difference in sign-up rates</strong>:</p>
+<p><span class="math display">\[\theta = \pi_A - \pi_B\]</span></p>
+<p>If <span class="math inline">\(\theta &gt; 0\)</span>, CTA A is better. If <span class="math inline">\(\theta &lt; 0\)</span>, CTA B wins. If <span class="math inline">\(\theta = 0\)</span>, they’re equivalent.</p>
+<p>Our <strong>estimator</strong> of θ is straightforward: take the difference in sample proportions.</p>
+<p><span class="math display">\[\hat\theta = \bar{X}_A - \bar{X}_B\]</span></p>
+<p>Since each observation is either 0 or 1, the sample mean is just the proportion who signed up. So <span class="math inline">\(\bar{X}_A = \hat\pi_A\)</span> (the observed sign-up rate in group A) and similarly for B.</p>
+<p>With this framework in place, we’re ready to simulate.</p>
+</section>
+<section id="simulating-data" class="level2">
+<h2 class="anchored" data-anchor-id="simulating-data">Simulating Data</h2>
+<p>In the real world, we wouldn’t know the true values of <span class="math inline">\(\pi_A\)</span> and <span class="math inline">\(\pi_B\)</span>—that’s precisely what we’re trying to estimate. But for this exercise, we’ll set them ourselves. This lets us study how our estimator behaves when we know the ground truth, which is invaluable for building intuition.</p>
+<p>Let’s suppose: - <span class="math inline">\(\pi_A = 0.22\)</span> (CTA A converts 22% of visitors) - <span class="math inline">\(\pi_B = 0.18\)</span> (CTA B converts 18% of visitors) - Therefore, the true difference is <span class="math inline">\(\theta = 0.04\)</span> (a 4 percentage point lift)</p>
+<p>We’ll simulate 1,000 visitors for each CTA—2,000 total.</p>
+<div id="bd1f308f" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># True parameters</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>pi_A <span class="op">=</span> <span class="fl">0.22</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>pi_B <span class="op">=</span> <span class="fl">0.18</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>theta_true <span class="op">=</span> pi_A <span class="op">-</span> pi_B</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate data</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>data_A <span class="op">=</span> np.random.binomial(<span class="dv">1</span>, pi_A, n)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>data_B <span class="op">=</span> np.random.binomial(<span class="dv">1</span>, pi_B, n)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pl.DataFrame({</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"signup_A"</span>: data_A,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"signup_B"</span>: data_B,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Useful later for the hypothesis test section</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>df_test <span class="op">=</span> df</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute summary stats</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> df.select(</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">"signup_A"</span>).mean().alias(<span class="st">"rate_A"</span>),</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">"signup_B"</span>).mean().alias(<span class="st">"rate_B"</span>),</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    (pl.col(<span class="st">"signup_A"</span>).mean() <span class="op">-</span> pl.col(<span class="st">"signup_B"</span>).mean()).alias(<span class="st">"diff"</span>)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>rate_A, rate_B, observed_diff <span class="op">=</span> results.row(<span class="dv">0</span>)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Simulated </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss"> visitors for each CTA"</span>)</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"True θ = </span><span class="sc">{</span>theta_true<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Observed sign-up rate A: </span><span class="sc">{</span>rate_A<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Observed sign-up rate B: </span><span class="sc">{</span>rate_B<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Observed difference: </span><span class="sc">{</span>observed_diff<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simulated 1000 visitors for each CTA
+True θ = 0.0400
+Observed sign-up rate A: 0.2160
+Observed sign-up rate B: 0.1780
+Observed difference: 0.0380</code></pre>
+</div>
+</div>
+</section>
+<section id="the-law-of-large-numbers" class="level2">
+<h2 class="anchored" data-anchor-id="the-law-of-large-numbers">The Law of Large Numbers</h2>
+<p>The <strong>Law of Large Numbers</strong> (LLN) is one of the most fundamental results in probability theory. It tells us that as our sample size grows, the sample mean converges to the population mean. In our context, this means that <span class="math inline">\(\hat\theta\)</span> will get closer and closer to the true θ as we collect more data.</p>
+<p>This is what gives us confidence that our estimator works: with enough visitors, we’ll pin down the true difference.</p>
+<p>Let’s see this visually. We’ll compute the running average of our estimate—what happens if we calculate <span class="math inline">\(\hat\theta\)</span> using just the first visitor from each group, then the first two, then the first three, and so on, up to all 1,000.</p>
+<div id="2c73d2a5" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_lln <span class="op">=</span> (</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    pl.DataFrame({</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"visitor"</span>: np.arange(<span class="dv">1</span>, <span class="bu">len</span>(data_A) <span class="op">+</span> <span class="dv">1</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"signup_A"</span>: data_A,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"signup_B"</span>: data_B,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    .with_columns(</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        (pl.col(<span class="st">"signup_A"</span>) <span class="op">-</span> pl.col(<span class="st">"signup_B"</span>)).alias(<span class="st">"difference"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    .with_columns(</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        (pl.col(<span class="st">"difference"</span>).cum_sum() <span class="op">/</span> pl.col(<span class="st">"visitor"</span>)).alias(<span class="st">"cumulative_avg"</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>plt.plot(df_lln[<span class="st">"visitor"</span>], df_lln[<span class="st">"cumulative_avg"</span>], linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>plt.axhline(y<span class="op">=</span>theta_true, color<span class="op">=</span><span class="st">"red"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f"True θ = </span><span class="sc">{</span>theta_true<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Number of Observations"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Cumulative Average of θ̂"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Law of Large Numbers: Sample Mean Converges to Population Mean"</span>, fontsize<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>plt.legend(fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ab_testing_simulation_files/figure-html/cell-3-output-1.png" width="951" height="566" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Notice how the estimate bounces around wildly when we have only a handful of observations—it might be 0.5, then -0.3, then 0.2. But as the sample grows, it settles down and hovers around the true value of 0.04. This is the LLN in action: more data means less noise.</p>
+<p>This is reassuring, but it raises a new question: <em>how much</em> uncertainty remains even with 1,000 observations? For that, we need standard errors.</p>
+</section>
+<section id="bootstrap-standard-errors" class="level2">
+<h2 class="anchored" data-anchor-id="bootstrap-standard-errors">Bootstrap Standard Errors</h2>
+<p>We trust our estimator, but how <em>precise</em> is it? To quantify uncertainty, we need a <strong>confidence interval</strong>—a range that plausibly contains the true θ. To build that interval, we first need to estimate the <strong>standard error</strong> of <span class="math inline">\(\hat\theta\)</span>.</p>
+<p>One powerful way to do this is <strong>bootstrapping</strong>, a resampling method that doesn’t require mathematical formulas. Here’s the idea:</p>
+<ol type="1">
+<li>Randomly resample (with replacement) from our observed data</li>
+<li>Compute <span class="math inline">\(\hat\theta\)</span> on that resample</li>
+<li>Repeat many times</li>
+<li>The standard deviation of those resampled estimates is our standard error</li>
+</ol>
+<p>Let’s implement it:</p>
+<div id="4e90c247" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Point estimate from observed data</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>theta_hat <span class="op">=</span> data_A.mean() <span class="op">-</span> data_B.mean()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Bootstrap</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>n_bootstrap <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>bootstrap_estimates <span class="op">=</span> np.empty(n_bootstrap)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n_bootstrap):</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    resample_A <span class="op">=</span> np.random.choice(data_A, size<span class="op">=</span>n, replace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    resample_B <span class="op">=</span> np.random.choice(data_B, size<span class="op">=</span>n, replace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    bootstrap_estimates[i] <span class="op">=</span> resample_A.mean() <span class="op">-</span> resample_B.mean()</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Store bootstrap draws in Polars</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>bootstrap_df <span class="op">=</span> pl.DataFrame({</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bootstrap_estimate"</span>: bootstrap_estimates</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Bootstrap standard error</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>se_bootstrap <span class="op">=</span> bootstrap_df.select(</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">"bootstrap_estimate"</span>).std().alias(<span class="st">"se_bootstrap"</span>)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>).item()</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Analytical standard error</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>summary <span class="op">=</span> pl.DataFrame({</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"group"</span>: [<span class="st">"A"</span>, <span class="st">"B"</span>],</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">"rate"</span>: [data_A.mean(), data_B.mean()],</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"n"</span>: [n, n]</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>pi_A_hat <span class="op">=</span> summary.<span class="bu">filter</span>(pl.col(<span class="st">"group"</span>) <span class="op">==</span> <span class="st">"A"</span>).select(<span class="st">"rate"</span>).item()</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>pi_B_hat <span class="op">=</span> summary.<span class="bu">filter</span>(pl.col(<span class="st">"group"</span>) <span class="op">==</span> <span class="st">"B"</span>).select(<span class="st">"rate"</span>).item()</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>se_analytical <span class="op">=</span> np.sqrt(</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    pi_A_hat <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> pi_A_hat) <span class="op">/</span> n <span class="op">+</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    pi_B_hat <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> pi_B_hat) <span class="op">/</span> n</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Bootstrap standard error: </span><span class="sc">{</span>se_bootstrap<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Analytical standard error: </span><span class="sc">{</span>se_analytical<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Difference: </span><span class="sc">{</span><span class="bu">abs</span>(se_bootstrap <span class="op">-</span> se_analytical)<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Bootstrap standard error: 0.0177
+Analytical standard error: 0.0178
+Difference: 0.0001</code></pre>
+</div>
+</div>
+<p>The bootstrap and analytical standard errors are nearly identical—the bootstrap “works” because it mimics the sampling process that generated our data.</p>
+<p>Now we can construct a <strong>95% confidence interval</strong>. Using the bootstrap standard error and assuming approximate normality (which we’ll justify in the next section), the interval is:</p>
+<div id="5d55f798" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>margin_of_error <span class="op">=</span> <span class="fl">1.96</span> <span class="op">*</span> se_bootstrap</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ci_lower <span class="op">=</span> theta_hat <span class="op">-</span> margin_of_error</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>ci_upper <span class="op">=</span> theta_hat <span class="op">+</span> margin_of_error</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>ci_df <span class="op">=</span> pl.DataFrame({</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"theta_hat"</span>: [theta_hat],</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"se_bootstrap"</span>: [se_bootstrap],</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"margin_of_error"</span>: [margin_of_error],</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ci_lower"</span>: [ci_lower],</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ci_upper"</span>: [ci_upper],</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"theta_true"</span>: [theta_true],</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"contains_true_theta"</span>: [ci_lower <span class="op">&lt;=</span> theta_true <span class="op">&lt;=</span> ci_upper]</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">95% Confidence Interval for θ:"</span>)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Point estimate: </span><span class="sc">{</span>theta_hat<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"CI: [</span><span class="sc">{</span>ci_lower<span class="sc">:.4f}</span><span class="ss">, </span><span class="sc">{</span>ci_upper<span class="sc">:.4f}</span><span class="ss">]"</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"True value (</span><span class="sc">{</span>theta_true<span class="sc">:.4f}</span><span class="ss">) is "</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"</span><span class="sc">{</span><span class="st">'inside'</span> <span class="cf">if</span> ci_lower <span class="op">&lt;=</span> theta_true <span class="op">&lt;=</span> ci_upper <span class="cf">else</span> <span class="st">'outside'</span><span class="sc">}</span><span class="ss"> the interval"</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">CI summary:"</span>)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ci_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+95% Confidence Interval for θ:
+Point estimate: 0.0380
+CI: [0.0034, 0.0726]
+True value (0.0400) is inside the interval
+
+CI summary:
+shape: (1, 7)
+┌───────────┬──────────────┬─────────────────┬──────────┬──────────┬────────────┬──────────────────┐
+│ theta_hat ┆ se_bootstrap ┆ margin_of_error ┆ ci_lower ┆ ci_upper ┆ theta_true ┆ contains_true_th │
+│ ---       ┆ ---          ┆ ---             ┆ ---      ┆ ---      ┆ ---        ┆ eta              │
+│ f64       ┆ f64          ┆ f64             ┆ f64      ┆ f64      ┆ f64        ┆ ---              │
+│           ┆              ┆                 ┆          ┆          ┆            ┆ bool             │
+╞═══════════╪══════════════╪═════════════════╪══════════╪══════════╪════════════╪══════════════════╡
+│ 0.038     ┆ 0.017659     ┆ 0.034612        ┆ 0.003388 ┆ 0.072612 ┆ 0.04       ┆ true             │
+└───────────┴──────────────┴─────────────────┴──────────┴──────────┴────────────┴──────────────────┘</code></pre>
+</div>
+</div>
+<p><strong>Interpretation</strong>: We are 95% confident that the true difference in sign-up rates is between these bounds. In repeated experiments, 95% of intervals constructed this way would contain the true θ.</p>
+</section>
+<section id="the-central-limit-theorem" class="level2">
+<h2 class="anchored" data-anchor-id="the-central-limit-theorem">The Central Limit Theorem</h2>
+<p>Why did we assume the sampling distribution of <span class="math inline">\(\hat\theta\)</span> is approximately Normal? Because of the <strong>Central Limit Theorem</strong> (CLT).</p>
+<p>The CLT states that regardless of the shape of the underlying population distribution (Bernoulli in our case), the distribution of the <em>sample mean</em> becomes approximately Normal as the sample size grows. Since <span class="math inline">\(\hat\theta\)</span> is a difference of sample means, it too becomes approximately Normal.</p>
+<p>Let’s see this in action. We’ll simulate the sampling distribution of <span class="math inline">\(\hat\theta\)</span> for different sample sizes: n = 25, 50, 100, and 500.</p>
+<div id="b482c1b3" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample sizes to test</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>sample_sizes <span class="op">=</span> [<span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">500</span>]</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>n_simulations <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">10</span>))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> axes.flatten()</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx, n_size <span class="kw">in</span> <span class="bu">enumerate</span>(sample_sizes):</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    theta_hats <span class="op">=</span> np.array([</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        np.random.binomial(<span class="dv">1</span>, pi_A, n_size).mean()</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        <span class="op">-</span> np.random.binomial(<span class="dv">1</span>, pi_B, n_size).mean()</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n_simulations)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    sim_df <span class="op">=</span> pl.DataFrame({<span class="st">"theta_hat"</span>: theta_hats})</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    se_theoretical <span class="op">=</span> np.sqrt(</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>        pi_A <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> pi_A) <span class="op">/</span> n_size <span class="op">+</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>        pi_B <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> pi_B) <span class="op">/</span> n_size</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    x_range <span class="op">=</span> np.linspace(</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>        sim_df.select(pl.col(<span class="st">"theta_hat"</span>).<span class="bu">min</span>()).item(),</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>        sim_df.select(pl.col(<span class="st">"theta_hat"</span>).<span class="bu">max</span>()).item(),</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>        <span class="dv">100</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    axes[idx].hist(sim_df[<span class="st">"theta_hat"</span>].to_numpy(), bins<span class="op">=</span><span class="dv">30</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, edgecolor<span class="op">=</span><span class="st">"black"</span>)</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    axes[idx].plot(x_range, stats.norm.pdf(x_range, theta_true, se_theoretical), linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">"Normal approximation"</span>)</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    axes[idx].axvline(theta_true, color<span class="op">=</span><span class="st">"green"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f"True θ = </span><span class="sc">{</span>theta_true<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    axes[idx].set_title(<span class="ss">f"n = </span><span class="sc">{</span>n_size<span class="sc">}</span><span class="ss">"</span>, fontsize<span class="op">=</span><span class="dv">13</span>)</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    axes[idx].set_xlabel(<span class="st">"θ̂"</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    axes[idx].set_ylabel(<span class="st">"Density"</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>    axes[idx].legend(fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    axes[idx].grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"Central Limit Theorem: Sampling Distribution of θ̂"</span>, fontsize<span class="op">=</span><span class="dv">15</span>, y<span class="op">=</span><span class="fl">1.00</span>)</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ab_testing_simulation_files/figure-html/cell-6-output-1.png" width="1140" height="964" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Watch how the distribution evolves. At n = 25, the histogram is choppy and somewhat skewed—it doesn’t look very Normal. But as we increase to n = 50, 100, and 500, the distribution becomes smoother and more symmetric, converging to the bell-shaped Normal curve (shown in red).</p>
+<p>This is the CLT at work. For large samples, we can reliably use Normal-based inference (z-tests, confidence intervals) even though the underlying data are Bernoulli, not Normal.</p>
+</section>
+<section id="hypothesis-testing" class="level2">
+<h2 class="anchored" data-anchor-id="hypothesis-testing">Hypothesis Testing</h2>
+<p>Armed with the CLT, we can now perform a formal <strong>hypothesis test</strong>. Our research question is: do the two CTAs produce different sign-up rates?</p>
+<p>We formalize this as: - <strong>Null hypothesis</strong> <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\theta = 0\)</span> (no difference) - <strong>Alternative hypothesis</strong> <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\theta \neq 0\)</span> (there is a difference)</p>
+<p>The goal is to assess whether our data provide sufficient evidence to reject <span class="math inline">\(H_0\)</span>.</p>
+<section id="the-test-statistic" class="level3">
+<h3 class="anchored" data-anchor-id="the-test-statistic">The Test Statistic</h3>
+<p>To test this, we standardize <span class="math inline">\(\hat\theta\)</span> by dividing by its standard error:</p>
+<p><span class="math display">\[z = \frac{\hat\theta - 0}{SE(\hat\theta)}\]</span></p>
+<p>Why does this help? Let’s walk through the logic:</p>
+<ol type="1">
+<li><strong>By the CLT</strong>, we know <span class="math inline">\(\hat\theta\)</span> is approximately Normal for large samples</li>
+<li><strong>Under <span class="math inline">\(H_0\)</span></strong>, the mean of that distribution is 0 (since we assume <span class="math inline">\(\theta = 0\)</span>)</li>
+<li><strong>When we standardize</strong> a Normal random variable (subtract the mean, divide by the standard deviation), we get a standard Normal: <span class="math inline">\(z \sim N(0,1)\)</span></li>
+</ol>
+<p>This is powerful because we now know the distribution of our test statistic <em>under the null hypothesis</em>. We can ask: “If there were truly no difference, how extreme is our observed z?”</p>
+</section>
+<section id="a-note-on-terminology" class="level3">
+<h3 class="anchored" data-anchor-id="a-note-on-terminology">A Note on Terminology</h3>
+<p>You might hear this called a “t-test,” which can be confusing. The classical <strong>Student’s t-test</strong> arises when: - The underlying data are Normal (not Bernoulli) - The variance is unknown and must be estimated - The test statistic follows an exact t-distribution</p>
+<p>In our case, the data are <em>Bernoulli</em>, not Normal, so there’s no exact t-distribution. Instead, the CLT gives us approximate Normality. What we’re really doing is a <strong>z-test</strong>. For large samples, the t-distribution and standard Normal are nearly identical, so the distinction rarely matters in practice—but it’s important to understand the theory.</p>
+</section>
+<section id="running-the-test" class="level3">
+<h3 class="anchored" data-anchor-id="running-the-test">Running the Test</h3>
+<div id="71be3857" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute test statistic</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Pooled proportion under H0: pi_A = pi_B</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>pooled_rate <span class="op">=</span> (</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    df_test.select(</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        (pl.col(<span class="st">"signup_A"</span>).<span class="bu">sum</span>() <span class="op">+</span> pl.col(<span class="st">"signup_B"</span>).<span class="bu">sum</span>()) <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> n)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    ).item()</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>se_pooled <span class="op">=</span> np.sqrt(</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    pooled_rate <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> pooled_rate) <span class="op">*</span> (<span class="dv">1</span> <span class="op">/</span> n <span class="op">+</span> <span class="dv">1</span> <span class="op">/</span> n)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>z_stat <span class="op">=</span> theta_hat <span class="op">/</span> se_pooled</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>p_value <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> stats.norm.cdf(<span class="bu">abs</span>(z_stat)))</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Two-sample proportion z-test:"</span>)</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"θ̂ = </span><span class="sc">{</span>theta_hat<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Pooled SE = </span><span class="sc">{</span>se_pooled<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"z = </span><span class="sc">{</span>z_stat<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p-value = </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">At α = 0.05: </span><span class="sc">{</span><span class="st">'Reject H₀'</span> <span class="cf">if</span> p_value <span class="op">&lt;</span> <span class="fl">0.05</span> <span class="cf">else</span> <span class="st">'Fail to reject H₀'</span><span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Two-sample proportion z-test:
+θ̂ = 0.0380
+Pooled SE = 0.0178
+z = 2.1364
+p-value = 0.0326
+
+At α = 0.05: Reject H₀</code></pre>
+</div>
+</div>
+<p><strong>Interpretation</strong>: Our p-value measures the probability of observing a difference as extreme as ours (or more extreme) if the null hypothesis were true. A small p-value (typically &lt; 0.05) suggests the data are incompatible with <span class="math inline">\(H_0\)</span>, leading us to reject it in favor of the alternative.</p>
+</section>
+</section>
+<section id="the-t-test-as-a-regression" class="level2">
+<h2 class="anchored" data-anchor-id="the-t-test-as-a-regression">The T-Test as a Regression</h2>
+<p>Here’s a beautiful connection that unifies hypothesis testing and regression: <strong>the two-sample t-test is mathematically equivalent to a simple linear regression</strong>.</p>
+<p>This might seem surprising, but it’s incredibly useful. It means the same framework you use for regression can handle A/B tests, and it generalizes naturally to more complex experimental designs (multiple treatment arms, covariates, interactions).</p>
+<section id="the-setup" class="level3">
+<h3 class="anchored" data-anchor-id="the-setup">The Setup</h3>
+<p>We’ll stack our data into a single dataset with two columns: - <span class="math inline">\(Y_i\)</span>: outcome (1 if signed up, 0 otherwise) - <span class="math inline">\(D_i\)</span>: treatment indicator (1 if saw CTA A, 0 if saw CTA B)</p>
+<p>Then we fit the regression:</p>
+<p><span class="math display">\[Y_i = \beta_0 + \beta_1 D_i + \varepsilon_i\]</span></p>
+</section>
+<section id="interpreting-the-coefficients" class="level3">
+<h3 class="anchored" data-anchor-id="interpreting-the-coefficients">Interpreting the Coefficients</h3>
+<ul>
+<li><span class="math inline">\(\beta_0\)</span> is the expected value of <span class="math inline">\(Y\)</span> when <span class="math inline">\(D = 0\)</span>, i.e., the mean sign-up rate for CTA B: <span class="math inline">\(\beta_0 = \pi_B\)</span></li>
+<li><span class="math inline">\(\beta_0 + \beta_1\)</span> is the expected value when <span class="math inline">\(D = 1\)</span>, i.e., the mean for CTA A: <span class="math inline">\(\beta_0 + \beta_1 = \pi_A\)</span></li>
+<li>Therefore, <span class="math inline">\(\beta_1 = \pi_A - \pi_B = \theta\)</span></li>
+</ul>
+<p>The OLS estimate <span class="math inline">\(\hat\beta_1\)</span> is <em>numerically identical</em> to <span class="math inline">\(\hat\theta = \bar{X}_A - \bar{X}_B\)</span>.</p>
+<div id="bdf1c3ef" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> t <span class="im">as</span> t_dist</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create regression dataset</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>df_reg <span class="op">=</span> pl.DataFrame({</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Y"</span>: np.concatenate([data_A, data_B]),</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"D"</span>: np.concatenate([np.ones(n), np.zeros(n)]),</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit regression: Y_i = beta_0 + beta_1 D_i + e_i</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df_reg.select(<span class="st">"D"</span>).to_numpy()</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> df_reg[<span class="st">"Y"</span>].to_numpy()</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LinearRegression()</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>model.fit(X, Y)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>beta_0 <span class="op">=</span> model.intercept_</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>beta_1 <span class="op">=</span> model.coef_[<span class="dv">0</span>]</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Residual-based standard error for beta_1</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>y_hat <span class="op">=</span> model.predict(X)</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>residuals <span class="op">=</span> Y <span class="op">-</span> y_hat</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>n_total <span class="op">=</span> <span class="bu">len</span>(Y)</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>mse <span class="op">=</span> np.<span class="bu">sum</span>(residuals <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> (n_total <span class="op">-</span> <span class="dv">2</span>)</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>X_with_intercept <span class="op">=</span> np.column_stack([np.ones(n_total), X.flatten()])</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>var_beta <span class="op">=</span> mse <span class="op">*</span> np.linalg.inv(X_with_intercept.T <span class="op">@</span> X_with_intercept)</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>se_beta_1 <span class="op">=</span> np.sqrt(var_beta[<span class="dv">1</span>, <span class="dv">1</span>])</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a><span class="co"># t-statistic and p-value</span></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>t_stat <span class="op">=</span> beta_1 <span class="op">/</span> se_beta_1</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>p_value_reg <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> t_dist.cdf(<span class="bu">abs</span>(t_stat), df<span class="op">=</span>n_total <span class="op">-</span> <span class="dv">2</span>))</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Group means from Polars, for comparison</span></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>group_summary <span class="op">=</span> (</span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>    df_reg.group_by(<span class="st">"D"</span>)</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>    .agg(</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>        pl.col(<span class="st">"Y"</span>).mean().alias(<span class="st">"mean_Y"</span>),</span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>        pl.<span class="bu">len</span>().alias(<span class="st">"n"</span>)</span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>    .sort(<span class="st">"D"</span>)</span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>theta_from_means <span class="op">=</span> (</span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>    group_summary.<span class="bu">filter</span>(pl.col(<span class="st">"D"</span>) <span class="op">==</span> <span class="dv">1</span>).select(<span class="st">"mean_Y"</span>).item()</span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span> group_summary.<span class="bu">filter</span>(pl.col(<span class="st">"D"</span>) <span class="op">==</span> <span class="dv">0</span>).select(<span class="st">"mean_Y"</span>).item()</span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>reg_summary <span class="op">=</span> pl.DataFrame({</span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>    <span class="st">"beta_0"</span>: [beta_0],</span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>    <span class="st">"beta_1"</span>: [beta_1],</span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>    <span class="st">"se_beta_1"</span>: [se_beta_1],</span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>    <span class="st">"t_stat"</span>: [t_stat],</span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>    <span class="st">"p_value"</span>: [p_value_reg],</span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>    <span class="st">"theta_from_means"</span>: [theta_from_means],</span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>    <span class="st">"match"</span>: [np.isclose(beta_1, theta_from_means)],</span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Regression Results:"</span>)</span>
+<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"β₀ (intercept, π_B): </span><span class="sc">{</span>beta_0<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"β₁ (treatment effect, θ̂): </span><span class="sc">{</span>beta_1<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"SE(β₁): </span><span class="sc">{</span>se_beta_1<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"t-statistic: </span><span class="sc">{</span>t_stat<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p-value: </span><span class="sc">{</span>p_value_reg<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Comparison to difference in means:"</span>)</span>
+<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"θ̂ from group means: </span><span class="sc">{</span>theta_from_means<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"β₁ from regression: </span><span class="sc">{</span>beta_1<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Match: </span><span class="sc">{</span>np<span class="sc">.</span>isclose(beta_1, theta_from_means)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Summary table:"</span>)</span>
+<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(reg_summary)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Regression Results:
+β₀ (intercept, π_B): 0.1780
+β₁ (treatment effect, θ̂): 0.0380
+SE(β₁): 0.0178
+t-statistic: 2.1377
+p-value: 0.0327
+
+Comparison to difference in means:
+θ̂ from group means: 0.0380
+β₁ from regression: 0.0380
+Match: True
+
+Summary table:
+shape: (1, 7)
+┌────────┬────────┬───────────┬──────────┬──────────┬──────────────────┬───────┐
+│ beta_0 ┆ beta_1 ┆ se_beta_1 ┆ t_stat   ┆ p_value  ┆ theta_from_means ┆ match │
+│ ---    ┆ ---    ┆ ---       ┆ ---      ┆ ---      ┆ ---              ┆ ---   │
+│ f64    ┆ f64    ┆ f64       ┆ f64      ┆ f64      ┆ f64              ┆ bool  │
+╞════════╪════════╪═══════════╪══════════╪══════════╪══════════════════╪═══════╡
+│ 0.178  ┆ 0.038  ┆ 0.017776  ┆ 2.137748 ┆ 0.032658 ┆ 0.038            ┆ true  │
+└────────┴────────┴───────────┴──────────┴──────────┴──────────────────┴───────┘</code></pre>
+</div>
+</div>
+<p>The estimates match perfectly! The small difference in standard errors comes from how variance is computed: the two-sample formula allows separate variances for each group, while OLS assumes a single pooled variance. For practical purposes, they yield the same conclusion.</p>
+<p><strong>Why this matters</strong>: The regression framework makes it trivial to extend your A/B test. Want to add a third treatment arm? Just add another indicator variable. Want to control for pre-treatment covariates? Add them as regressors. The machinery stays the same.</p>
+</section>
+</section>
+<section id="the-problem-with-peeking" class="level2">
+<h2 class="anchored" data-anchor-id="the-problem-with-peeking">The Problem with Peeking</h2>
+<p>You’ve launched your A/B test, and after a few days, you’re eager to know the results. Your boss is even more impatient. She suggests: “Why wait? Let’s check the results every day. If we see a significant difference, we’ll stop early and roll out the winner.”</p>
+<p>This sounds reasonable—why not adapt based on what you’re seeing? The problem is that <strong>peeking invalidates classical hypothesis testing</strong>.</p>
+<section id="why-peeking-breaks-things" class="level3">
+<h3 class="anchored" data-anchor-id="why-peeking-breaks-things">Why Peeking Breaks Things</h3>
+<p>Recall that a single hypothesis test at <span class="math inline">\(\alpha = 0.05\)</span> has a 5% chance of a false positive (rejecting <span class="math inline">\(H_0\)</span> when it’s actually true). But when you conduct <em>multiple tests</em> on accumulating data, each peek is another opportunity for a spurious significant result.</p>
+<p>The overall probability of at least one false rejection across all your peeks is much higher than 5%. This is called <strong>inflating the Type I error rate</strong>.</p>
+</section>
+<section id="simulating-the-damage" class="level3">
+<h3 class="anchored" data-anchor-id="simulating-the-damage">Simulating the Damage</h3>
+<p>Let’s quantify this. We’ll simulate a world where the null hypothesis is true (<span class="math inline">\(\pi_A = \pi_B = 0.20\)</span>, so <span class="math inline">\(\theta = 0\)</span>). Then we’ll:</p>
+<ol type="1">
+<li>Simulate 1,000 visitors per group</li>
+<li>Peek at the results after every 100 visitors (10 peeks total)</li>
+<li>Record whether <em>any</em> of those peeks produced a p-value &lt; 0.05</li>
+<li>Repeat 10,000 times</li>
+</ol>
+<p>The fraction of experiments with at least one significant peek is the empirical false positive rate.</p>
+<div id="8af04a0f" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up null world</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>pi_null <span class="op">=</span> <span class="fl">0.20</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>n_total <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>peek_points <span class="op">=</span> np.arange(<span class="dv">100</span>, n_total <span class="op">+</span> <span class="dv">1</span>, <span class="dv">100</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>n_experiments <span class="op">=</span> <span class="dv">10000</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">123</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>peek_records <span class="op">=</span> []</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> exp_id <span class="kw">in</span> <span class="bu">range</span>(n_experiments):</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    experiment_A <span class="op">=</span> np.random.binomial(<span class="dv">1</span>, pi_null, n_total)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    experiment_B <span class="op">=</span> np.random.binomial(<span class="dv">1</span>, pi_null, n_total)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n_peek <span class="kw">in</span> peek_points:</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>        sample_A <span class="op">=</span> experiment_A[:n_peek]</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>        sample_B <span class="op">=</span> experiment_B[:n_peek]</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>        pi_A_hat <span class="op">=</span> sample_A.mean()</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>        pi_B_hat <span class="op">=</span> sample_B.mean()</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>        theta_hat <span class="op">=</span> pi_A_hat <span class="op">-</span> pi_B_hat</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>        se <span class="op">=</span> np.sqrt(</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>            pi_A_hat <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> pi_A_hat) <span class="op">/</span> n_peek <span class="op">+</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>            pi_B_hat <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> pi_B_hat) <span class="op">/</span> n_peek</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> se <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>            z_stat <span class="op">=</span> theta_hat <span class="op">/</span> se</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>            p_value <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> stats.norm.cdf(<span class="bu">abs</span>(z_stat)))</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>            z_stat <span class="op">=</span> np.nan</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>            p_value <span class="op">=</span> np.nan</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>        peek_records.append({</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>            <span class="st">"experiment_id"</span>: exp_id <span class="op">+</span> <span class="dv">1</span>,</span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>            <span class="st">"n_peek"</span>: n_peek,</span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>            <span class="st">"theta_hat"</span>: theta_hat,</span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>            <span class="st">"se"</span>: se,</span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>            <span class="st">"z_stat"</span>: z_stat,</span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>            <span class="st">"p_value"</span>: p_value,</span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>            <span class="st">"significant"</span>: p_value <span class="op">&lt;</span> <span class="fl">0.05</span> <span class="cf">if</span> <span class="kw">not</span> np.isnan(p_value) <span class="cf">else</span> <span class="va">False</span>,</span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>peek_df <span class="op">=</span> pl.DataFrame(peek_records)</span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>experiment_summary <span class="op">=</span> (</span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>    peek_df.group_by(<span class="st">"experiment_id"</span>)</span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>    .agg(</span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a>        pl.col(<span class="st">"significant"</span>).<span class="bu">any</span>().alias(<span class="st">"had_false_positive"</span>)</span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a>summary_df <span class="op">=</span> experiment_summary.select(</span>
+<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a>    pl.<span class="bu">len</span>().alias(<span class="st">"n_experiments"</span>),</span>
+<span id="cb13-56"><a href="#cb13-56" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">"had_false_positive"</span>).<span class="bu">sum</span>().alias(<span class="st">"false_positives"</span>),</span>
+<span id="cb13-57"><a href="#cb13-57" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">"had_false_positive"</span>).mean().alias(<span class="st">"false_positive_rate"</span>),</span>
+<span id="cb13-58"><a href="#cb13-58" aria-hidden="true" tabindex="-1"></a>).with_columns(</span>
+<span id="cb13-59"><a href="#cb13-59" aria-hidden="true" tabindex="-1"></a>    pl.lit(<span class="fl">0.05</span>).alias(<span class="st">"nominal_alpha"</span>),</span>
+<span id="cb13-60"><a href="#cb13-60" aria-hidden="true" tabindex="-1"></a>    (pl.col(<span class="st">"false_positive_rate"</span>) <span class="op">/</span> <span class="fl">0.05</span>).alias(<span class="st">"inflation_factor"</span>)</span>
+<span id="cb13-61"><a href="#cb13-61" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-62"><a href="#cb13-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-63"><a href="#cb13-63" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(summary_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>shape: (1, 5)
+┌───────────────┬─────────────────┬─────────────────────┬───────────────┬──────────────────┐
+│ n_experiments ┆ false_positives ┆ false_positive_rate ┆ nominal_alpha ┆ inflation_factor │
+│ ---           ┆ ---             ┆ ---                 ┆ ---           ┆ ---              │
+│ u32           ┆ u32             ┆ f64                 ┆ f64           ┆ f64              │
+╞═══════════════╪═════════════════╪═════════════════════╪═══════════════╪══════════════════╡
+│ 10000         ┆ 1990            ┆ 0.199               ┆ 0.05          ┆ 3.98             │
+└───────────────┴─────────────────┴─────────────────────┴───────────────┴──────────────────┘</code></pre>
+</div>
+</div>
+<p>The results are striking. Instead of 5%, we might see a false positive rate of 15-20% or higher—<strong>more than triple the nominal rate</strong>. This means if you peek repeatedly, you’ll declare a “winner” one time in five <em>even when there’s no real difference</em>.</p>
+</section>
+<section id="what-this-means-in-practice" class="level3">
+<h3 class="anchored" data-anchor-id="what-this-means-in-practice">What This Means in Practice</h3>
+<p>Peeking is tempting, but it’s statistically invalid under the classical framework. If you must peek, you need to adjust for multiple comparisons (e.g., Bonferroni correction, which would test each peek at <span class="math inline">\(\alpha/10 = 0.005\)</span>) or use methods explicitly designed for sequential testing (e.g., sequential probability ratio tests, alpha spending functions).</p>
+<p>Better yet: decide your sample size upfront using a power analysis, commit to it, and resist the urge to peek.</p>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>We started with a simple question: which call-to-action gets more newsletter sign-ups? Along the way, we’ve explored the statistical machinery that makes A/B testing work:</p>
+<ul>
+<li>The <strong>Law of Large Numbers</strong> assures us that our estimates converge to the truth with enough data</li>
+<li>The <strong>Central Limit Theorem</strong> justifies using Normal-based inference even with non-Normal data</li>
+<li><strong>Bootstrap methods</strong> let us estimate uncertainty without formulas</li>
+<li><strong>Hypothesis testing</strong> gives us a principled framework for decision-making under uncertainty</li>
+<li>The <strong>regression equivalence</strong> unifies t-tests and linear models, opening the door to more complex designs</li>
+<li>The <strong>peeking problem</strong> reminds us that statistical rigor requires discipline—rushing to conclusions can backfire</li>
+</ul>
+<p>These concepts extend far beyond A/B testing. They’re the foundation of data science, experimental design, and causal inference. Master them, and you’ll have the tools to think critically about evidence in any domain.</p>
+<p>Now go forth and test—but <em>don’t peek</em>.</p>
+<hr>
+<p><strong>Further Reading:</strong> - For more on sequential testing: Wald’s Sequential Probability Ratio Test - For Bayesian alternatives: Thompson Sampling and Bayesian A/B testing - For advanced experimental design: Factorial designs, stratified randomization, and regression discontinuity</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
