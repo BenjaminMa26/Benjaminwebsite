@@ -3,6 +3,10 @@ title: "MaxDiff Analysis of MSBA Class Preferences"
 subtitle: "From best-worst choices to MNL utilities, MLE estimates, and Bayesian uncertainty"
 author: "Benjamin Ma"
 date: today
+image: maxdiff-preview.png
+image-alt: "Comparison of MaxDiff counts, MLE shares, and Bayesian MNL shares"
+description: "A MaxDiff analysis of MSBA class preferences using counts, maximum likelihood MNL, and Bayesian MNL estimation."
+categories: [Python, MaxDiff, MNL, Bayesian Statistics]
 jupyter: python3
 format:
   html:
